@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="notification" type="xmlRestitutionRoot"/>
+
+  <xs:complexType name="xmlRestitutionRoot">
+    <xs:all>
+      <xs:element name="customerLogin" type="xs:string" minOccurs="0"/>
+      <xs:element name="receptionDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="receptionDateWithTZ" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="productionDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="productionDateWithTZ" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="campaignName" type="xs:string" minOccurs="0"/>
+      <xs:element name="recipients" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="recipient" type="xmlRecipient" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+    <xs:attribute name="type" type="xmlRestitutionType"/>
+  </xs:complexType>
+
+  <xs:complexType name="xmlRecipient">
+    <xs:all>
+      <xs:element name="foldId" type="xs:string" minOccurs="0"/>
+      <xs:element name="foldTrackId" type="xs:string" minOccurs="0"/>
+      <xs:element name="requestId" type="xs:string" minOccurs="0"/>
+      <xs:element name="requestTrackId" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalAddressLine1" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalAddressLine2" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalAddressLine3" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalAddressLine4" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalAddressLine5" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalAddressLine6" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalCountryCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalCountryName" type="xs:string" minOccurs="0"/>
+      <xs:element name="receptionDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="erlNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="erlDeliveryDate" type="xs:dateTime" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:simpleType name="xmlRestitutionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DOC"/>
+      <xs:enumeration value="PRV"/>
+      <xs:enumeration value="AR"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

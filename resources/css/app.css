@@ -1,0 +1,131 @@
+@import "filepond/dist/filepond.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: "Montserrat Variable", system-ui, sans-serif;
+    }
+
+    body {
+        @apply bg-[#14142b] text-white;
+    }
+
+    main {
+        @apply bg-white text-[#14142b];
+    }
+}
+
+@layer components {
+    .text-gradient {
+        @apply bg-gradient-to-r from-[#fb29cd] to-[#fdc51d] bg-clip-text inline-block text-transparent;
+    }
+}
+
+/**
+ * TipTap
+ */
+.ProseMirror {
+    @apply outline-none p-6 min-h-[20rem];
+}
+
+.ProseMirror * + p {
+    @apply pt-3;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+    @apply text-blue-300;
+}
+
+/**
+ * Toggle checkbox
+ */
+
+.toggle-checkbox {
+    @apply relative bg-gray-300 rounded-full appearance-none w-12 h-6 cursor-pointer;
+}
+
+.toggle-checkbox-amber {
+    @apply bg-amber-200;
+}
+
+.toggle-checkbox::before {
+    content: "";
+    @apply absolute left-0 block bg-white border-2 border-gray-300 rounded-full w-6 h-6;
+}
+
+.toggle-checkbox-amber::before {
+    @apply border-amber-200;
+}
+
+.toggle-checkbox:checked, .toggle-checkbox-amber:checked {
+    @apply bg-blue-700;
+}
+
+.toggle-checkbox:checked::before {
+    @apply left-auto right-0;
+}
+
+.article h1 {
+    @apply text-black font-semibold text-3xl pb-4 leading-tight;
+}
+
+.article h2 {
+    @apply font-semibold text-xl pb-4 leading-tight;
+    color: #12E7F4;
+    background: linear-gradient(90deg, #2F64ED, #12E7F4);
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+strong {
+    @apply font-semibold;
+}
+
+@screen lg {
+    .article h1 {
+        @apply text-4xl;
+    }
+
+    .article h2 {
+        @apply text-2xl;
+    }
+
+    .article h3 {
+        @apply text-xl;
+    }
+}
+
+.article p {
+    @apply pb-4 text-justify;
+}
+
+.article ul,
+.article ol {
+    @apply pb-4;
+}
+
+.article a {
+    @apply underline text-blue-700;
+}
+
+.article ul li {
+    @apply relative pl-3;
+}
+
+.article ul li::before {
+    content: "- ";
+    @apply absolute left-0;
+}
+
+.sav {
+    background: #eef4f4 url('/images/sav.jpg') no-repeat 0 50%;
+    background-size: contain;
+}

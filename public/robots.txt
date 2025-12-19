@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /assets/*
+Disallow: /css/*
+Disallow: /vendor/*
+Disallow: /js/*
+Sitemap: https://www.stop-contrat.com/sitemap.xml

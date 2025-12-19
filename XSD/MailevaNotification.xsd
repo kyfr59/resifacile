@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid XML Studio - FREE Community Edition 7.0.2.746 (http://www.liquid-technologies.com)-->
+<xs:schema xmlns:notif="http://www.maileva.fr/MailevaNotificationSchema" xmlns:com="http://www.maileva.fr/CommonSchema" xmlns:mlv="http://www.maileva.fr/MailevaSpecificSchema" elementFormDefault="qualified" targetNamespace="http://www.maileva.fr/MailevaNotificationSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="Maileva.xsd" namespace="http://www.maileva.fr/MailevaSpecificSchema" />
+  <xs:import schemaLocation="Common.xsd" namespace="http://www.maileva.fr/CommonSchema" />
+  <xs:element name="Notification">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://www.maileva.fr/MailevaSpecificSchema" name="NotificationType" type="q1:MlvNotificationType" />
+        <xs:element name="Request">
+          <xs:complexType>
+            <xs:sequence>
+              <!-- PAPER, EMAIL, ...-->
+              <xs:element name="Type" type="com:ComMediaType" />
+              <xs:element minOccurs="0" name="TrackId">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DepositId">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="24" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ReceptionDate" type="xs:string" />
+              <xs:element name="GmtReceptionDate" type="xs:string" />
+              <xs:element minOccurs="0" name="ProductionDate" type="xs:string" />
+              <xs:element minOccurs="0" name="GmtProductionDate" type="xs:string" />
+              <xs:element minOccurs="0" name="ExpectedProductionDate" type="xs:string" />
+              <xs:element minOccurs="0" name="GmtExpectedProductionDate" type="xs:string" />
+              <xs:element minOccurs="0" name="FoldsCount" type="xs:int" />
+              <!-- KO, OK, NOK, NACCEPT, ACCEPT -->
+              <xs:element name="Status">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="OK" />
+                    <xs:enumeration value="NOK" />
+                    <xs:enumeration value="ACCEPT" />
+                    <xs:enumeration value="NACCEPT" />
+                    <xs:enumeration value="AUTHENTICATION_KO" />
+                    <xs:enumeration value="SERVICE_FILE_KO" />
+                    <xs:enumeration value="ACCEPT_NOK" />
+                    <xs:enumeration value="ALLNOK" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="ErlNumbers" type="xs:string" />
+              <xs:element minOccurs="0" name="ErrorCode" type="xs:int" />
+              <xs:element minOccurs="0" name="ErrorLabel" type="xs:string" />
+              <xs:element minOccurs="0" name="FoldsInError">
+                <xs:complexType>
+                  <xs:sequence maxOccurs="unbounded">
+                    <xs:element name="Fold">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="PaperAddress" type="com:PaperAddress" />
+                          <xs:element name="FoldErrorCode" type="xs:int" />
+                          <xs:element name="FoldErrorLabel" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="Id" type="xs:integer" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="recipients">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="recipient">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element minOccurs="0" name="foldId" type="xs:string" />
+                          <xs:element minOccurs="0" name="foldTrackId" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalAddress1" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalAddress2" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalAddress3" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalAddress4" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalAddress5" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalAddress6" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalCountryCode" type="xs:string" />
+                          <xs:element minOccurs="0" name="postalCountryName" type="xs:string" />
+                          <xs:element minOccurs="0" name="erlNumber" type="xs:string" />
+                          <xs:element minOccurs="0" name="erlDeliveryDate" type="xs:dateTime" />
+                          <xs:element minOccurs="0" maxOccurs="1" name="FoldErrorCode" type="xs:int" />
+                          <xs:element minOccurs="0" maxOccurs="1" name="FoldErrorLabel" type="xs:string" />
+                          <xs:element minOccurs="0" name="indexes">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element minOccurs="1" maxOccurs="unbounded" name="index">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element minOccurs="1" maxOccurs="1" name="code" type="xs:string" />
+                                      <xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:string" />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PaperOptions">
+                <xs:complexType>
+                  <xs:sequence>
+                    <!-- C5, C5 -->
+                    <xs:element xmlns:q2="http://www.maileva.fr/MailevaSpecificSchema" name="EnvelopeType" type="q2:MlvEnvelopeType" />
+                    <!-- FIRST_CLASS, SECOND_CLASS, ...-->
+                    <xs:element xmlns:q3="http://www.maileva.fr/MailevaSpecificSchema" name="PostageClass" type="q3:MlvPostageClass" />
+                    <xs:element name="HasColorPage" type="xs:boolean" />
+                    <xs:element name="PrintDuplex" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="DocumentCount" type="xs:int" />
+                    <xs:element minOccurs="0" name="BilledPageCount" type="xs:int" />
+                    <xs:element minOccurs="0" name="PageCount" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

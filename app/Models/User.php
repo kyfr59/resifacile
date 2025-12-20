@@ -49,15 +49,8 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return match ($this->email) {
-            'jofrey@qilink.fr' => true,
-            'rihab@ecall-services.com' => true,
-            'sarah.lopezazema@gmail.com' => true,
+            'kyfr59@gmail.com' => true,
             'j.gandillon@gmail.com' => true,
-            'juliette@tiny-fox.com' => true,
-            'fabien@tiny-fox.com' => true,
-            'samuel@eurocb.net' => true,
-            'aurelie@qilink.fr' => true,
-            'thomas@mediagroup.app' => true,
             default => false,
         };
     }

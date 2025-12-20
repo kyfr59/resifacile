@@ -43,7 +43,7 @@ class GuideResource extends Resource
                             ->label('Image de couverture')
                             ->image()
                             ->imageEditor()
-                            ->disk('do')
+                            ->disk('public')
                             ->directory('guides')
                             ->visibility('public'),
                         MarkdownEditor::make('article')

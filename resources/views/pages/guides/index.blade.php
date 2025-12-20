@@ -35,7 +35,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->paginate(18);
                             class="flex flex-col rounded-xl shadow-lg overflow-hidden"
                         >
                             @if($guide->visual)
-                                <img src="{{ Storage::disk('do')->url($guide->visual) }}" alt="{{ $guide->title }}" class="aspect-video object-cover">
+                                <img src="{{ Storage::disk('public')->url($guide->visual) }}" alt="{{ $guide->title }}" class="aspect-video object-cover">
                             @endif
                             <div class="p-6 flex-1">
                                 <div class="text-lg md:text-xl md:leading-tight font-semibold mb-3">

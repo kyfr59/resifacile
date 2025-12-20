@@ -45,7 +45,7 @@ name('guides.article');
                    {{ $guide->title }}
                </h1>
                @if($guide->visual)
-                   <img src="{{ Storage::disk('do')->url($guide->visual) }}" alt="{{ $guide->title }}" class="shadow-lg rounded-xl aspect-[1000/256] object-cover">
+                   <img src="{{ Storage::disk('public')->url($guide->visual) }}" alt="{{ $guide->title }}" class="shadow-lg rounded-xl aspect-[1000/256] object-cover">
                @endif
                <article class="article w-full md:w-4/5">
                    {!! Markdown::parse($guide->article) !!}

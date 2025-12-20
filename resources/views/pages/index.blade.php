@@ -341,7 +341,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                         >
                             <?php /*
                             @if($guide->visual)
-                                <img src="{{ Storage::disk('do')->url($guide->visual) }}" alt="{{ $guide->title }}" class="aspect-video object-cover">
+                                <img src="{{ Storage::disk('public')->url($guide->visual) }}" alt="{{ $guide->title }}" class="aspect-video object-cover">
                             @endif
                             */ ?>
                             <div class="p-6 flex-1">

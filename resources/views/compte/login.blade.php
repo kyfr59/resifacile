@@ -2,7 +2,8 @@
     <x-slot:head>
         <title>{{ config('app.name') }}</title>
         <meta name="description" content="Envoyez vos courriers sans vous déplacer ! — {{ config('app.name') }}"/>
-        <meta name="robots" content="noindex, noarchive, nocache, noimageindex" />
+        <?php /* <meta name="robots" content="noindex, noarchive, nocache, noimageindex" /> */ ?>
+        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
     </x-slot:head>
 
     <div class="bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] pt-16 md:pt-24">

@@ -2,7 +2,8 @@
     <x-slot:head>
         <title>Importez vos documents - {{ config('app.name') }}</title>
         <meta name="description" content="Importez vos documents"/>
-        <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/>
+        <?php /* <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/> */ ?>
+        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
     </x-slot:head>

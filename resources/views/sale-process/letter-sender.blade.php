@@ -2,7 +2,8 @@
     <x-slot:head>
         <title>Coordonnées expéditeur - {{ config('app.name') }}</title>
         <meta name="description" content="Coordonnées expéditeur"/>
-        <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/>
+        <?php /* <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/> */ ?>
+        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
     </x-slot:head>

@@ -3,6 +3,7 @@
 namespace App\Jobs\HipayWebhooks;
 
 use App\Actions\MakeCreateTransaction;
+use Illuminate\Support\Str;
 use App\Actions\MakeNewInvoice;
 use App\Actions\MakeNewPaymentMethod;
 use App\Actions\Subscription\CreateServiceAgreementAction;
@@ -42,7 +43,7 @@ class HandleCaptured implements ShouldQueue
 
     public function handle(
         SubscriptionSettings $subscriptionSettings
-    ): void
+    )
     {
         $transactionData = $this->webhookCall->payload;
 
@@ -80,7 +81,6 @@ class HandleCaptured implements ShouldQueue
             ),
         );
 
-
         if($invoiceType === InvoiceType::ORDER) {
             (new MakeNewInvoice())->handle(
                 transaction: $transaction,
@@ -91,7 +91,7 @@ class HandleCaptured implements ShouldQueue
         if(!$transactionData['custom_data']['is_subscription_transaction']) {
             $document = null;
 
-            if($transactionData['custom_data']['has_subscription']) {
+            if(!empty($transactionData['custom_data']['has_subscription'])) {
                 (new MakeNewPaymentMethod($transactionable->customer))(
                     $transactionData['payment_method']['card_id'],
                     [
@@ -139,6 +139,16 @@ class HandleCaptured implements ShouldQueue
             Mail::to($transaction->transactionable->customer->email)->send(
                 new GetComment()
             );
+        }
+
+        if (config('payment.bypass_payment')) {
+            $order = Order::find($transactionData['custom_data']['order_id']);
+            $url = route('frontend.letter.payment.confirmation', [
+                'token' => Str::uuid(),
+                'orderid' => $order->number,
+            ]);
+            header('Location:'.$url);
+            exit;
         }
     }
 }

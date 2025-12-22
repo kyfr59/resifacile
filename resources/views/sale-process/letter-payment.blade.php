@@ -18,6 +18,9 @@
                     </h1>
                 </div>
                 <livewire:letter-payment-form/>
+                @if(config('payment.bypass_payment'))
+                    <livewire:letter-fake-payment-buttons />
+                @endif
             </div>
         </section>
     </div>

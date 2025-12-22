@@ -51,6 +51,8 @@ class User extends Authenticatable implements FilamentUser
         return match ($this->email) {
             'kyfr59@gmail.com' => true,
             'j.gandillon@gmail.com' => true,
+            'juliette@tiny-fox.com' => true,
+            'fabien@tiny-fox.com' => true,
             default => false,
         };
     }

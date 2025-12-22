@@ -12,8 +12,8 @@ class Dashboard extends \Filament\Pages\Dashboard
         return match (auth()->user()->email) {
             'kyfr59@gmail.com' => true,
             'j.gandillon@gmail.com' => true,
-            'samuel@eurocb.net' => true,
-            'thomas@mediagroup.app' => true,
+            'juliette@tiny-fox.com' => true,
+            'fabien@tiny-fox.com' => true,
             default => false,
         };
     }

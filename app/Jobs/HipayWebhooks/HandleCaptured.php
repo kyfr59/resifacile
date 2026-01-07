@@ -29,6 +29,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Spatie\WebhookClient\Models\WebhookCall;
+use Illuminate\Support\Facades\Http;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class HandleCaptured implements ShouldQueue
 {
@@ -131,6 +133,17 @@ class HandleCaptured implements ShouldQueue
                     new SubcriptionCreated(transaction: $transaction, service_agreement: $document)
                 );
             }
+
+            $body = (new InvoiceCreated(transaction: $transaction))->render();
+            $cssInliner = new CssToInlineStyles();
+            $bodyInline = $cssInliner->convert($body);
+            $bodyInline = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', '', $bodyInline);
+
+            Http::post('https://quidsante.com/blog/index.php?rest_route=/relay/v1/send-mail', [
+                'to' => 'jeremy@kolibri-network.com',
+                'subject' => 'Test depuis Laravel en prod',
+                'body' => $bodyInline
+            ]);
 
             Mail::to($transaction->transactionable->customer->email)->send(
                 new InvoiceCreated(transaction: $transaction)

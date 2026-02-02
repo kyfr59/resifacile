@@ -104,9 +104,6 @@ class BrandResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('categories.name')
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('d/m/Y')
                     ->searchable()

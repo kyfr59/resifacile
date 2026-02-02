@@ -49,6 +49,9 @@ class LetterController extends Controller
                 $template = $product->template->model->toArray();
             } else {
                 $templateModel = Template::where('slug', $slug)->first();
+                if (!$templateModel) {
+                    abort(404);
+                }
                 $template = $templateModel->model->toArray();
             }
         } else {

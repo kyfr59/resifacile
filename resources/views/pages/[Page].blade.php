@@ -12,8 +12,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
     <x-slot:head>
         <title>{{ $page->seo_title }} - {{ config('app.name') }}</title>
         <meta name="description" content="{{ $page->seo_title }}"/>
-        <?php /* <meta name="robots" content="index, noarchive, nocache, noimageindex"/> */ ?>
-        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+        <meta name="robots" content="index, noarchive, nocache, noimageindex"/>
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
     </x-slot:head>

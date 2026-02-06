@@ -2,8 +2,7 @@
     <x-slot:head>
         <title>Coordonnées destinataire - {{ config('app.name') }}</title>
         <meta name="description" content="Coordonnées destinataire"/>
-        <?php /* <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/> */ ?>
-        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+        <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/>
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
     </x-slot:head>

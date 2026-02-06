@@ -2,8 +2,7 @@
     <x-slot:head>
         <title>{{ $entry->seo_title }}</title>
         <meta name="description" content="{{ $entry->seo_description }}">
-        <?php /* <meta name="robots" content="{{ $entry->seo_robots }}"> */ ?>
-        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+        <meta name="robots" content="{{ $entry->seo_robots }}">
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
         <script type="application/ld+json">

@@ -7,8 +7,7 @@
     <meta name="csrf_token" content="{{ csrf_token() }}">
     <title>Site en maintenance - {{ config('app.name') }}</title>
     <meta name="description" content="Notre site est en maintenance"/>
-    <?php /* <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/> */ ?>
-    <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+    <meta name="robots" content="noindex, noarchive, nocache, noimageindex"/>
     <link rel="canonical" href="{{ url()->current() }}">
     <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
     @vite('resources/css/app.css')

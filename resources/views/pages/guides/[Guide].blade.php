@@ -10,8 +10,7 @@ name('guides.article');
     <x-slot:head>
         <title>{{ $guide->seo_title }} - {{ config('app.name') }}</title>
         <meta name="description" content="{{ $guide->seo_title }}"/>
-        <?php /* <meta name="robots" content="index, noarchive, nocache, noimageindex"/> */ ?>
-        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+        <meta name="robots" content="index, noarchive, nocache, noimageindex"/>
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
         <script type="application/ld+json">

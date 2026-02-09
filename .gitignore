@@ -16,3 +16,8 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/public/sitemap.xml
+/public/sitemap-guides.xml
+/public/sitemap-lettre-resiliation.xml
+/public/sitemap-page.xml
+/public/sitemap_index.xml

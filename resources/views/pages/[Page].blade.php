@@ -63,7 +63,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
     </div>
     <div class="bg-white">
         <div class="max-w-screen-xl mx-auto py-12 md:py-24 px-6 flex justify-between flex-wrap">
-            <div class="text-center md:text-left w-full text-xl md:text-2xl mb-4 md:mb-0 leading-none">Pourquoi choisir stop-contrat ?</div>
+            <div class="text-center md:text-left w-full text-xl md:text-2xl mb-4 md:mb-0 leading-none">Pourquoi choisir Resifacile ?</div>
             <div class="text-center md:text-left w-full text-3xl leading-tight md:text-4xl font-semibold text-gradient pb-6">Les avantages de nos services</div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="flex flex-col justify-start items-center gap-3">

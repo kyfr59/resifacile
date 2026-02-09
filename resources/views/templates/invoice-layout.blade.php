@@ -86,7 +86,7 @@
                     <div style="margin-bottom: 6px; line-height: 1.2em;">
                         <div>
                             <div style="font-size: 10px; font-weight: bold; color:#1d4ed8;">Pour toute question :</div>
-                            <div style="font-size: 12px;">Contactez-nous sur contact@stop-contrat.com ou par téléphone au :</div>
+                            <div style="font-size: 12px;">Contactez-nous sur contact@resifacile.fr ou par téléphone au :</div>
                             <div>
                                 <img src="numero-vert.png" height="35" alt="">
                             </div>
@@ -116,7 +116,7 @@
             <tr>
                 <td style="font-size: .4rem; line-height: 1.4em; text-align: center;">
                     {{ config('app.name') }} - Euro CB SAS - Capital Social 30 000€ - RCS 821 030 574 Bordeaux - APE 6312Z<br/>
-                    TVA FR 28 821 030 574 - 2, rue Buhan, 33000 Bordeaux - contact@stop-contrat.com
+                    TVA FR 28 821 030 574 - 2, rue Buhan, 33000 Bordeaux - contact@resifacile.fr
                 </td>
             </tr>
         </table>

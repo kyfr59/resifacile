@@ -12,7 +12,7 @@ $guides = \App\Models\Guide::all();
 <x-layouts.app>
     <x-slot:head>
         <title>Plan du site - {{ config('app.name') }}</title>
-        <meta name="description" content="Retrouvez toutes les marques et modèles de lettres dédiés à vos résiliations de contrats avec stop-contrat.com"/>
+        <meta name="description" content="Retrouvez toutes les marques et modèles de lettres dédiés à vos résiliations de contrats avec resifacile.fr"/>
         <meta name="robots" content="index, noarchive, nocache, imageindex"/>
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">

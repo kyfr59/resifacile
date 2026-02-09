@@ -36,7 +36,7 @@
         <div class="bg-white">
             <div class="max-w-screen-lg mx-auto py-12 md:py-24 px-6 flex flex-col gap-6 md:gap-12">
                 <h1 class="text-4xl leading-tight md:text-5xl font-semibold w-full text-gradient">
-                    Stop Contrat est en maintenance !
+                    Resifacile est en maintenance !
                 </h1>
                 <article class="article w-full md:w-4/5">
                     <p class="text-lg leading-relaxed">

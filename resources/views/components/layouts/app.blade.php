@@ -36,6 +36,9 @@
         @endif
     </head>
     <body x-data="{showMenu: false}">
+        <div class="sticky top-0 z-50 bg-blue-600 text-white text-center py-2 px-4">
+            Site en maintenance. Disponible en consultation uniquement : l’envoi et le service de courrier sont momentanément indisponibles.
+        </div>
         @if(request()->session()->has('error'))
             <div class="bg-red-50 text-red-700 p-6 text-center border-b border-red-200">
                 {{ request()->session()->get('error') }}

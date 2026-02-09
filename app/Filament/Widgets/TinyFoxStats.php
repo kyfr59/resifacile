@@ -31,7 +31,7 @@ class TinyFoxStats extends BaseWidget
         )->toArray();
 
         return array_merge([
-            Stat::make('Total', round((($totalTinyFox[0]->total / 2) * 100) / $total[0]->total, 2) . '%')
+            Stat::make('Total', round((($totalTinyFox[0]->total / 2) * 100) / max($total[0]->total, 1), 2) . '%')
                 ->description('Part de revenu versé à Tiny Fox')
                 ->extraAttributes([
                     'style' => 'grid-column: span 2 / span 2',

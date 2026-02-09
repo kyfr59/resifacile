@@ -19,7 +19,7 @@
 
 @layer components {
     .text-gradient {
-        @apply bg-gradient-to-r from-[#2fa89c] to-[#2B6CB0] bg-clip-text inline-block text-transparent;
+        @apply bg-gradient-to-r from-[#2B6CB0] to-[#2fa89c] bg-clip-text inline-block text-transparent;
     }
 }
 

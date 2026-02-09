@@ -60,6 +60,7 @@
                     </div>
                 </label>
                 <button
+                    id="sale-continuation"
                     class="hover:outline hover:outline-offset-2 hover:outline-4 hover:outline-blue-100 w-full md:w-auto bg-blue-700 text-white h-14 px-6 rounded-xl flex items-center justify-center"
                     type="submit">
                     Je poursuis
@@ -70,4 +71,22 @@
     @if($errors->any())
         <div class="mt-6 md:mt-12 p-6 text-white text-center w-full bg-red-500 rounded-lg">Nous avons observé des erreurs ou des oublis dans les informations fournies ci-dessus, veuillez vérifier vos informations.</div>
     @endif
+
+    <div id="form-message" class="hidden mt-6 md:mt-12 p-6 text-white text-center w-full bg-red-500 rounded-lg">Notre service est temporairement suspendu, veuillez nous en excuser.<br />L'équipe Resifacile.fr</div>
+
 </form>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('sale-continuation');
+    const message = document.getElementById('form-message');
+
+    if (!button || !message) return;
+
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        message.classList.remove('hidden');
+        button.disabled = true;
+    });
+});
+</script>

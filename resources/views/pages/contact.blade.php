@@ -27,7 +27,7 @@ $page = \App\Models\Page::find(16);
                 <article class="article w-full md:w-4/5">
                     {!! Markdown::parse($page->article) !!}
                 </article>
-                @include('components.sections.call')
+                {{-- @include('components.sections.call') --}}
                 <livewire:contact-form/>
             </div>
             <div class="bg-gray-50">

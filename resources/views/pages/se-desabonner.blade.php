@@ -28,6 +28,7 @@ $page = \App\Models\Page::find(15);
                 </article>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                     <livewire:unsubscribe-form/>
+                    {{--
                     <div class="w-full">
                         <div class="md:flex bg-[#eaece8] rounded-xl p-6 flex-col gap-3 justify-center items-start">
                             <div>
@@ -44,6 +45,7 @@ $page = \App\Models\Page::find(15);
                             </a>
                         </div>
                     </div>
+                    --}}
 
                 </div>
             </div>

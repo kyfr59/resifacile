@@ -28,7 +28,7 @@ $page = \App\Models\Page::find(16);
                     {!! Markdown::parse($page->article) !!}
                 </article>
                 {{-- @include('components.sections.call') --}}
-                <livewire:contact-form/>
+                {{--<livewire:contact-form/>--}}
             </div>
             <div class="bg-gray-50">
                 <div class="max-w-screen-xl mx-auto py-12 md:py-24 px-6 flex justify-between flex-wrap">

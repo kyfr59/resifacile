@@ -16,8 +16,8 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
         <title>{{ $page->seo_title }} - {{ config('app.name') }}</title>
         <meta name="description" content="{{ $page->seo_description }}"/>
         <meta name="robots" content="index, noarchive, nocache, imageindex"/>
-        <link rel="canonical" href="{{ url()->current() }}/">
-        <link rel="alternate" href="{{ url()->current() }}/" hreflang="fr">
+        <link rel="canonical" href="{{ url()->current() }}">
+        <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
         <script type="application/ld+json">
             {
                 "@context": "http://schema.org",

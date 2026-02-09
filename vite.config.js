@@ -3,9 +3,16 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
   server: {
+    watch: {
+      usePolling: true,
+      interval: 100,
+      ignored: ['**/node_modules/**', '**/dist/**'] // ne pas surveiller ces dossiers
+    },
+    host: process.env.DDEV_HOSTNAME,
+    port: 5173,
     hmr: {
       host: process.env.DDEV_HOSTNAME,
-      protocol: 'wss'
+      protocol: 'ws'
     }
   },
   plugins: [

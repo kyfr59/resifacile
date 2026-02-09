@@ -9,17 +9,18 @@
     }
 
     body {
-        @apply bg-[#14142b] text-white;
+        @apply bg-[#1F1F2E] text-[#F5F5F5]; /* fond sombre gris-violet doux, texte clair */
     }
 
     main {
-        @apply bg-white text-[#14142b];
+        @apply bg-[#FAFAFA] text-[#1F1F2E]; /* fond clair pour le contenu, texte sombre */
     }
 }
 
 @layer components {
     .text-gradient {
-        @apply bg-gradient-to-r from-[#fb29cd] to-[#fdc51d] bg-clip-text inline-block text-transparent;
+        @apply bg-gradient-to-r from-[#4FD1C5] to-[#2B6CB0] bg-clip-text inline-block text-transparent;
+        /* dégradé turquoise → bleu, plus doux et élégant */
     }
 }
 
@@ -39,7 +40,7 @@
     float: left;
     height: 0;
     pointer-events: none;
-    @apply text-blue-300;
+    @apply text-[#6B7280]; /* placeholder gris neutre */
 }
 
 /**
@@ -47,24 +48,24 @@
  */
 
 .toggle-checkbox {
-    @apply relative bg-gray-300 rounded-full appearance-none w-12 h-6 cursor-pointer;
+    @apply relative bg-gray-400 rounded-full appearance-none w-12 h-6 cursor-pointer;
 }
 
 .toggle-checkbox-amber {
-    @apply bg-amber-200;
+    @apply bg-amber-300;
 }
 
 .toggle-checkbox::before {
     content: "";
-    @apply absolute left-0 block bg-white border-2 border-gray-300 rounded-full w-6 h-6;
+    @apply absolute left-0 block bg-white border-2 border-gray-400 rounded-full w-6 h-6;
 }
 
 .toggle-checkbox-amber::before {
-    @apply border-amber-200;
+    @apply border-amber-300;
 }
 
 .toggle-checkbox:checked, .toggle-checkbox-amber:checked {
-    @apply bg-blue-700;
+    @apply bg-[#2B6CB0]; /* bleu harmonieux */
 }
 
 .toggle-checkbox:checked::before {
@@ -72,13 +73,13 @@
 }
 
 .article h1 {
-    @apply text-black font-semibold text-3xl pb-4 leading-tight;
+    @apply text-[#1F1F2E] font-semibold text-3xl pb-4 leading-tight;
 }
 
 .article h2 {
     @apply font-semibold text-xl pb-4 leading-tight;
-    color: #12E7F4;
-    background: linear-gradient(90deg, #2F64ED, #12E7F4);
+    color: #0BC5EA; /* turquoise doux */
+    background: linear-gradient(90deg, #38B2AC, #0BC5EA);
     -webkit-text-fill-color: transparent;
     text-fill-color: transparent;
     -webkit-background-clip: text;
@@ -104,7 +105,7 @@ strong {
 }
 
 .article p {
-    @apply pb-4 text-justify;
+    @apply pb-4 text-justify text-[#374151]; /* gris foncé pour confort lecture */
 }
 
 .article ul,
@@ -113,7 +114,7 @@ strong {
 }
 
 .article a {
-    @apply underline text-blue-700;
+    @apply underline text-[#2B6CB0]; /* bleu harmonieux pour liens */
 }
 
 .article ul li {
@@ -122,10 +123,10 @@ strong {
 
 .article ul li::before {
     content: "- ";
-    @apply absolute left-0;
+    @apply absolute left-0 text-[#4A5568]; /* gris doux */
 }
 
 .sav {
-    background: #eef4f4 url('/images/sav.jpg') no-repeat 0 50%;
+    background: #F0FAFA url('/images/sav.jpg') no-repeat 0 50%;
     background-size: contain;
 }

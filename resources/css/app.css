@@ -9,18 +9,17 @@
     }
 
     body {
-        @apply bg-[#1F1F2E] text-[#F5F5F5]; /* fond sombre gris-violet doux, texte clair */
+        @apply bg-[#1F1F2E] text-[#F5F5F5];
     }
 
     main {
-        @apply bg-[#FAFAFA] text-[#1F1F2E]; /* fond clair pour le contenu, texte sombre */
+        @apply bg-[#FAFAFA] text-[#1F1F2E];
     }
 }
 
 @layer components {
     .text-gradient {
-        @apply bg-gradient-to-r from-[#4FD1C5] to-[#2B6CB0] bg-clip-text inline-block text-transparent;
-        /* dégradé turquoise → bleu, plus doux et élégant */
+        @apply bg-gradient-to-r from-[#2fa89c] to-[#2B6CB0] bg-clip-text inline-block text-transparent;
     }
 }
 
@@ -40,7 +39,7 @@
     float: left;
     height: 0;
     pointer-events: none;
-    @apply text-[#6B7280]; /* placeholder gris neutre */
+    @apply text-[#6B7280];
 }
 
 /**
@@ -78,7 +77,7 @@
 
 .article h2 {
     @apply font-semibold text-xl pb-4 leading-tight;
-    color: #0BC5EA; /* turquoise doux */
+    color: #0BC5EA;
     background: linear-gradient(90deg, #38B2AC, #0BC5EA);
     -webkit-text-fill-color: transparent;
     text-fill-color: transparent;
@@ -105,7 +104,7 @@ strong {
 }
 
 .article p {
-    @apply pb-4 text-justify text-[#374151]; /* gris foncé pour confort lecture */
+    @apply pb-4 text-justify text-[#374151];
 }
 
 .article ul,
@@ -114,7 +113,7 @@ strong {
 }
 
 .article a {
-    @apply underline text-[#2B6CB0]; /* bleu harmonieux pour liens */
+    @apply underline text-[#2B6CB0];
 }
 
 .article ul li {
@@ -123,7 +122,7 @@ strong {
 
 .article ul li::before {
     content: "- ";
-    @apply absolute left-0 text-[#4A5568]; /* gris doux */
+    @apply absolute left-0 text-[#4A5568];
 }
 
 .sav {

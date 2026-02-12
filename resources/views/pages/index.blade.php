@@ -175,7 +175,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                 <div class="w-full text-4xl md:text-5xl leading-tight font-semibold">Oubliez la paperasse, <span class="text-gradient inline-block">les files d'attente et le stress</span></div>
                 <div class="flex flex-wrap justify-between items-center py-12">
                     <div class="w-full md:w-1/3 pb-6 md:pb-0">
-                        <img src="{{ asset('/images/arg-1.gif') }}" alt="Une moyenne de 45 min de gagnée">
+                        <img src="{{ asset('/images/arg-1.jpg') }}" alt="Une moyenne de 45 min de gagnée">
                     </div>
                     <div class="w-full md:w-2/3 md:pl-24">
                         <div class="text-xl md:text-2xl text-gray-400 font-semibold">Rapide & efficace</div>
@@ -216,7 +216,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                 </div>
                 <div class="flex flex-wrap justify-between items-center pt-12">
                     <div class="w-full md:w-1/3 pb-6 md:pb-0">
-                        <img src="{{ asset('/images/arg-3.gif') }}" alt="Une moyenne de 45 min de gagnée">
+                        <img src="{{ asset('/images/arg-3.png') }}" alt="Une moyenne de 45 min de gagnée">
                     </div>
                     <div class="w-full md:w-2/3 md:pl-24">
                         <div class="text-xl md:text-2xl text-gray-400 font-semibold">Ecolo & écono</div>

@@ -4,7 +4,7 @@ use Illuminate\Mail\Markdown;
 use function Laravel\Folio\{name};
 name('guides.index');
 
-$guides = \App\Models\Guide::orderByDesc('created_at')->paginate(18);
+$guides = \App\Models\Guide::orderByDesc('created_at')->paginate(36);
 
 ?>
 

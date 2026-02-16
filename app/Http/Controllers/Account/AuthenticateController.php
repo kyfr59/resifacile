@@ -11,8 +11,8 @@ class AuthenticateController extends Controller
 {
     public function __invoke(Request $request)
     {
-        Auth::guard('site')->loginUsingId(83904);
-        return redirect()->route('auth.account');
+        //Auth::guard('site')->loginUsingId(83904);
+        //return redirect()->route('auth.account');
 
         if($request->has('token')) {
             $access = Access::where('token', $request->get('token'))->first();

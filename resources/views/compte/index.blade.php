@@ -1,3 +1,4 @@
+@inject('accounting', 'App\Helpers\Accounting')
 <x-layouts.app>
     <x-slot:head>
         <title>{{ config('app.name') }}</title>

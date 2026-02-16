@@ -15,6 +15,8 @@ use App\Http\Controllers\SaleProcess\ValidationController;
 use App\Http\Controllers\UnsubscribeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Account\PreviewDocumentController;
+use App\Http\Controllers\Account\PreviewInvoiceController;
 
 //include_once __DIR__ . '/test.php';
 
@@ -173,3 +175,20 @@ Route::get('/mon-compte', HomePageController::class)
  */
 Route::webhooks('webhook-hipay', 'hipay');
 Route::webhooks('webhook-mail', 'mail');
+
+/**
+ *  Account Preview
+ */
+Route::get(
+    '/account/preview/invoice/{id}',
+    PreviewInvoiceController::class,
+)
+    ->middleware('auth:site')
+    ->name('frontend.account.preview.invoice');
+
+Route::get(
+    '/account/preview/{id}',
+    PreviewDocumentController::class,
+)
+    ->middleware('auth:site')
+    ->name('frontend.account.preview.document');

@@ -1,4 +1,5 @@
 @inject('accounting', 'App\Helpers\Accounting')
+<script src="https://documentcloud.adobe.com/view-sdk/viewer.js"></script>
 <x-layouts.app>
     <x-slot:head>
         <title>{{ config('app.name') }}</title>

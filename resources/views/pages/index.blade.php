@@ -398,7 +398,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                 </div>
                 <a href="{{ route('pages.categories') }}" class="w-full text-center md:text-left inline-block text-blue-700 hover:text-blue-500 font-semibold pt-6">Voir toutes les catégories</a>
             </div>
-            <div class="pt-6 md:pt-12">
+            <div>
                 <div class="text-center md:text-left text-gray-400 md:text-xl leading-tight font-semibold pb-2">
                     Les <span class="text-gradient">types</span> de lettres de résiliations
                 </div>
@@ -407,7 +407,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                 </div>
                 <div class="grid grid-cols-1 divide-gray-200 divide-y">
                     @foreach($models as $model)
-                        <a href="" class="hover:bg-gray-50 hover:text-blue-700 py-2 flex justify-between w-full items-center">
+                        <a href="{{ url('lettre-resiliation/' .$model->slug) }}" class="hover:bg-gray-50 hover:text-blue-700 py-2 flex justify-between w-full items-center">
                             {{ $model->name }}
                             <svg class="flex-none fill-blue-700" width="12" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.62 1.23a1.177 1.177 0 00-.89-.392c-.706 0-1.274.6-1.274 1.362 0 .381.15.728.397.993l7.497 7.898-7.497 7.874a1.475 1.475 0 00-.397.993c0 .762.568 1.363 1.275 1.363.353 0 .653-.139.889-.393l8.333-8.775c.3-.3.439-.67.45-1.074 0-.404-.15-.75-.45-1.062L2.62 1.23z"/></svg>
                         </a>

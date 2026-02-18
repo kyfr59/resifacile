@@ -3,4 +3,4 @@ Disallow: /assets/*
 Disallow: /css/*
 Disallow: /vendor/*
 Disallow: /js/*
-Sitemap: https://www.stop-contrat.com/sitemap.xml
+Sitemap: https://www.resifacile.fr/sitemap_index.xml

@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+  # Redirige vers le site lorsqu'on appelle l'URL du cluster
+  RewriteCond %{HTTP_HOST} ^resifaq\.cluster100\.hosting\.ovh\.net$ [NC]
+  RewriteRule ^(.*)$ https://resifacile.fr/$1 [R=301,L]
+</IfModule>

@@ -139,12 +139,6 @@ class HandleCaptured implements ShouldQueue
             $bodyInline = $cssInliner->convert($body);
             $bodyInline = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', '', $bodyInline);
 
-            Http::post('https://quidsante.com/blog/index.php?rest_route=/relay/v1/send-mail', [
-                'to' => 'jeremy@kolibri-network.com',
-                'subject' => 'Test depuis Laravel en prod',
-                'body' => $bodyInline
-            ]);
-
             Mail::to($transaction->transactionable->customer->email)->send(
                 new InvoiceCreated(transaction: $transaction)
             );

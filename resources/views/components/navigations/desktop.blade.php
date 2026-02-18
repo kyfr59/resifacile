@@ -1,6 +1,6 @@
 <div class="mx-auto max-w-screen-xl px-6 h-16 md:h-24 flex items-center justify-between">
     <a href="{{ route('pages.index') }}">
-       <img src="{{ asset('images/logo-header.jpg') }}" class="pt-5" width="225" height="71" alt="{{ config('app.name') }}">
+       <img src="{{ asset('images/logo-header.png') }}" class="pt-5" width="225" height="71" alt="{{ config('app.name') }}">
     </a>
     <button
         class="block md:hidden w-6 h-8 text-gray-800"

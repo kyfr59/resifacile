@@ -72,7 +72,9 @@
         <div class="mt-6 md:mt-12 p-6 text-white text-center w-full bg-red-500 rounded-lg">Nous avons observé des erreurs ou des oublis dans les informations fournies ci-dessus, veuillez vérifier vos informations.</div>
     @endif
 
-    <div id="form-message" class="hidden mt-6 md:mt-12 p-6 text-white text-center w-full bg-red-500 rounded-lg">Notre service est temporairement suspendu, veuillez nous en excuser.<br />L'équipe Resifacile.fr</div>
+    @if(config('app.env') === 'production')
+        <div id="form-message" class="hidden mt-6 md:mt-12 p-6 text-white text-center w-full bg-red-500 rounded-lg">Notre service est temporairement suspendu, veuillez nous en excuser.<br />L'équipe Resifacile.fr</div>
+    @endif
 
 </form>
 

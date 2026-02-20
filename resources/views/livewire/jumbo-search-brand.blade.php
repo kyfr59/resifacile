@@ -22,8 +22,12 @@
         </div>
     </div>
     @teleport('body')
-        <div x-show="$wire.get('openSearchBox')" class="text-[#14142b] p-6 fixed flex justify-center items-center inset-0 backdrop-blur-md bg-gray-400/20 z-50">
-            <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-screen-md overflow-hidden">
+        <div
+            x-show="$wire.get('openSearchBox')"
+            x-on:click="$wire.set('openSearchBox', false)"
+            class="text-[#14142b] p-6 fixed flex justify-center items-center inset-0 backdrop-blur-md bg-gray-400/20 z-50"
+        >
+            <div @click.stop class="relative bg-white rounded-2xl shadow-2xl w-full max-w-screen-md overflow-hidden">
                 <div class="p-3 flex items-center border-b border-gray-300 overflow-hidden h-14">
                     <svg class="w-6 h-6 flex-none" viewBox="0 0 19 21" fill="none">
                         <path class="stroke-gray-400" d="M14.9747 8C14.9747 11.8675 11.8449 15 7.98737 15C4.12984 15 1 11.8675 1 8C1 4.13252 4.12984 1 7.98737 1C11.8449 1 14.9747 4.13252 14.9747 8Z" stroke-width="2"/>

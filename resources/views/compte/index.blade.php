@@ -51,7 +51,7 @@
                         <div class="grid grid-cols-1">
                             <div x-show="tab === 'mes-cordonnees'" x-cloak class="flex flex-col gap-y-6">
                                 <livewire:change-profile-information-from/>
-                                <livewire:delete-account-from/>
+                                <livewire:delete-account />
                             </div>
                             <div x-show="tab === 'mes-courriers'" x-cloak>
                                 @unless(auth()->guard('site')->user()->orders)

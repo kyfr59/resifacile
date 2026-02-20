@@ -13,10 +13,10 @@
                     type="text"
                     placeholder="raison sociale"
                     id="compagny"
-                    wire:model="customer.compagny"
+                    wire:model="compagny"
                     class="w-full border px-3 rounded-[7px] outline-none h-14 md:h-10 placeholder:text-blue-300 border-blue-300 @error('customer.compagny') outline outline-offset-2 outline-4 outline-red-100 @enderror"
                 />
-                @error('customer.compagny')
+                @error('compagny')
                     <div class="text-sm text-red-500 pt-1">{{ $message }}</div>
                 @enderror
             </div>
@@ -30,10 +30,10 @@
                 type="text"
                 placeholder="prénom"
                 id="first_name"
-                wire:model="customer.first_name"
+                wire:model="first_name"
                 class="w-full border px-3 rounded-[7px] outline-none h-14 md:h-10 placeholder:text-blue-300 border-blue-300 @error('customer.first_name') outline outline-offset-2 outline-4 outline-red-100 @enderror"
             />
-            @error('customer.first_name')
+            @error('first_name')
                 <div class="text-sm text-red-500 pt-1">{{ $message }}</div>
             @enderror
         </div>
@@ -46,10 +46,10 @@
                 type="text"
                 placeholder="nom"
                 id="last_name"
-                wire:model="customer.last_name"
+                wire:model="last_name"
                 class="w-full border px-3 rounded-[7px] outline-none h-14 md:h-10 placeholder:text-blue-300 border-blue-300 @error('customer.last_name') outline outline-offset-2 outline-4 outline-red-100 @enderror"
             />
-            @error('customer.last_name')
+            @error('last_name')
                 <div class="text-sm text-red-500 pt-1">{{ $message }}</div>
             @enderror
         </div>
@@ -62,10 +62,10 @@
                 type="email"
                 placeholder="email"
                 id="email"
-                wire:model="customer.email"
+                wire:model="email"
                 class="w-full border px-3 rounded-[7px] outline-none h-14 md:h-10 placeholder:text-blue-300 border-blue-300 @error('customer.email') outline outline-offset-2 outline-4 outline-red-100 @enderror"
             />
-            @error('customer.email')
+            @error('email')
                 <div class="text-sm text-red-500 pt-1">{{ $message }}</div>
             @enderror
         </div>
@@ -78,10 +78,10 @@
                 type="phone"
                 placeholder="téléphone"
                 id="phone"
-                wire:model="customer.phone"
+                wire:model="phone"
                 class="w-full border px-3 rounded-[7px] outline-none h-14 md:h-10 placeholder:text-blue-300 @error('customer.phone') border-red-500 @else border-blue-300 @enderror"
             />
-            @error('customer.phone')
+            @error('phone')
             <div class="text-xs text-red-500 pt-1">{{ $message }}</div>
             @enderror
         </div>

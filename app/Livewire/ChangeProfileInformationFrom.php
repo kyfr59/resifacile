@@ -9,26 +9,32 @@ use Livewire\Component;
 
 class ChangeProfileInformationFrom extends Component
 {
+    public $first_name;
+    public $last_name;
+    public $email;
+    public $phone;
+    public $compagny;
+
     public Customer $customer;
 
     protected $validationAttributes = [
-        'customer.first_name' => 'prénom',
-        'customer.last_name' => 'nom',
-        'customer.compagny' => 'raison social',
-        'customer.phone' => 'Téléphone',
+        'first_name' => 'prénom',
+        'last_name' => 'nom',
+        'compagny' => 'raison social',
+        'phone' => 'Téléphone',
     ];
 
     protected function rules(): array
     {
         $rules = [
-            'customer.first_name' => 'required|max:19',
-            'customer.last_name' => 'required|max:19',
-            'customer.email' => 'required|email',
-            'customer.phone' => '',
+            'first_name' => 'required|max:19',
+            'last_name'  => 'required|max:19',
+            'email'      => 'required|email',
+            'phone'      => '',
         ];
 
         if ($this->customer->is_professional) {
-            $rules['customer.compagny'] = 'required|string|max:38';
+            $rules['compagny'] = 'required|string|max:38';
         }
 
         return $rules;
@@ -37,20 +43,29 @@ class ChangeProfileInformationFrom extends Component
     public function mount(): void
     {
         $this->customer = Auth::guard('site')->user();
+        if (! $this->customer) {
+            abort(403, 'Utilisateur non connecté.');
+        }
+
+        $this->first_name = $this->customer->first_name;
+        $this->last_name = $this->customer->last_name;
+        $this->email = $this->customer->email;
+        $this->phone = $this->customer->phone;
+        $this->compagny = $this->customer->compagny;
     }
 
     public function save(): void
     {
         $this->validate();
+
+        $this->customer->first_name = $this->first_name;
+        $this->customer->last_name  = $this->last_name;
+        $this->customer->email      = $this->email;
+        $this->customer->phone      = $this->phone;
+        $this->customer->compagny   = $this->compagny;
         $this->customer->save();
 
-        //Auth::guard('site')->user()->email = $this->customer->email;
-        //Auth::guard('site')->user()->first_name = $this->customer->first_name;
-        //Auth::guard('site')->user()->last_name = $this->customer->last_name;
-        //Auth::guard('site')->user()->save();
-        Auth::guard('site')->user()->refresh();
-
-        session()->flash('message', 'Votre profile à bien été mis à jour !');
+        session()->flash('message', 'Votre profil a bien été mis à jour !');
     }
 
     public function render(): View

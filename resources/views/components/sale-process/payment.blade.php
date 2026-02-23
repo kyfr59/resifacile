@@ -27,7 +27,7 @@
                         <div class="hostedfield relative z-10 h-[40px] px-5 bg-transparent outline-none w-full border-2 rounded-xl border-gray-200" id="hipay-cvc"></div>
                     </div>
                 </div>
-                <div class="text-[0.7rem] text-center md:text-left">En fournissant vos informations de carte bancaire, vous autorisez Media Group SAS à débiter votre carte pour les paiements futurs conformément à ses conditions.</div>
+                <div class="text-[0.7rem] text-center md:text-left">En fournissant vos informations de carte bancaire, vous autorisez Kolibri Network SARL à débiter votre carte pour les paiements futurs conformément à ses conditions.</div>
             </div>
         @elseif($paymentHandle === 'stripe')
             <div id="payment-element" class="col-span-4" wire:ignore></div>

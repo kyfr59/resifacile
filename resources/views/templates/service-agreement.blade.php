@@ -61,7 +61,7 @@
             <table style="width: 100%; font-family: sans-serif; font-size: 12px;" cellspacing="10">
                 <tr>
                     <td style="width:50%;text-align: left;">Conditions générales de vente</td>
-                    <td style="width:50%;text-align: right;">{{ $activities[0]->causer->name }} — {{ $activities[0]->causer->email }} — IP : {{ $activities[0]->properties['ip'] }}</td>
+                    {{-- <td style="width:50%;text-align: right;">{{ $activities[0]->causer->name }} — {{ $activities[0]->causer->email }} — IP : {{ $activities[0]->properties['ip'] }}</td>--}}
                 </tr>
             </table>
         </header>

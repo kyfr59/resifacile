@@ -5,8 +5,11 @@
     <input type="hidden" name="status" value="118" />
     <input type="hidden" name="transaction_reference" value="TX123456" />
     <input type="hidden" name="mid" value="MERCHANT123" />
-    <input type="hidden" name="custom_data[is_subscription_transaction]" value="" />
+    <input type="hidden" name="custom_data[has_subscription]" value="1" />
+    <input type="hidden" name="custom_data[subscription_id]" value="1" />
+    <input type="hidden" name="custom_data[is_subscription_transaction]" value="1" />
     <input type="hidden" name="custom_data[order_id]" value="{{ $order->id }}" />
+    <input type="hidden" name="custom_data[customer_id]" value="{{ $order->customer_id }}" />
     <input
         type="hidden"
         name="authorized_amount"

@@ -62,6 +62,7 @@ class HandleCaptured implements ShouldQueue
             $transactionable->current_period_end_at = now()->addMonth();
             $transactionable->save();
             $invoiceType = InvoiceType::SUBSCRIPTION;
+
         } else {
             $transactionable = Order::find($transactionData['custom_data']['order_id']);
             $type = 'App\Models\Order';
@@ -93,7 +94,9 @@ class HandleCaptured implements ShouldQueue
         if(!$transactionData['custom_data']['is_subscription_transaction']) {
             $document = null;
 
-            if(!empty($transactionData['custom_data']['has_subscription'])) {
+            if($transactionData['custom_data']['has_subscription']) {
+
+                /*
                 (new MakeNewPaymentMethod($transactionable->customer))(
                     $transactionData['payment_method']['card_id'],
                     [
@@ -112,6 +115,7 @@ class HandleCaptured implements ShouldQueue
                         '3ds_xid' => array_key_exists('three_d_secure', $transactionData) ? $transactionData['three_d_secure']['xid'] : null,
                     ]
                 );
+                */
 
                 (new CreateSubscriptionAction)(new SubscriptionData(
                     designation: $subscriptionSettings->label,

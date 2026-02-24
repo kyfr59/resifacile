@@ -12,7 +12,11 @@
         </button>
     </div>
     @teleport('body')
-        <div x-show="$wire.get('openSearchBox')" class="text-[#14142b] p-6 fixed flex justify-center items-center inset-0 backdrop-blur-md bg-gray-400/20 z-50">
+        <div
+            x-show="$wire.get('openSearchBox')"
+            x-on:click="$wire.set('openSearchBox', false)"
+            class="text-[#14142b] p-6 fixed flex justify-center items-center inset-0 backdrop-blur-md bg-gray-400/20 z-50"
+        >
             <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-screen-md overflow-hidden">
                 <div class="p-3 flex items-center border-b border-gray-300 overflow-hidden h-14">
                     <svg class="w-6 h-6 flex-none" viewBox="0 0 19 21" fill="none">

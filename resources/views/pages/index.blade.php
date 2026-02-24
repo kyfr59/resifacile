@@ -126,7 +126,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
         </script>
     </x-slot:head>
 
-    <div class="bg-none md:bg-[url('/images/accueil.jpg')] md:bg-right-top md:bg-[length:500px_501px] md:bg-no-repeat">
+    <div class="bg-none md:bg-[url('/public/images/accueil.jpg')] md:bg-right-top md:bg-[length:500px_501px] md:bg-no-repeat">
         <livewire:jumbo-search-brand/>
         <div class="bg-gray-50">
             <div class="container mx-auto max-w-screen-lg py-12 md:py-24 px-6">

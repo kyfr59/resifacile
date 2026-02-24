@@ -23,10 +23,6 @@
     "file": "assets/montserrat-vietnamese-wght-normal.woff2",
     "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-vietnamese-wght-normal.woff2"
   },
-  "public/images/accueil.jpg": {
-    "file": "assets/accueil.jpg",
-    "src": "public/images/accueil.jpg"
-  },
   "resources/css/app.css": {
     "file": "assets/app.css",
     "isEntry": true,

@@ -31,10 +31,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(Cart::class, fn() => new CartService());
         $this->app->singleton(Pdf::class, fn() => new DomPdfService());
-        $this->app->singleton(PostLetter::class, fn() => new MailevaService(
-            login: config('maileva.login'),
-            password: config('maileva.password'),
-        ));
+        $this->app->singleton(PostLetter::class, MailevaService::class);
 
         Blade::if('access', static fn(AppType $appType) => config('site.type') === $appType->value);
 

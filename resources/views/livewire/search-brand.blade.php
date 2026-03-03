@@ -23,7 +23,7 @@
                         <path class="stroke-gray-400" d="M14.9747 8C14.9747 11.8675 11.8449 15 7.98737 15C4.12984 15 1 11.8675 1 8C1 4.13252 4.12984 1 7.98737 1C11.8449 1 14.9747 4.13252 14.9747 8Z" stroke-width="2"/>
                         <line class="stroke-gray-400" x1="1" y1="-1" x2="8.21335" y2="-1" transform="matrix(0.650195 0.759767 -0.758746 0.651387 10.9827 14)" stroke-width="2" stroke-linecap="round"/>
                     </svg>
-                    <input wire:model.live.debounce.250ms="search" type="text" autocomplete="off" class="flex-1 outline-none h-14 px-3" placeholder="Indiquez la marque à résilier"/>
+                    <input x-on:click.stop wire:model.live.debounce.250ms="search" type="text" autocomplete="off" class="flex-1 outline-none h-14 px-3" placeholder="Indiquez la marque à résilier"/>
                 </div>
                 <div class="max-h-96 overflow-x-scroll pb-14">
                     <div class="pt-6 pb-3 px-6 font-semibold border-b border-gray-100">Les plus recherchés</div>

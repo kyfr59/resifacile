@@ -10,17 +10,17 @@ class MailevaSettings extends Settings
 
     public string $name;
 
-    public int $campaign_number;
+    public int $sending_number;
 
-    public string $media_type;
+    public ?string $media_type = null;
 
-    public string $campaign_prefix;
+    public ?string $sending_prefix = null;
 
-    public string $mention_one;
+    public ?string $mention_one = null;
 
-    public string $mention_two;
+    public ?string $mention_two = null;
 
-    public string $mention_three;
+    public ?string $mention_three = null;
 
     public static function group(): string
     {

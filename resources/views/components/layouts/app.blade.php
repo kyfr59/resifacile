@@ -29,7 +29,7 @@
         @endif
     </head>
     <body x-data="{showMenu: false}">
-        <div class="sticky top-0 z-50 bg-blue-600 text-white text-center py-2 px-4">
+        <div class="sticky top-0 z-50 {{ app()->environment('staging') ? 'bg-red-600' : 'bg-blue-600' }} text-white text-center py-2 px-4">
             Site en maintenance. Disponible en consultation uniquement : l’envoi et le service de courrier sont momentanément indisponibles.
         </div>
         @if(request()->session()->has('error'))

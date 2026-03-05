@@ -9,8 +9,11 @@ use App\Enums\AppType;
 use App\Services\CartService;
 use App\Services\DomPdfService;
 use App\Services\MailevaService;
+use App\Services\MailevaAuthService;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use App\Settings\MailevaSettings;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +34,14 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(Cart::class, fn() => new CartService());
         $this->app->singleton(Pdf::class, fn() => new DomPdfService());
-        $this->app->singleton(PostLetter::class, MailevaService::class);
+        $this->app->singleton(PostLetter::class, function () {
+            return new MailevaService(
+                login: config('maileva.username'),
+                password: config('maileva.password'),
+                auth: app(MailevaAuthService::class),
+                mailevaSettings: app(MailevaSettings::class),
+            );
+        });
 
         Blade::if('access', static fn(AppType $appType) => config('site.type') === $appType->value);
 

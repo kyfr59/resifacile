@@ -28,6 +28,17 @@ class Sending extends Model
         'delivered_at' => 'datetime',
     ];
 
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);

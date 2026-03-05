@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Actions\AddRequestToCampaign;
+use App\Actions\AddRequestToSending;
 use App\Casts\OptionsConvertor;
 use App\Casts\PriceConvertor;
 use App\Contracts\PostLetter;
@@ -63,6 +63,11 @@ class Order extends Model
         return $this->hasOne(Campaign::class);
     }
 
+    public function sending(): HasOne
+    {
+        return $this->hasOne(Sending::class);
+    }
+
     public function transactions(): MorphMany
     {
         return $this->morphMany(Transaction::class, 'transactionable');
@@ -76,47 +81,46 @@ class Order extends Model
     protected static function booted(): void
     {
         static::updated(function (Order $order) {
-            if($order->status === OrderStatus::PAID) {
-                (new AddRequestToCampaign())->handle(
-                    requestData: (App::make(PostLetter::class))->newRequest(
-                        trackId: 'CUS_' . $order->customer->id . '_' . now()->timestamp,
-                        postageType: $order->postage,
-                        recipients: AddressData::collection($order->details->recipients)->each(static function($address) {
-                            if ($address->type === AddressType::PROFESSIONAL) {
-                                $address->first_name = null;
-                                $address->last_name = null;
-                            } else {
-                                $address->compagny = null;
-                            }
-                        }),
-                        senders: AddressData::collection($order->details->senders)->each(static function($address) {
-                            if ($address->type === AddressType::PROFESSIONAL) {
-                                $address->first_name = null;
-                                $address->last_name = null;
-                            } else {
-                                $address->compagny = null;
-                            }
-                        }),
-                        documents: DocumentData::collection(collect($order->details->documents)->map(fn ($document) => new DocumentData(
-                            file_name: $document->file_name,
-                            readable_file_name: $document->readable_file_name,
-                            path: $document->path,
-                            size: $document->size,
-                            type: match($document->type) {
-                                DocumentType::HANDWRITE->value => DocumentType::HANDWRITE,
-                                DocumentType::TEMPLATE->value => DocumentType::TEMPLATE,
-                                DocumentType::PDF->value => DocumentType::PDF,
-                                DocumentType::WORD->value => DocumentType::WORD,
-                                DocumentType::JPG->value => DocumentType::JPG,
-                                DocumentType::TXT->value => DocumentType::TXT,
-                            },
-                            number_of_pages: $document->number_of_pages,
-                        ))),
-                        options: OptionData::collection($order->options),
+
+            (new AddRequestToSending())->handle(
+                requestData: (App::make(PostLetter::class))->newRequest(
+                    trackId: 'CUS_' . $order->customer->id . '_' . now()->timestamp,
+                    postageType: $order->postage,
+                    recipients: AddressData::collection($order->details->recipients)->each(static function($address) {
+                        if ($address->type === AddressType::PROFESSIONAL) {
+                            $address->first_name = null;
+                            $address->last_name = null;
+                        } else {
+                            $address->compagny = null;
+                        }
+                    }),
+                    senders: AddressData::collection($order->details->senders)->each(static function($address) {
+                        if ($address->type === AddressType::PROFESSIONAL) {
+                            $address->first_name = null;
+                            $address->last_name = null;
+                        } else {
+                            $address->compagny = null;
+                        }
+                    }),
+                    documents: DocumentData::collection(collect($order->details->documents)->map(fn ($document) => new DocumentData(
+                        file_name: $document->file_name,
+                        readable_file_name: $document->readable_file_name,
+                        path: $document->path,
+                        size: $document->size,
+                        type: match($document->type) {
+                            DocumentType::HANDWRITE->value => DocumentType::HANDWRITE,
+                            DocumentType::TEMPLATE->value => DocumentType::TEMPLATE,
+                            DocumentType::PDF->value => DocumentType::PDF,
+                            DocumentType::WORD->value => DocumentType::WORD,
+                            DocumentType::JPG->value => DocumentType::JPG,
+                            DocumentType::TXT->value => DocumentType::TXT,
+                        },
+                        number_of_pages: $document->number_of_pages,
+                    ))),
+                    options: OptionData::collection($order->options),
                     ),
-                    order: $order,
-                );
-            }
+                order: $order,
+            );
         });
     }
 }

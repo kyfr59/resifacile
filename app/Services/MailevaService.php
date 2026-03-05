@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Actions\GetAllDocumentsFromCampaign;
-use App\Actions\MakeCouFromCampaign;
+// use App\Actions\GetAllDocumentsFromCampaign;
+// use App\Actions\MakeCouFromCampaign;
 use App\Contracts\PostLetter;
 use App\DataTransferObjects\PostLetter\AddressLinesData;
-use App\DataTransferObjects\PostLetter\CampaignData;
+use App\DataTransferObjects\PostLetter\SendingData;
 use App\DataTransferObjects\PostLetter\ContentData;
 use App\DataTransferObjects\PostLetter\DocumentData as PostLetterDocumentData;
 use App\DataTransferObjects\PostLetter\DocumentOptionPaperData;
@@ -43,6 +43,9 @@ use phpseclib3\Net\SFTP;
 use Spatie\ArrayToXml\ArrayToXml;
 use Spatie\LaravelData\DataCollection;
 use ZipArchive;
+use App\Services\MailevaAuthService;
+use Illuminate\Support\Facades\Http;
+use setasign\Fpdi\Fpdi;
 
 class MailevaService implements PostLetter
 {
@@ -54,16 +57,19 @@ class MailevaService implements PostLetter
     public function __construct(
         private readonly string $login,
         private readonly string $password,
+        private MailevaAuthService $auth,
+        protected MailevaSettings $mailevaSettings
     ) {}
 
     /**
      * @return CampaignData
      */
+    /*
     public function newCampaign(): CampaignData
     {
         $mailevaSettings = App::make(MailevaSettings::class);
 
-        ++$mailevaSettings->campaign_number;
+        ++$mailevaSettings->sending_number;
 
         $campaign = new CampaignData(
             user: new UserData(
@@ -75,12 +81,35 @@ class MailevaService implements PostLetter
             version: $mailevaSettings->version,
             partner_track_id: config('maileva.partner_track_id'),
             name: $mailevaSettings->name,
-            track_id: Accounting::makeNumber($mailevaSettings->campaign_prefix, $mailevaSettings->campaign_number),
+            track_id: Accounting::makeNumber($mailevaSettings->campaign_prefix, $mailevaSettings->sending_number),
         );
 
         $mailevaSettings->save();
 
         return $campaign;
+    }
+        */
+
+    public function newSending(): SendingData
+    {
+        $mailevaSettings = $this->mailevaSettings;
+        ++$mailevaSettings->sending_number;
+
+        $sending = new SendingData(
+            user: new UserData(
+                auth_type: 'PLAINTEXT',
+                login: $this->login,
+                password: $this->password,
+            ),
+            requests: RequestData::collection([]),
+            version: $mailevaSettings->version,
+            name: $mailevaSettings->name,
+            track_id: Accounting::makeNumber($mailevaSettings->sending_prefix, $mailevaSettings->sending_number),
+        );
+
+        $mailevaSettings->save();
+
+        return $sending;
     }
 
     /**
@@ -253,15 +282,18 @@ class MailevaService implements PostLetter
     }
 
     /**
-     * @param CampaignData $campaign
+     * @param SendingData $sending
      * @return void
      */
-    public function pushCampaign(CampaignData $campaign): void
+    public function pushSending(SendingData $sending): void
     {
+        $token = $this->auth->getAccessToken();
+        dd("pushSending");
+
+        /*
         $campaignName = $campaign->track_id;
         $path = 'campaigns/executed/' . $campaignName;
         $pathZip = storage_path('app/executed/' . $campaignName . '.zcou.tmp');
-
         Storage::makeDirectory($path);
 
         try {
@@ -273,43 +305,70 @@ class MailevaService implements PostLetter
                 $realPath = $documents[$i]->content->uri;
                 $name = $campaignName . '.' . str_pad($i + 1, 3, '0', STR_PAD_LEFT);
                 $translateDocuments[$realPath] = $name;
+                $executedName = $path . DIRECTORY_SEPARATOR .$name.'.pdf';
 
                 Storage::copy(
                     $realPath,
-                    $path . DIRECTORY_SEPARATOR .$name,
+                    $executedName,
+                );
+
+                $fullPath = Storage::path($executedName);
+                $token = $this->auth->getAccessToken();
+
+                $id = (string) \Illuminate\Support\Str::uuid();
+                $path = $executedName; // ton chemin relatif storage
+                $fullPath = Storage::path($path);
+                $size = Storage::size($path);
+                $mimeType = Storage::mimeType($path);
+                $pdf = new Fpdi();
+                $pageCount = $pdf->setSourceFile($fullPath);
+                $sheetsCount = (int) ceil($pageCount / 2);
+
+                $documentPayload = [
+                    'id' => (string) Str::uuid(),
+                    'type' => $mimeType, // application/pdf
+                    'pages_count' => $pageCount,
+                    'sheets_count' => $sheetsCount,
+                    'size' => $size,
+                    'converted_size' => $size, // ou valeur retournée par API si conversion
+                ];
+
+
+                $url = 'https://api.sandbox.maileva.net/mail/v2/sendings/eb987f58-696d-47fd-bf16-a5fc5c4838f2/documents';
+
+                $response = Http::withToken($token)
+                    ->acceptJson()
+                    ->attach(
+                        'document',
+                        fopen($fullPath, 'r'),
+                        basename($fullPath)
+                    )
+                    ->attach(
+                        'metadata',
+                        json_encode([
+                            'priority' => 3,
+                            'name' => basename($fullPath),
+                            'shrink' => true,
+                        ]),
+                        'metadata.json'
+                    )
+                    ->post($url);
+
+                    dd($response->headers());
+
+            if (!$response->successful()) {
+                throw new \Exception(
+                    'Erreur API Maileva: ' .
+                    $response->status() . ' - ' .
+                    $response->body()
                 );
             }
+            Log::info('Maileva campaign envoyée', [
+                'track_id' => $campaignName,
+                'response' => $response->json()
+            ]);
+        }
 
-            $xml = $this->xml($campaign->toArray(), $translateDocuments);
-            $dom = new DOMDocument('1.0', 'UTF-8');
-
-            $dom->loadXML($xml);
-
-            $dom->schemaValidate(base_path('XSD/MailevaPJS.xsd'));
-
-            Storage::put($path . DIRECTORY_SEPARATOR . $campaignName . '.pjs', $dom->saveXML());
-
-            $zip = new ZipArchive();
-            $zip->open($pathZip, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-            foreach (Storage::files($path) as $file) {
-                $zip->addFromString(last(explode('/', $file)), Storage::get($file));
-            }
-
-            $zip->close();
-
-            $sftp = new SFTP(
-                config('filesystems.disks.sftp.host'),
-                config('filesystems.disks.sftp.port'),
-                10
-            );
-
-            $sftp->login(config('filesystems.disks.sftp.username'), config('filesystems.disks.sftp.password'));
-
-            $sftp->put($campaignName . '.zcou.tmp', Storage::disk('local')->get('executed/' . $campaignName . '.zcou.tmp'));
-            $sftp->rename($campaignName . '.zcou.tmp', $campaignName . '.zcou');
-
-            $sftp->disconnect();
         } catch (Exception $e) {
             if(Storage::directories($path)) {
                 Storage::deleteDirectory($path);
@@ -321,146 +380,6 @@ class MailevaService implements PostLetter
 
             Log::error($e);
         }
-    }
-
-    /**
-     * @param array $campaign
-     * @param array $translateDocuments
-     * @return string
-     */
-    private function xml(array $campaign, array $translateDocuments): string
-    {
-        return ArrayToXml::convert(
-            array: [
-                '__custom:pjs\\:User' => [
-                    '_attributes' => [
-                        'AuthType' => $campaign['user']['auth_type'],
-                    ],
-                    '__custom:pjs\\:Login' => $campaign['user']['login'],
-                    '__custom:pjs\\:Password' => $campaign['user']['password'],
-                ],
-                '__custom:pjs\\:Requests' => [
-                    '__custom:pjs\\:Request' => Arr::map($campaign['requests'], static fn ($request) => [
-                        '_attributes' => [
-                            'TrackId' => $request['track_id'],
-                            'MediaType' => $request['media_type'],
-                        ],
-                        '__custom:pjs\\:Recipients' => [
-                            '__custom:pjs\\:Internal' => [
-                                '__custom:pjs\\:Recipient' => Arr::map($request['recipients'], static fn ($recipient) => [
-                                    '_attributes' => [
-                                        'Id' => $recipient['id'],
-                                    ],
-                                    '__custom:com\\:PaperAddress' => [
-                                        '__custom:com\\:AddressLines' => Arr::whereNotNull([
-                                            '__custom:com\\:AddressLine1' => $recipient['paper_address']['address_lines']['address_line_1'],
-                                            '__custom:com\\:AddressLine2' => $recipient['paper_address']['address_lines']['address_line_2'],
-                                            '__custom:com\\:AddressLine3' => $recipient['paper_address']['address_lines']['address_line_3'],
-                                            '__custom:com\\:AddressLine4' => $recipient['paper_address']['address_lines']['address_line_4'],
-                                            '__custom:com\\:AddressLine5' => $recipient['paper_address']['address_lines']['address_line_5'],
-                                            '__custom:com\\:AddressLine6' => $recipient['paper_address']['address_lines']['address_line_6'],
-                                        ]),
-                                        '__custom:com\\:Country' => $recipient['paper_address']['country'],
-                                        '__custom:com\\:CountryCode' => $recipient['paper_address']['country_code']
-                                    ],
-                                ]),
-                            ]
-                        ],
-                        '__custom:pjs\\:Senders' => [
-                            '__custom:pjs\\:Sender' => Arr::map($request['senders'], static fn ($sender) => [
-                                '_attributes' => [
-                                    'Id' => $sender['id'],
-                                ],
-                                '__custom:com\\:PaperAddress' => [
-                                    '__custom:com\\:AddressLines' => Arr::whereNotNull([
-                                        '__custom:com\\:AddressLine1' => $sender['paper_address']['address_lines']['address_line_1'],
-                                        '__custom:com\\:AddressLine2' => $sender['paper_address']['address_lines']['address_line_2'],
-                                        '__custom:com\\:AddressLine3' => $sender['paper_address']['address_lines']['address_line_3'],
-                                        '__custom:com\\:AddressLine4' => $sender['paper_address']['address_lines']['address_line_4'],
-                                        '__custom:com\\:AddressLine5' => $sender['paper_address']['address_lines']['address_line_5'],
-                                        '__custom:com\\:AddressLine6' => $sender['paper_address']['address_lines']['address_line_6'],
-                                    ]),
-                                    '__custom:com\\:Country' => $sender['paper_address']['country'],
-                                    '__custom:com\\:CountryCode' => $sender['paper_address']['country_code']
-                                ],
-                            ]),
-                        ],
-                        '__custom:pjs\\:DocumentData' => [
-                            '__custom:pjs\\:Documents' => [
-                                '__custom:pjs\\:Document' => Arr::map($request['documentData'], static fn ($document) => [
-                                    '_attributes' => [
-                                        'Id' => substr($document['id'], 0, 15),
-                                    ],
-                                    '__custom:com\\:Shrink' => (int)$document['shrink'],
-                                    '__custom:com\\:Content' => [
-                                        '__custom:com\\:Uri' => $translateDocuments[$document['content']['uri']]
-                                    ]
-                                ]),
-                            ],
-                        ],
-                        '__custom:pjs\\:Options' => [
-                            '__custom:pjs\\:RequestOption' => Arr::map($request['options'], static fn ($option) => [
-                                '__custom:spec\\:PaperOption' => [
-                                    '__custom:spec\\:FoldOption' => [
-                                        '__custom:spec\\:DocumentOption' => [
-                                            '__custom:spec\\:PrintDuplex' => (int)$option['request_option']['fold_option']['document_option']['print_duplex'],
-                                        ],
-                                        '__custom:spec\\:PostageClass' => $option['request_option']['fold_option']['postage_class'],
-                                        '__custom:spec\\:FoldPrintColor' => (int)$option['request_option']['fold_option']['fold_print_color'],
-                                        '__custom:spec\\:PrintSenderAddress' => (int)$option['request_option']['fold_option']['print_sender_address'],
-                                        '__custom:spec\\:UseFlyLeaf' => (int)$option['request_option']['fold_option']['use_fly_leaf'],
-                                    ],
-                                ],
-                            ]),
-                        ],
-                        '__custom:pjs\\:Folds' => [
-                            '__custom:pjs\\:Fold' => Arr::map($request['folds'], static fn ($fold) => [
-                                '_attributes' => [
-                                    'Id' => $fold['id'],
-                                    'TrackId' => $fold['track_id']
-                                ],
-                                '__custom:pjs\\:RecipientId' => $fold['recipient_id'],
-                                '__custom:pjs\\:SenderId' => $fold['sender_id'],
-                            ]),
-                        ],
-                        '__custom:pjs\\:Notifications' =>  [
-                            '__custom:pjs\\:Notification' => Arr::map($request['notifications'], static fn ($notification) => [
-                                '_attributes' => [
-                                    'Type' => $notification['type'],
-                                ],
-                                '__custom:spec\\:Format' => $notification['format'],
-                                '__custom:spec\\:Protocols' => Arr::map($notification['protocols'], static function ($protocol) use ($notification) {
-                                    if($notification['format'] === NotificationFormat::XML->value) {
-                                        return [
-                                            '__custom:spec\\:Protocol' => [
-                                                '__custom:spec\\:Ftp' => []
-                                            ]
-                                        ];
-                                    }
-                                    return [
-                                        '__custom:spec\\:Protocol' => [
-                                            '__custom:spec\\:Email' => $protocol['protocol']['value']
-                                        ]
-                                    ];
-                                })
-                            ]),
-                        ]
-                    ]),
-                ]
-            ],
-            rootElement: [
-                'rootElementName' => 'pjs:Campaign',
-                '_attributes' => [
-                    'xmlns:com' => 'http://www.maileva.fr/CommonSchema',
-                    'xmlns:pjs' => 'http://www.maileva.fr/MailevaPJSSchema',
-                    'xmlns:spec' => 'http://www.maileva.fr/MailevaSpecificSchema',
-                    'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-                    'Version' => $campaign['version'],
-                    'TrackId' => $campaign['track_id'],
-                    'Application' => config('app.name'),
-                ],
-            ],
-            domProperties: ['formatOutput' => true]
-        );
+        */
     }
 }

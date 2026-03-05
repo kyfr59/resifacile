@@ -2,18 +2,18 @@
 
 namespace App\Contracts;
 
-use App\DataTransferObjects\PostLetter\CampaignData;
+use App\DataTransferObjects\PostLetter\SendingData;
 use App\DataTransferObjects\PostLetter\RequestData;
 use App\Enums\PostageType;
-use App\Models\Campaign;
+use App\Models\Sending;
 use Spatie\LaravelData\DataCollection;
 
 interface PostLetter
 {
     /**
-     * @return CampaignData
+     * @return SendingData
      */
-    public function newCampaign(): CampaignData;
+    public function newSending(): SendingData;
 
     /**
      * @param DataCollection $recipients
@@ -32,8 +32,8 @@ interface PostLetter
     ): RequestData;
 
     /**
-     * @param CampaignData $campaign
+     * @param SendingData $sending
      * @return void
      */
-    public function pushCampaign(CampaignData $campaign): void;
+    public function pushSending(SendingData $sending): void;
 }

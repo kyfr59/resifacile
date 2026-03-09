@@ -1,6 +1,8 @@
 @inject('accounting', 'App\Helpers\Accounting')
-<script src="https://documentcloud.adobe.com/view-sdk/viewer.js"></script>
 <x-layouts.app>
+    @push('scripts')
+        <script src="https://documentcloud.adobe.com/view-sdk/viewer.js"></script>
+    @endpush
     <x-slot:head>
         <title>{{ config('app.name') }}</title>
         <meta name="description" content="Envoyez vos courriers sans vous déplacer ! — {{ config('app.name') }}"/>
@@ -120,20 +122,22 @@
                                                         <div class="text-sm font-semibold pb-2">Ma facture</div>
                                                         <div class="grid grid-cols-1 gap-1.5">
                                                             @foreach($order->transactions()->where('status', \App\Enums\TransactionStatus::CAPTURED->value)->whereNot('transactionable_type', 'App\\Models\\Subscription')->get() as $index => $transaction)
-                                                                <div
-                                                                    class="flex items-center bg-[#64605e] text-white rounded-[7px] h-[40px] gap-2 px-4 text-sm shadow-document"
-                                                                    x-on:click.prevent="previewUrl('{{ route('frontend.account.preview.invoice', ['id' => $transaction->invoice->id]) }}', '{{ $transaction->invoice->number }}')"
-                                                                >
-                                                                    <div class="flex-auto text-sm whitespace-nowrap overflow-hidden text-ellipsis">{{ $transaction->invoice->number }}</div>
-                                                                    <div class="pl-2 flex items-center justify-end">
-                                                            <span class="cursor-pointer">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-4 stroke-current">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.23 6.246c.166.207.258.476.258.754 0 .279-.092.547-.258.754C12.18 9.025 9.79 11.5 7 11.5c-2.79 0-5.18-2.475-6.23-3.746A1.208 1.208 0 0 1 .512 7c0-.278.092-.547.258-.754C1.82 4.975 4.21 2.5 7 2.5c2.79 0 5.18 2.475 6.23 3.746Z"/>
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                                                                </svg>
-                                                            </span>
+                                                                @if(isset($transaction->invoice))
+                                                                    <div
+                                                                        class="flex items-center bg-[#64605e] text-white rounded-[7px] h-[40px] gap-2 px-4 text-sm shadow-document"
+                                                                        x-on:click.prevent="previewUrl('{{ route('frontend.account.preview.invoice', ['id' => $transaction->invoice->id]) }}', '{{ $transaction->invoice->number }}')"
+                                                                    >
+                                                                        <div class="flex-auto text-sm whitespace-nowrap overflow-hidden text-ellipsis">{{ $transaction->invoice->number }}</div>
+                                                                        <div class="pl-2 flex items-center justify-end">
+                                                                <span class="cursor-pointer">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-4 stroke-current">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.23 6.246c.166.207.258.476.258.754 0 .279-.092.547-.258.754C12.18 9.025 9.79 11.5 7 11.5c-2.79 0-5.18-2.475-6.23-3.746A1.208 1.208 0 0 1 .512 7c0-.278.092-.547.258-.754C1.82 4.975 4.21 2.5 7 2.5c2.79 0 5.18 2.475 6.23 3.746Z"/>
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                                                    </svg>
+                                                                </span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                @endif
                                                             @endforeach
                                                         </div>
                                                     </div>

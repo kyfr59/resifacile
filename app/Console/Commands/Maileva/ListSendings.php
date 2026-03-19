@@ -45,6 +45,7 @@ class ListSendings extends Command
                 echo
                   $sending->status . ' - '
                 . $sending->id . ' - '
+                . $sending->creation_date . ' - '
                 . $sending->documents_count . ' docs '
                 . $sending->recipients_counts->total . ' recips '
                 . PHP_EOL;
@@ -56,8 +57,19 @@ class ListSendings extends Command
                         echo "    - ".$doc->id . PHP_EOL;
                     }
                 }
-                $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}/recipients");
-                $recipients = json_decode($response->body());
+
+                // Détail d'un envoi
+                if ($sending->id == 'd3472173-87e2-48b7-acde-71746e710b1e') {
+                    continue;
+                    $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}");
+                    $response = json_decode($response->body());
+                    dd($response);
+                    $recipient_id = $response->recipients[0]->id;
+                    $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}/recipients/{$recipient_id}");
+                    $response = json_decode($response->body());
+                    dd($response);
+                    //dd(json_decode($response->body()));
+                }
             }
 
         } else {

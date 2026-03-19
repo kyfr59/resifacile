@@ -6,10 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use App\Services\MailevaAuthService;
 
-class Notifications extends Command
+class DeleteSubscriptions extends Command
 {
-    protected $signature = 'maileva:notifications';
-    protected $description = 'List all notifications';
+    protected $signature = 'maileva:delete-subscriptions';
+    protected $description = 'Delete all subscriptions';
     private $sendingId = null;
     private $baseUrl = 'https://api.sandbox.maileva.net/notification_center/v2';
 
@@ -23,22 +23,30 @@ class Notifications extends Command
         }
 
         $this->token = $token;
-        $this->listNotifications();
+        $this->listSubscriptions();
     }
 
-    private function listNotifications()
+    private function listSubscriptions()
     {
         $response = Http::withToken($this->token)
             ->withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->get($this->baseUrl . '/notifications');
+            ->get($this->baseUrl . '/subscriptions');
 
         if ($response->successful()) {
             $json = $response->body();
             $response = json_decode($json);
-            dd($response);
+            foreach($response->subscriptions as $sub) {
+                $response = Http::withToken($this->token)
+                    ->withHeaders([
+                        'Accept' => 'application/json',
+                        'Content-Type' => 'application/json',
+                    ])
+                    ->delete($this->baseUrl . '/subscriptions/'.$sub->id);
+            }
+
 
         } else {
             $this->error('❌ Échec de l\'appel API test');

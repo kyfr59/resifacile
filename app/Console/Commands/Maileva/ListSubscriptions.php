@@ -6,10 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use App\Services\MailevaAuthService;
 
-class Notifications extends Command
+class ListSubscriptions extends Command
 {
-    protected $signature = 'maileva:notifications';
-    protected $description = 'List all notifications';
+    protected $signature = 'maileva:list-subscriptions';
+    protected $description = 'List all subscriptions';
     private $sendingId = null;
     private $baseUrl = 'https://api.sandbox.maileva.net/notification_center/v2';
 
@@ -23,17 +23,17 @@ class Notifications extends Command
         }
 
         $this->token = $token;
-        $this->listNotifications();
+        $this->listSubscriptions();
     }
 
-    private function listNotifications()
+    private function listSubscriptions()
     {
         $response = Http::withToken($this->token)
             ->withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->get($this->baseUrl . '/notifications');
+            ->get($this->baseUrl . '/subscriptions');
 
         if ($response->successful()) {
             $json = $response->body();

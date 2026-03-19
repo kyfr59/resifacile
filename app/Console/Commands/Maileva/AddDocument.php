@@ -33,7 +33,7 @@ class AddDocument extends Command
     private function createNewSending()
     {
         // Retrieve the document of a sending
-        $sending = Sending::find(1);
+        $sending = Sending::latest()->first();
         $request = $sending->data->requests->first();
         $document = $request->documentData->first();
         $documentPath = $document->content->uri;

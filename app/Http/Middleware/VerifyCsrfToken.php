@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'webhook-hipay',
         'webhook-mail',
+        'webhook-maileva',
         'hipay/ip',
     ];
 }

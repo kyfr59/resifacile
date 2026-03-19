@@ -126,6 +126,11 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'maileva' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/maileva.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

@@ -175,6 +175,7 @@ Route::get('/mon-compte', HomePageController::class)
  */
 Route::webhooks('webhook-hipay', 'hipay');
 Route::webhooks('webhook-mail', 'mail');
+Route::webhooks('webhook-maileva', 'maileva');
 
 /**
  *  Account Preview

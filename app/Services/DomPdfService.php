@@ -44,10 +44,10 @@ class DomPdfService implements Pdf
 
         Storage::put(
             $path,
-            $stream,
+            $stream->getContent(),
         );
 
-        Storage::disk('local')->put($localPath, $stream);
+        Storage::disk('local')->put($localPath, $stream->getContent());
 
         $page = null;
         exec('/usr/bin/pdfinfo ' . storage_path('app/' . $localPath) . ' | awk \'/Pages/ {print $2}\'', $page);

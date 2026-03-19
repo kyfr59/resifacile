@@ -34,6 +34,20 @@ return [
             'store_headers' => [],
             'process_webhook_job' => \App\WebhookClient\Jobs\ProcessMailWebhookJob::class,
             'default_job' => \App\Jobs\MailRecieved::class,
+        ],
+        [
+            'name' => 'maileva',
+            'signature_validator' => \App\WebhookClient\SignatureValidator\MailevaSignatureValidator::class,
+            'webhook_profile' => \App\WebhookClient\WebhookProfile\MailevaWebhookProfile::class,
+            'webhook_response' => \Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo::class,
+            'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
+            'store_headers' => [],
+            'process_webhook_job' => \App\WebhookClient\Jobs\ProcessMailevaWebhookJob::class,
+            'default_job' => \App\WebhookClient\Jobs\ProcessOtherMailevaWebhookJob::class,
+            'jobs' => [
+                'accepted' => \App\Jobs\MailevaWebhooks\HandleAccepted::class,
+                'rejected' => \App\Jobs\MailevaWebhooks\HandleRejected::class,
+            ],
         ]
     ],
     'delete_after_days' => 30,

@@ -51,7 +51,9 @@ class HandleCaptured implements ShouldQueue
 
         $transactionStatus = TransactionStatus::code($transactionData['status']);
 
-        if($transactionData['custom_data']['is_subscription_transaction']) {
+        if ($transactionData['custom_data']['is_subscription_transaction']) {
+
+            // Il s'agit d'une transaction d'abonnement mensuel
             $transactionable = Subscription::find($transactionData['custom_data']['subscription_id']);
             $type = 'App\Models\Subscription';
 
@@ -59,20 +61,26 @@ class HandleCaptured implements ShouldQueue
                 $transactionable->status = SubscriptionStatus::RECURRING;
             }
 
+            // Après avoir récupérer l'abonnement, on prolonge sa date d'expiration
             $transactionable->current_period_end_at = now()->addMonth();
             $transactionable->save();
             $invoiceType = InvoiceType::SUBSCRIPTION;
 
         } else {
+
+            // Il s'agit d'une transaction de commande
+            // On récupère la commande (crée en base à l'étape précédente)
             $transactionable = Order::find($transactionData['custom_data']['order_id']);
             $type = 'App\Models\Order';
 
+            // On marque la commande comme payée
             $transactionable->status = OrderStatus::PAID;
             $transactionable->save();
 
             $invoiceType = InvoiceType::ORDER;
         }
 
+        // On stocke la transaction dans la base
         $transaction = (new MakeCreateTransaction())->handle(
             transactionData: new TransactionData(
                 amount: $transactionData['authorized_amount'] * 100,
@@ -84,6 +92,7 @@ class HandleCaptured implements ShouldQueue
             ),
         );
 
+        // On génère la facture et on la stocke en base
         if($invoiceType === InvoiceType::ORDER) {
             (new MakeNewInvoice())->handle(
                 transaction: $transaction,

@@ -2,16 +2,16 @@
 
 <form method="POST" action="/webhook-hipay">
     @csrf
-    <input type="hidden" name="status" value="118" />
-    <input type="hidden" name="transaction_reference" value="TX123456" />
-    <input type="hidden" name="mid" value="MERCHANT123" />
-    <input type="hidden" name="custom_data[has_subscription]" value="1" />
-    <input type="hidden" name="custom_data[subscription_id]" value="1" />
-    <input type="hidden" name="custom_data[is_subscription_transaction]" value="1" />
-    <input type="hidden" name="custom_data[order_id]" value="{{ $order->id }}" />
-    <input type="hidden" name="custom_data[customer_id]" value="{{ $order->customer_id }}" />
+    <input type="text" name="status" value="118" />
+    <input type="text" name="transaction_reference" value="TX123456" />
+    <input type="text" name="mid" value="MERCHANT123" />
+    <input type="text" name="custom_data[has_subscription]" value="{{ $orderInfos['has_subscription'] }}" />
+    <input type="text" name="custom_data[subscription_id]" value="{{ $orderInfos['has_subscription'] }}" />
+    <input type="text" name="custom_data[is_subscription_transaction]" value="0" />
+    <input type="text" name="custom_data[order_id]" value="{{ $order->id }}" />
+    <input type="text" name="custom_data[customer_id]" value="{{ $order->customer_id }}" />
     <input
-        type="hidden"
+        type="text"
         name="authorized_amount"
         value="{{ number_format($accounting::addTax($order->amount) / 100, 2, '.', '') }}"
     />

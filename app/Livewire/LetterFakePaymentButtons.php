@@ -12,6 +12,7 @@ use \App\Models\Order;
 class LetterFakePaymentButtons extends Component
 {
     public $order;
+    public $orderInfos;
 
     public function render()
     {
@@ -22,5 +23,6 @@ class LetterFakePaymentButtons extends Component
         $cart = App::make(Cart::class);
         $order =  Order::find(Session::get('order_id'));
         $this->order = $order;
+        $this->orderInfos = $cart->getOrder()->toArray();
     }
 }

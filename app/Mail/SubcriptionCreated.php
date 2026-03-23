@@ -11,6 +11,7 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class SubcriptionCreated extends Mailable
 {
@@ -58,13 +59,13 @@ class SubcriptionCreated extends Mailable
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
-    {
-        if($this->service_agreement) {
-            $attachments[] = Attachment::fromStorage($this->service_agreement->path)
-                ->as($this->service_agreement->readable_file_name)
-                ->withMime('application/pdf');
-        }
-
-        return $attachments;
+{
+    if($this->service_agreement) {
+        $attachments[] = Attachment::fromStorageDisk('local', $this->service_agreement->path)
+            ->as($this->service_agreement->readable_file_name)
+            ->withMime('application/pdf');
     }
+
+    return $attachments ?? [];
+}
 }

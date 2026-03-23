@@ -100,10 +100,11 @@ class HandleCaptured implements ShouldQueue
             );
         }
 
-        if(!$transactionData['custom_data']['is_subscription_transaction']) {
+        if(!$transactionData['custom_data']['is_subscription_transaction']) { // Ce n'est pas une transaction d'abonnement
+
             $document = null;
 
-            if($transactionData['custom_data']['has_subscription']) {
+            if($transactionData['custom_data']['has_subscription']) { // Un abonnement est demandé
 
                 /*
                 (new MakeNewPaymentMethod($transactionable->customer))(

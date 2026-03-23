@@ -5,8 +5,8 @@
     <input type="text" name="status" value="118" />
     <input type="text" name="transaction_reference" value="TX123456" />
     <input type="text" name="mid" value="MERCHANT123" />
-    <input type="text" name="custom_data[has_subscription]" value="{{ $orderInfos['has_subscription'] }}" />
-    <input type="text" name="custom_data[subscription_id]" value="{{ $orderInfos['has_subscription'] }}" />
+    <input type="text" name="custom_data[has_subscription]" value="1" />
+    <input type="text" name="custom_data[subscription_id]" value="0" />
     <input type="text" name="custom_data[is_subscription_transaction]" value="0" />
     <input type="text" name="custom_data[order_id]" value="{{ $order->id }}" />
     <input type="text" name="custom_data[customer_id]" value="{{ $order->customer_id }}" />

@@ -10,7 +10,7 @@ class CreateSending extends Command
 {
     protected $signature = 'maileva:create-sending';
     protected $description = 'Create sending';
-    private $baseUrl = 'https://api.sandbox.maileva.net/mail/v2';
+    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
 
     public function handle(MailevaAuthService $auth)
     {

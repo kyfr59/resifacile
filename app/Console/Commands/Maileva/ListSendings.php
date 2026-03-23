@@ -4,13 +4,14 @@ namespace App\Console\Commands\Maileva;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use App\Services\MailevaAuthService;
 
 class ListSendings extends Command
 {
     protected $signature = 'maileva:list-sendings';
     protected $description = 'List all sendings';
-    private $baseUrl = 'https://api.sandbox.maileva.net/mail/v2';
+    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
 
     public function handle(MailevaAuthService $auth)
     {
@@ -22,7 +23,6 @@ class ListSendings extends Command
             $this->error('Erreur connexion Maileva');
             $this->error($e->getMessage());
         }
-
         $this->token = $token;
         $this->listSendings();
     }
@@ -59,6 +59,7 @@ class ListSendings extends Command
                 }
 
                 // Détail d'un envoi
+                /*
                 if ($sending->id == 'd3472173-87e2-48b7-acde-71746e710b1e') {
                     continue;
                     $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}");
@@ -70,6 +71,7 @@ class ListSendings extends Command
                     dd($response);
                     //dd(json_decode($response->body()));
                 }
+                */
             }
 
         } else {

@@ -19,8 +19,8 @@ class AddSubscription extends Command
         $response = Http::withToken($token)
         ->acceptJson()
         ->post('https://api.sandbox.maileva.net/notification_center/v2/subscriptions', [
-            "event_type"     => "ON_STATUS_REJECTED",
-            "resource_type"  => "mail/v2/sendings",
+            "event_type"     => "ON_MAIN_DELIVERY_STATUS_UNDELIVERED",
+            "resource_type"  => "registered_mail/v4/sendings",
             "callback_url"   => "https://webhook.site/76d13e1f-ad81-4578-ab88-1d7a89a17c9e",
             "authentication" => [
                 "basic" => [

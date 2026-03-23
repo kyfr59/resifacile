@@ -12,7 +12,7 @@ class AddDocument extends Command
 {
     protected $signature = 'maileva:add-document {sending_id}';
     protected $description = 'Add document existing sending {$sending_id}';
-    private $baseUrl = 'https://api.sandbox.maileva.net/mail/v2';
+    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
     private $sendingId = null;
 
     public function handle(MailevaAuthService $auth)

@@ -32,8 +32,8 @@ interface PostLetter
     ): RequestData;
 
     /**
-     * @param SendingData $sending
+     * @param Sending $sending
      * @return void
      */
-    public function pushSending(SendingData $sending): void;
+    public function pushSending(Sending $sending): void;
 }

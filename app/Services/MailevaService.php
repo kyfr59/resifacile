@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-// use App\Actions\GetAllDocumentsFromCampaign;
+use App\Actions\GetDocumentFromSending;
+use App\Actions\GetSenderFromSending;
 // use App\Actions\MakeCouFromCampaign;
 use App\Contracts\PostLetter;
 use App\DataTransferObjects\PostLetter\AddressLinesData;
@@ -30,6 +31,7 @@ use App\Enums\NotificationType;
 use App\Enums\PostageClassType;
 use App\Enums\PostageType;
 use App\Helpers\Accounting;
+use App\Models\Sending;
 use App\Settings\MailevaSettings;
 use DOMDocument;
 use Exception;
@@ -59,37 +61,13 @@ class MailevaService implements PostLetter
         private readonly string $password,
         private MailevaAuthService $auth,
         protected MailevaSettings $mailevaSettings
-    ) {}
-
-    /**
-     * @return CampaignData
-     */
-    /*
-    public function newCampaign(): CampaignData
-    {
-        $mailevaSettings = App::make(MailevaSettings::class);
-
-        ++$mailevaSettings->sending_number;
-
-        $campaign = new CampaignData(
-            user: new UserData(
-                auth_type: 'PLAINTEXT',
-                login: $this->login,
-                password: $this->password,
-            ),
-            requests: RequestData::collection([]),
-            version: $mailevaSettings->version,
-            partner_track_id: config('maileva.partner_track_id'),
-            name: $mailevaSettings->name,
-            track_id: Accounting::makeNumber($mailevaSettings->campaign_prefix, $mailevaSettings->sending_number),
-        );
-
-        $mailevaSettings->save();
-
-        return $campaign;
+    ) {
+        $this->baseUrl = config('maileva.base_url');
     }
-        */
 
+    /*
+     * Creates a new sending in database
+     */
     public function newSending(): SendingData
     {
         $mailevaSettings = $this->mailevaSettings;
@@ -282,104 +260,178 @@ class MailevaService implements PostLetter
     }
 
     /**
-     * @param SendingData $sending
+     * @param Sending $sending
      * @return void
      */
-    public function pushSending(SendingData $sending): void
+    public function pushSending(Sending $sending): void
     {
-        $token = $this->auth->getAccessToken();
-        dd("pushSending");
-
+        dd('push sending');
         /*
-        $campaignName = $campaign->track_id;
-        $path = 'campaigns/executed/' . $campaignName;
-        $pathZip = storage_path('app/executed/' . $campaignName . '.zcou.tmp');
-        Storage::makeDirectory($path);
+        Log::channel('maileva')->info("###");
+        Log::channel('maileva')->info("### Début du processus de transmission d'un envoi", [
+            'sending_id' => $sending->id
+        ]);
 
-        try {
-            $documents = (new GetAllDocumentsFromCampaign())->handle($campaign);
+        $mailevaSendingId = $this->createSending($sending);
 
-            $translateDocuments = [];
+        $maileva = $sending->maileva ?? [];
+        $maileva['sending_id'] = $mailevaSendingId;
+        $sending->update([
+            'maileva' => $maileva,
+        ]);
 
-            for ($i = 0; $i < count($documents); $i++) {
-                $realPath = $documents[$i]->content->uri;
-                $name = $campaignName . '.' . str_pad($i + 1, 3, '0', STR_PAD_LEFT);
-                $translateDocuments[$realPath] = $name;
-                $executedName = $path . DIRECTORY_SEPARATOR .$name.'.pdf';
-
-                Storage::copy(
-                    $realPath,
-                    $executedName,
-                );
-
-                $fullPath = Storage::path($executedName);
-                $token = $this->auth->getAccessToken();
-
-                $id = (string) \Illuminate\Support\Str::uuid();
-                $path = $executedName; // ton chemin relatif storage
-                $fullPath = Storage::path($path);
-                $size = Storage::size($path);
-                $mimeType = Storage::mimeType($path);
-                $pdf = new Fpdi();
-                $pageCount = $pdf->setSourceFile($fullPath);
-                $sheetsCount = (int) ceil($pageCount / 2);
-
-                $documentPayload = [
-                    'id' => (string) Str::uuid(),
-                    'type' => $mimeType, // application/pdf
-                    'pages_count' => $pageCount,
-                    'sheets_count' => $sheetsCount,
-                    'size' => $size,
-                    'converted_size' => $size, // ou valeur retournée par API si conversion
-                ];
+        $mailevaDocumentId = $this->addDocument($sending);
+        $maileva['document_id'] = $mailevaDocumentId;
+        $sending->update([
+            'maileva' => $maileva,
+        ]);
+        */
+    }
 
 
-                $url = 'https://api.sandbox.maileva.net/mail/v2/sendings/eb987f58-696d-47fd-bf16-a5fc5c4838f2/documents';
+    /**
+     * @param Sending $sending
+     * @return integer The Maileva sending number
+     */
+    private function createSending(Sending $sending): string
+    {
+        /*
+        $token = $this->auth->getAccessToken();
 
-                $response = Http::withToken($token)
-                    ->acceptJson()
-                    ->attach(
-                        'document',
-                        fopen($fullPath, 'r'),
-                        basename($fullPath)
-                    )
-                    ->attach(
-                        'metadata',
-                        json_encode([
-                            'priority' => 3,
-                            'name' => basename($fullPath),
-                            'shrink' => true,
-                        ]),
-                        'metadata.json'
-                    )
-                    ->post($url);
+        $sender = (new GetSenderFromSending())->handle($sending->data);
+        $address = $sender->paper_address->address_lines;
 
-                    dd($response->headers());
+        $data = [
+            'name' => $sending->order->number,
+            'custom_id' => 'sending_'.$sending->id,
+            'custom_data' => time(),
+            'color_printing' => true,
+            'duplex_printing' => true,
+            'optional_address_sheet' => false,
+            'notification_email' => 'do_not_reply@maileva.com',
+            'print_sender_address' => false,
+            'sender_address_line_1' => $address->address_line_1,
+            'sender_address_line_2' => $address->address_line_2,
+            'sender_address_line_3' => $address->address_line_3,
+            'sender_address_line_4' => $address->address_line_4,
+            'sender_address_line_5' => $address->address_line_5,
+            'sender_address_line_6' => $address->address_line_6,
+            'sender_country_code' => 'FR',
+            'archiving_duration' => 0,
+            'envelope_windows_type' => 'SIMPLE',
+            'postage_type' => 'FAST',
+            'treat_undelivered_mail' => false,
+            'notification_treat_undelivered_mail' => [
+                'email@domain.com',
+                'email_bis@domain.com',
+            ],
+        ];
 
-            if (!$response->successful()) {
-                throw new \Exception(
-                    'Erreur API Maileva: ' .
-                    $response->status() . ' - ' .
-                    $response->body()
-                );
-            }
-            Log::info('Maileva campaign envoyée', [
-                'track_id' => $campaignName,
-                'response' => $response->json()
+        $response = Http::withToken($token)
+            ->acceptJson()
+            ->post($this->baseUrl . '/sendings', $data);
+
+        if (!$response->successful()) {
+
+            Log::channel('maileva')->error("Erreur de création de l'envoi", [
+                'sending_id' => $sending->id,
+                'status' => $response->status(),
+                'body' => $response->body(),
             ]);
+
+            throw new \RuntimeException(
+                "Erreur avec l'API Maileva : ({$response->status()}): ".$response->body()
+            );
         }
 
-        } catch (Exception $e) {
-            if(Storage::directories($path)) {
-                Storage::deleteDirectory($path);
-            }
+        $mailevaSendingId = $response['id'];
 
-            if(Storage::disk('local')->get('app/executed/' . $campaignName . '.zcou.tmp')) {
-                Storage::disk('local')->delete('app/executed/' . $campaignName . '.zcou.tmp');
-            }
+        Log::channel('maileva')->info("    Création de l'envoi réussie", [
+            'sending_id' => $sending->id,
+            'maileva_id' => $mailevaSendingId
+        ]);
 
-            Log::error($e);
+        return $mailevaSendingId;
+        */
+    }
+
+
+    /**
+     * @param Sending $sending
+     * @return integer The Maileva document number
+     */
+    private function addDocument(Sending $sending): string
+    {
+        /*
+        $token = $this->auth->getAccessToken();
+
+        $mailevaSendingId = $sending->maileva['sending_id'];
+
+        $document = (new GetDocumentFromSending())->handle($sending->data);
+        $uri = $document->content->uri;
+        $fullPath = Storage::path($uri);
+
+        if (!Storage::disk('public')->exists($uri)) {
+            Log::channel('maileva')->error("Erreur de création de l'envoi : le document à envoyer n'existe pas sur le serveur");
+
+            throw new \RuntimeException(
+                "Erreur lors de la création de l'envoi : le document à envoyer n'existe pas sur le serveur"
+            );
         }
+
+        $size = Storage::size($uri);
+        $filename = basename($uri);
+
+        // Preparing payload
+        $documentPayload = [
+            'id' => $id = (string) \Illuminate\Support\Str::uuid(),
+            'type' => 'application/pdf',
+            'pages_count' => 1,
+            'sheets_count' => 1,
+            'size' => $size,
+            'converted_size' => $size,
+        ];
+
+        $response = Http::withToken($token)
+            ->acceptJson()
+            ->attach(
+                'document',
+                fopen($fullPath, 'r'),
+                $filename
+            )
+            ->attach(
+                'metadata',
+                json_encode([
+                    'priority' => 1,
+                    'name' => $filename,
+                    'shrink' => true,
+                ]),
+                'metadata.json'
+            )
+            ->post($this->baseUrl."/sendings/{$mailevaSendingId}/documents", $documentPayload);
+
+        if (!$response->successful()) {
+
+            Log::channel('maileva')->error("    Erreur de création de l'envoi", [
+                'sending_id' => $sending->id,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            throw new \RuntimeException(
+                "   Erreur avec l'API Maileva : ({$response->status()}): ".$response->body()
+            );
+        }
+
+        $mailevaDocumentId = $response['id'];
+
+        Log::channel('maileva')->info("    Ajout du document réussi", [
+            'sending_id' => $sending->id,
+            'maileva_id' => $mailevaSendingId,
+            'document_id' => $mailevaDocumentId,
+        ]);
+
+        return $mailevaDocumentId;
         */
     }
 }

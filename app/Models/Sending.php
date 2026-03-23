@@ -19,6 +19,7 @@ class Sending extends Model
         'sent_at',
         'delivered_at',
         'campaign_id',
+        'maileva',
     ];
 
     protected $casts = [
@@ -26,6 +27,7 @@ class Sending extends Model
         'status' => SendingStatus::class,
         'sent_at' => 'datetime',
         'delivered_at' => 'datetime',
+        'maileva' => 'array',
     ];
 
     public function order(): BelongsTo

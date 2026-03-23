@@ -34,6 +34,8 @@ class SendingData extends Data
         public ?string $com_application_name = null,
         #[Nullable]
         public ?string $break_down_code = null,
+        #[Nullable]
+        public ?array $maileva = null,
     ){
     }
 }

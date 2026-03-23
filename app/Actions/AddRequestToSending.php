@@ -19,7 +19,7 @@ class AddRequestToSending
     public function handle(RequestData $requestData, Order $order): void
     {
         $sending = new Sending();
-        $sending->status = SendingStatus::PENDING_EXECUTION;
+        $sending->status = SendingStatus::DRAFT;
         $sending->customer_id = $order->customer->id;
         $sending->order_id = $order->id;
 

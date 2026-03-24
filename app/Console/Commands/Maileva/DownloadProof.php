@@ -9,8 +9,8 @@ use App\Services\MailevaAuthService;
 
 class DownloadProof extends Command
 {
-    protected $signature = 'maileva:download-proof';
-    protected $description = 'Upload and store a PDF proof document';
+    protected $signature = 'maileva:download-proof {sending_id}';
+    protected $description = 'Download a PDF proof document and store it on current dir';
     private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
 
     public function handle(MailevaAuthService $auth)
@@ -25,49 +25,40 @@ class DownloadProof extends Command
         }
         $this->token = $token;
 
-        $lastProcessedSendingIds = $this->getLastProcessedSendingWithRecipient();
-        if (!$lastProcessedSendingIds) {
-            $this->error('Aucun envoi avec un destinataire et un statut PROCESSED');
-            die();
-        }
-        $sending_id = $lastProcessedSendingIds[0];
-        $recipient_id = $lastProcessedSendingIds[1];
+        $this->sendingId = $this->argument('sending_id');
 
-        // Preuve du contenu du destinataire
-        // @see https://www.maileva.com/catalogue-api/envoi-et-suivi-de-maileva-lrel/
-        $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending_id}/recipients/{$recipient_id}/content_proof/download_embedded_document");
-        Storage::put("documents/preuve-{$sending_id}.pdf", $response->body());
+        $sending = $this->getSending();
+
+        $recipient = $this->getRecipient($sending);
+
+        $proof = $this->getProof($sending, $recipient);
+
+        file_put_contents("./preuve-{$sending->id}.pdf", $proof);
     }
 
-    private function getLastProcessedSendingWithRecipient()
+    private function getSending()
     {
-        $response = Http::withToken($this->token)
-            ->withHeaders([
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-            ])
-            ->get($this->baseUrl . '/sendings');
-
-       if ($response->successful()) {
-            $this->info('✅ Appel API test réussi');
-            $json = $response->body();
-            $response = json_decode($json);
-            foreach ($response->sendings as $sending) {
-
-                if ($sending->status == 'PROCESSED' && $sending->recipients_counts->total > 0) {
-                    $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}/recipients");
-                    $response = json_decode($response->body());
-                    $recipient_id = $response->recipients[0]->id;
-                    if (!empty($recipient_id)) {
-                        return [$sending->id, $recipient_id];
-                    }
-                    return null;
-                }
-            }
-        } else {
-            $this->error('❌ Échec de l\'appel API test');
-            $this->error('Status: ' . $response->status());
-            $this->error('Body: ' . $response->body());
+        $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$this->sendingId}");
+        $sending = json_decode($response->body());
+        if ($sending->status != 'PROCESSED') {
+            throw new \Exception("L'envoi n'a pas le statut PROCESSED");
         }
+        return $sending;
+    }
+
+
+    private function getRecipient($sending)
+    {
+        $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}/recipients");
+        $recipient = json_decode($response->body());
+        return $recipient->recipients[0];
+    }
+
+    // Preuve du contenu du destinataire
+    // @see https://www.maileva.com/catalogue-api/envoi-et-suivi-de-maileva-lrel/
+    private function getProof($sending, $recipient)
+    {
+        $response = Http::withToken($this->token)->get($this->baseUrl . "/global_deposit_proofs");
+        return $response->body();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\SendingExecuted;
 use App\Contracts\PostLetter;
 use App\Models\Sending;
 use Illuminate\Bus\Queueable;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Enums\SendingStatus;
 use Illuminate\Support\Facades\Log;
 use App\Services\SendingOrchestrator;
+use Illuminate\Support\Facades\Mail;
 
 class ProcessSending implements ShouldQueue
 {
@@ -42,10 +44,11 @@ class ProcessSending implements ShouldQueue
         $this->sending->executed_at = now();
         $this->sending->save();
 
-
         Log::channel('maileva')->info("    Statut mis à jour : SENDED", [
             'sending_id' => $this->sending->id,
         ]);
         Log::channel('maileva')->info("");
+
+        Mail::to($this->sending->customer)->send(new SendingExecuted($this->sending));
     }
 }

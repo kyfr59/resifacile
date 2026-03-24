@@ -45,8 +45,7 @@ return [
             'process_webhook_job' => \App\WebhookClient\Jobs\ProcessMailevaWebhookJob::class,
             'default_job' => \App\WebhookClient\Jobs\ProcessOtherMailevaWebhookJob::class,
             'jobs' => [
-                'accepted' => \App\Jobs\MailevaWebhooks\HandleAccepted::class,
-                'rejected' => \App\Jobs\MailevaWebhooks\HandleRejected::class,
+                'processed' => \App\Jobs\MailevaWebhooks\HandleProcessed::class,
             ],
         ]
     ],

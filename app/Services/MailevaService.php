@@ -62,7 +62,8 @@ class MailevaService implements PostLetter
         private MailevaAuthService $auth,
         protected MailevaSettings $mailevaSettings
     ) {
-        $this->baseUrl = config('maileva.base_url');
+        $this->baseUrl = config('maileva.base_url').'/registered_mail/v4';
+        $this->token = $auth->getAccessToken();
     }
 
     /*
@@ -261,43 +262,10 @@ class MailevaService implements PostLetter
 
     /**
      * @param Sending $sending
-     * @return void
-     */
-    public function pushSending(Sending $sending): void
-    {
-        dd('push sending');
-        /*
-        Log::channel('maileva')->info("###");
-        Log::channel('maileva')->info("### Début du processus de transmission d'un envoi", [
-            'sending_id' => $sending->id
-        ]);
-
-        $mailevaSendingId = $this->createSending($sending);
-
-        $maileva = $sending->maileva ?? [];
-        $maileva['sending_id'] = $mailevaSendingId;
-        $sending->update([
-            'maileva' => $maileva,
-        ]);
-
-        $mailevaDocumentId = $this->addDocument($sending);
-        $maileva['document_id'] = $mailevaDocumentId;
-        $sending->update([
-            'maileva' => $maileva,
-        ]);
-        */
-    }
-
-
-    /**
-     * @param Sending $sending
      * @return integer The Maileva sending number
      */
     private function createSending(Sending $sending): string
     {
-        /*
-        $token = $this->auth->getAccessToken();
-
         $sender = (new GetSenderFromSending())->handle($sending->data);
         $address = $sender->paper_address->address_lines;
 
@@ -327,7 +295,7 @@ class MailevaService implements PostLetter
             ],
         ];
 
-        $response = Http::withToken($token)
+        $response = Http::withToken($this->token)
             ->acceptJson()
             ->post($this->baseUrl . '/sendings', $data);
 
@@ -352,86 +320,5 @@ class MailevaService implements PostLetter
         ]);
 
         return $mailevaSendingId;
-        */
-    }
-
-
-    /**
-     * @param Sending $sending
-     * @return integer The Maileva document number
-     */
-    private function addDocument(Sending $sending): string
-    {
-        /*
-        $token = $this->auth->getAccessToken();
-
-        $mailevaSendingId = $sending->maileva['sending_id'];
-
-        $document = (new GetDocumentFromSending())->handle($sending->data);
-        $uri = $document->content->uri;
-        $fullPath = Storage::path($uri);
-
-        if (!Storage::disk('public')->exists($uri)) {
-            Log::channel('maileva')->error("Erreur de création de l'envoi : le document à envoyer n'existe pas sur le serveur");
-
-            throw new \RuntimeException(
-                "Erreur lors de la création de l'envoi : le document à envoyer n'existe pas sur le serveur"
-            );
-        }
-
-        $size = Storage::size($uri);
-        $filename = basename($uri);
-
-        // Preparing payload
-        $documentPayload = [
-            'id' => $id = (string) \Illuminate\Support\Str::uuid(),
-            'type' => 'application/pdf',
-            'pages_count' => 1,
-            'sheets_count' => 1,
-            'size' => $size,
-            'converted_size' => $size,
-        ];
-
-        $response = Http::withToken($token)
-            ->acceptJson()
-            ->attach(
-                'document',
-                fopen($fullPath, 'r'),
-                $filename
-            )
-            ->attach(
-                'metadata',
-                json_encode([
-                    'priority' => 1,
-                    'name' => $filename,
-                    'shrink' => true,
-                ]),
-                'metadata.json'
-            )
-            ->post($this->baseUrl."/sendings/{$mailevaSendingId}/documents", $documentPayload);
-
-        if (!$response->successful()) {
-
-            Log::channel('maileva')->error("    Erreur de création de l'envoi", [
-                'sending_id' => $sending->id,
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
-
-            throw new \RuntimeException(
-                "   Erreur avec l'API Maileva : ({$response->status()}): ".$response->body()
-            );
-        }
-
-        $mailevaDocumentId = $response['id'];
-
-        Log::channel('maileva')->info("    Ajout du document réussi", [
-            'sending_id' => $sending->id,
-            'maileva_id' => $mailevaSendingId,
-            'document_id' => $mailevaDocumentId,
-        ]);
-
-        return $mailevaDocumentId;
-        */
     }
 }

@@ -30,10 +30,4 @@ interface PostLetter
         DataCollection $documents,
         DataCollection $options
     ): RequestData;
-
-    /**
-     * @param Sending $sending
-     * @return void
-     */
-    public function pushSending(Sending $sending): void;
 }

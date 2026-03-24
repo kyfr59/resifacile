@@ -2,12 +2,8 @@
 
 namespace App\Jobs;
 
-//use App\Actions\GetAllDocumentsFromCampaign;
-//use App\Actions\MakeCouFromCampaign;
-//use App\Actions\MakeXMLFromCampaign;
 use App\Contracts\PostLetter;
 use App\Models\Sending;
-//use App\DataTransferObjects\PostLetter\SendingData;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,6 +12,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
+use App\Enums\SendingStatus;
+use Illuminate\Support\Facades\Log;
+use App\Services\SendingOrchestrator;
 
 class ProcessSending implements ShouldQueue
 {
@@ -35,11 +34,18 @@ class ProcessSending implements ShouldQueue
      *
      * @return void
      */
-    public function handle(): void
+    public function handle(SendingOrchestrator $orchestrator): void
     {
-        App::make(PostLetter::class)
-            ->pushSending(
-                sending: $this->sending,
-            );
+        $orchestrator->process($this->sending);
+
+        $this->sending->status = SendingStatus::SENDED;
+        $this->sending->executed_at = now();
+        $this->sending->save();
+
+
+        Log::channel('maileva')->info("    Statut mis à jour : SENDED", [
+            'sending_id' => $this->sending->id,
+        ]);
+        Log::channel('maileva')->info("");
     }
 }

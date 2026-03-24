@@ -21,7 +21,7 @@ class CreateServiceAgreementAction
 
         $path = 'services-agreements/' . $uuid . '.pdf';
 
-        Storage::put(
+        Storage::disk('local')->put(
             $path,
             DomPdf::loadView('templates.service-agreement', [
                 'activities' => $activities,
@@ -34,7 +34,7 @@ class CreateServiceAgreementAction
         $document->readable_file_name = 'conditions-generales-de-vente.pdf';
         $document->file_name = $uuid . '.pdf';
         $document->path = $path;
-        $document->size = Storage::size($path);
+        $document->size = Storage::disk('local')->size($path);
         $document->type = DocumentType::SERVICE_AGREEMENT;
         $document->number_of_pages = 7;
 

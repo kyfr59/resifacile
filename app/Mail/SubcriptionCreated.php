@@ -59,13 +59,13 @@ class SubcriptionCreated extends Mailable
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
-{
-    if($this->service_agreement) {
-        $attachments[] = Attachment::fromStorageDisk('local', $this->service_agreement->path)
-            ->as($this->service_agreement->readable_file_name)
-            ->withMime('application/pdf');
-    }
+    {
+        if($this->service_agreement) {
+            $attachments[] = Attachment::fromStorageDisk('local', $this->service_agreement->path)
+                ->as($this->service_agreement->readable_file_name)
+                ->withMime('application/pdf');
+        }
 
-    return $attachments ?? [];
-}
+        return $attachments ?? [];
+    }
 }

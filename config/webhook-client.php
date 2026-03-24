@@ -39,7 +39,7 @@ return [
             'name' => 'maileva',
             'signature_validator' => \App\WebhookClient\SignatureValidator\MailevaSignatureValidator::class,
             'webhook_profile' => \App\WebhookClient\WebhookProfile\MailevaWebhookProfile::class,
-            'webhook_response' => \Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo::class,
+            'webhook_response' => \App\WebhookClient\WebhookResponse\MailevaRespondsTo::class,
             'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
             'store_headers' => [],
             'process_webhook_job' => \App\WebhookClient\Jobs\ProcessMailevaWebhookJob::class,

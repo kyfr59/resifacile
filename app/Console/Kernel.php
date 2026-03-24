@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
         //$schedule->command('notification:get')->everyThirtyMinutes()->onOneServer();
         //$schedule->command('campaign:execute')->everyFiveMinutes()->onOneServer();
 
+        $schedule->command('execute-sendings')->everyTwoMinutes();
+
         //$schedule->command('mail:send-proof')->everyThirtyMinutes()->onOneServer();
         //$schedule->command('tracking:get')->dailyAt('8:00')->onOneServer();
 
@@ -27,10 +29,11 @@ class Kernel extends ConsoleKernel
         //$schedule->command('sitemap:generate')->daily()->onOneServer();
 
         //$schedule->command('telescope:prune --hours=48')->daily();
+        /*
         $schedule->command('sending:single 1')
             ->everyMinute()
             ->emailOutputOnFailure('dev@resifacile.fr');
-
+        */
     }
 
     /**

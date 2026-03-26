@@ -38,7 +38,9 @@ class SimulateWebhook extends Command
         $this->info('Envoi du webhook simulé...');
         $this->line(json_encode($payload, JSON_PRETTY_PRINT));
 
-        $response = Http::post(config('app.url') . '/webhook-maileva', $payload);
+        $response = Http::
+            withBasicAuth('admin', 'Tinyfox')
+            ->post(config('app.url') . '/webhook-maileva', $payload);
 
         if ($response->successful()) {
             $this->info("✅ Réponse {$response->status()}");

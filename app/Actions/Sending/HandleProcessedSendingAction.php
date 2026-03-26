@@ -50,7 +50,9 @@ class HandleProcessedSendingAction
 
         // Get and store proof of déposit
 
-        $pdf = $this->mailevaService->storeProofOfDeposit($sending);
+        $pdfAndNumber = $this->mailevaService->storeProofOfDeposit($sending);
+        $number = $pdfAndNumber[0];
+        $pdf = $pdfAndNumber[1];
 
         //Mail::to($sending->user->email)->send(new SendingConfirmation($sending, $pdf));
 

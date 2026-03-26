@@ -249,13 +249,21 @@ class MailevaService implements PostLetter
         );
     }
 
-    public function storeProofOfDeposit(Sending $sending): string
+    /**
+     *
+     * @retuns Array :
+     * - The registered number
+     * - The proof PDF file
+     */
+    public function storeProofOfDeposit(Sending $sending): array
     {
         $mailevaSendingId = $sending->maileva['sending_id'];
-        $pdf = $this->mailevaApiClient->getProofOfDeposit($mailevaSendingId);
+        $pdfAndNumber = $this->mailevaApiClient->getProofOfDepositAndRegisteredNumber($mailevaSendingId);
+        $number = $pdfAndNumber[0];
+        $pdf = $pdfAndNumber[1];
         $path = "proofs-of-deposit/{$mailevaSendingId}.pdf";
         Storage::disk('local')->put($path, $pdf);
 
-        return $pdf;
+        return [$number, $pdf];
     }
 }

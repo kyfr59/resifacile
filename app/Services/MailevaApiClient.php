@@ -236,18 +236,27 @@ class MailevaApiClient
         ]);
     }
 
-    public function getProofOfDeposit($sendingId): string
+    /**
+     *
+     * @retuns Array :
+     * - The registered number
+     * - The proof PDF file
+     */
+    public function getProofOfDepositAndRegisteredNumber($sendingId): array
     {
         $recipient = $this->getRecipientFromSendingId($sendingId);
         $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sendingId}/recipients/{$recipient->id}/download_deposit_proof");
-
         if (!$response->successful()) {
             throw new \RuntimeException(
                 "Preuve de dépôt indisponible pour {$sendingId} : ({$response->status()}) {$response->body()}"
             );
         }
 
-        return $response->body();
+        return [
+            $recipient->registered_number,
+            $response->body()
+        ];
+
     }
 
     private function getRecipientFromSendingId($sendingId)

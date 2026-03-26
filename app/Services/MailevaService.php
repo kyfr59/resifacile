@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-use App\Actions\GetDocumentFromSending;
-use App\Actions\GetSenderFromSending;
-// use App\Actions\MakeCouFromCampaign;
 use App\Contracts\PostLetter;
 use App\DataTransferObjects\PostLetter\AddressLinesData;
 use App\DataTransferObjects\PostLetter\SendingData;
@@ -33,21 +30,12 @@ use App\Enums\PostageType;
 use App\Helpers\Accounting;
 use App\Models\Sending;
 use App\Settings\MailevaSettings;
-use DOMDocument;
-use Exception;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use phpseclib3\Net\SFTP;
-use Spatie\ArrayToXml\ArrayToXml;
-use Spatie\LaravelData\DataCollection;
-use ZipArchive;
 use App\Services\MailevaAuthService;
 use Illuminate\Support\Facades\Http;
-use setasign\Fpdi\Fpdi;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Spatie\LaravelData\DataCollection;
 
 class MailevaService implements PostLetter
 {
@@ -60,6 +48,7 @@ class MailevaService implements PostLetter
         private readonly string $login,
         private readonly string $password,
         private MailevaAuthService $auth,
+        private MailevaApiClient $mailevaApiClient,
         protected MailevaSettings $mailevaSettings
     ) {
         $this->baseUrl = config('maileva.base_url').'/registered_mail/v4';
@@ -260,65 +249,13 @@ class MailevaService implements PostLetter
         );
     }
 
-    /**
-     * @param Sending $sending
-     * @return integer The Maileva sending number
-     */
-    private function createSending(Sending $sending): string
+    public function storeProofOfDeposit(Sending $sending): string
     {
-        $sender = (new GetSenderFromSending())->handle($sending->data);
-        $address = $sender->paper_address->address_lines;
+        $mailevaSendingId = $sending->maileva['sending_id'];
+        $pdf = $this->mailevaApiClient->getProofOfDeposit($mailevaSendingId);
+        $path = "proofs-of-deposit/{$mailevaSendingId}.pdf";
+        Storage::disk('local')->put($path, $pdf);
 
-        $data = [
-            'name' => $sending->order->number,
-            'custom_id' => 'sending_'.$sending->id,
-            'custom_data' => time(),
-            'color_printing' => true,
-            'duplex_printing' => true,
-            'optional_address_sheet' => false,
-            'notification_email' => 'do_not_reply@maileva.com',
-            'print_sender_address' => false,
-            'sender_address_line_1' => $address->address_line_1,
-            'sender_address_line_2' => $address->address_line_2,
-            'sender_address_line_3' => $address->address_line_3,
-            'sender_address_line_4' => $address->address_line_4,
-            'sender_address_line_5' => $address->address_line_5,
-            'sender_address_line_6' => $address->address_line_6,
-            'sender_country_code' => 'FR',
-            'archiving_duration' => 0,
-            'envelope_windows_type' => 'SIMPLE',
-            'postage_type' => 'FAST',
-            'treat_undelivered_mail' => false,
-            'notification_treat_undelivered_mail' => [
-                'email@domain.com',
-                'email_bis@domain.com',
-            ],
-        ];
-
-        $response = Http::withToken($this->token)
-            ->acceptJson()
-            ->post($this->baseUrl . '/sendings', $data);
-
-        if (!$response->successful()) {
-
-            Log::channel('maileva')->error("Erreur de création de l'envoi", [
-                'sending_id' => $sending->id,
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
-
-            throw new \RuntimeException(
-                "Erreur avec l'API Maileva : ({$response->status()}): ".$response->body()
-            );
-        }
-
-        $mailevaSendingId = $response['id'];
-
-        Log::channel('maileva')->info("    Création de l'envoi réussie", [
-            'sending_id' => $sending->id,
-            'maileva_id' => $mailevaSendingId
-        ]);
-
-        return $mailevaSendingId;
+        return $pdf;
     }
 }

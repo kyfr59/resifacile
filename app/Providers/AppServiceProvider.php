@@ -10,6 +10,7 @@ use App\Services\CartService;
 use App\Services\DomPdfService;
 use App\Services\MailevaService;
 use App\Services\MailevaAuthService;
+use App\Services\MailevaApiClient;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Settings\MailevaSettings;
@@ -40,8 +41,11 @@ class AppServiceProvider extends ServiceProvider
                 password: config('maileva.password'),
                 auth: app(MailevaAuthService::class),
                 mailevaSettings: app(MailevaSettings::class),
+                mailevaApiClient: app(MailevaApiClient::class),
             );
         });
+
+        $this->app->singleton(MailevaService::class, fn() => app(PostLetter::class));
 
         Blade::if('access', static fn(AppType $appType) => config('site.type') === $appType->value);
 

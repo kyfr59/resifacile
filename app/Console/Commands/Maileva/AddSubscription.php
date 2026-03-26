@@ -19,9 +19,9 @@ class AddSubscription extends Command
         $response = Http::withToken($token)
         ->acceptJson()
         ->post('https://api.sandbox.maileva.net/notification_center/v2/subscriptions', [
-            "event_type"     => "ON_MAIN_DELIVERY_STATUS_UNDELIVERED",
+            "event_type"     => "ON_STATUS_PROCESSED",
             "resource_type"  => "registered_mail/v4/sendings",
-            "callback_url"   => "https://webhook.site/76d13e1f-ad81-4578-ab88-1d7a89a17c9e",
+            "callback_url"   => "https://admin:Tinyfox@preprod.resifacile.fr/webhook-maileva",
             "authentication" => [
                 "basic" => [
                     "login"    => config('maileva.username'),

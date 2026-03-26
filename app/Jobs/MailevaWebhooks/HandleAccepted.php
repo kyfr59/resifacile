@@ -25,6 +25,6 @@ class HandleAccepted implements ShouldQueue
     {
         // Test with :
         // php artisan maileva:simulate-webhook 0553894d-cf8c-4eb6-b6f8-9e06737a46af --event=ON_STATUS_ACCEPTED
-        Log::info("Webhook", ['ACCEPTED bien reçu']);
+        Log::info('ACCEPTED : ', $this->webhookCall->toArray());
     }
 }

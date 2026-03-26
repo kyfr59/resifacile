@@ -4,6 +4,7 @@ namespace App\Console\Commands\Maileva;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use App\Models\Sending;
 
 class SimulateWebhook extends Command
 {
@@ -17,6 +18,8 @@ class SimulateWebhook extends Command
 
     public function handle(): int
     {
+        $sending = Sending::fromMailevaId($this->argument('resource_id'));
+
         $payload = [
             'source'              => 'api.maileva.com',
             'user_id'             => '2335',
@@ -27,7 +30,7 @@ class SimulateWebhook extends Command
             'resource_id'         => $this->argument('resource_id'),
             'resource_location'   => 'https://api.sandbox.maileva.net/registered_mail/v4/sendings/' . $this->argument('resource_id'),
             'resource_name'       => 'sendings',
-            'resource_custom_id'  => $this->option('custom_id'),
+            'resource_custom_id'  => 'sending_'.$sending->id,
             'resource_custom_data'=> $this->option('custom_data'),
             'event_detail'        => null,
         ];

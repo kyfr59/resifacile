@@ -45,4 +45,9 @@ class Sending extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+    public static function fromMailevaId($mailevaId)
+    {
+        return static::where('maileva->sending_id', $mailevaId)->first();
+    }
 }

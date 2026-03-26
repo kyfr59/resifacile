@@ -1,6 +1,8 @@
 <x-mail::message>
 Chère cliente, cher client,
 
+https://www.laposte.fr/outils/suivre-vos-envois?code={{$number}}
+
 Nous vous confirmons le dépôt de votre courrier auprès de La Poste.
 
 Vous trouverez en pièce jointe :

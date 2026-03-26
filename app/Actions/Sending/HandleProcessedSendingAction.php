@@ -5,6 +5,7 @@ namespace App\Actions\Sending;
 use App\Enums\SendingStatus;
 use App\Models\Sending;
 use App\Mail\Admin\MailevaWebhookError;
+use App\Mail\ProofOfDepositRecieved;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Services\MailevaService;
@@ -54,7 +55,7 @@ class HandleProcessedSendingAction
         $number = $pdfAndNumber[0];
         $pdf = $pdfAndNumber[1];
 
-        //Mail::to($sending->user->email)->send(new SendingConfirmation($sending, $pdf));
+        Mail::to($sending->customer->email)->send(new ProofOfDepositRecieved($sending, $number, $pdf));
 
         $sending->status = SendingStatus::PROCESSED;
         $sending->executed_at = now();

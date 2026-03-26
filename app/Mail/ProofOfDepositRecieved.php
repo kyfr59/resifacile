@@ -13,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use ZipArchive;
+use App\Models\Sending;
 
 class ProofOfDepositRecieved extends Mailable
 {
@@ -22,7 +23,9 @@ class ProofOfDepositRecieved extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        protected array $payload,
+        protected Sending $sending,
+        protected string $number,
+        protected string $pdf,
     )
     {}
 
@@ -32,7 +35,7 @@ class ProofOfDepositRecieved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: Str::of($this->payload['payload']['Subject'])->lower()->ucfirst() . ' | ' . config('app.name'),
+            // subject: Str::of($this->payload['payload']['Subject'])->lower()->ucfirst() . ' | ' . config('app.name'),
             tags: ['preuve de depot'],
         );
     }
@@ -45,6 +48,9 @@ class ProofOfDepositRecieved extends Mailable
         return new Content(
             text: 'emails.proof-of-deposit-text',
             markdown: 'emails.proof-of-deposit',
+            with: [
+                'number' => $this->number,
+            ],
         );
     }
 
@@ -55,13 +61,13 @@ class ProofOfDepositRecieved extends Mailable
      */
     public function attachments(): array
     {
-        $attachments = [];
-
-        foreach ($this->payload['payload']['Attachments'] as $attachment) {
-            $attachments[] = Attachment::fromData(fn () => base64_decode($attachment['Content']))
-                ->as($attachment['Name'])
-                ->withMime('application/zip');
-        }
+        return [
+            Attachment::fromData(
+                fn () => $this->pdf
+            )
+            ->as($this->number . '.pdf')
+            ->withMime('application/pdf'),
+        ];
 
         return $attachments;
     }

@@ -73,7 +73,7 @@
             <label
                 for="phone"
                 class="text-xs text-blue-700"
-            >Téléhone</label>
+            >Téléphone</label>
             <input
                 type="phone"
                 placeholder="téléphone"

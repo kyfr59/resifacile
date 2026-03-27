@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="text-xs text-gray-400 text-center pt-3">
-        Le descripteur qui apparaitra sur votre relevé bancaire est : HPY*STOP-CONTRAT.COM
+        Le descripteur qui apparaitra sur votre relevé bancaire est : HPY*RESIFACILE.FR
     </div>
     <div class="mt-3 bg-white p-6 rounded-xl shadow-xl flex-col gap-3 flex">
         @include('components.sale-process.order')

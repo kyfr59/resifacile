@@ -18,7 +18,7 @@
                 </div>
                 <livewire:letter-recipient-form/>
                 <div class="text-[.7rem] text-justify">
-                    Kolibri Network SAS collecte vos données personnelles afin de gérer et suivre vos contrats, ainsi que de traiter et suivre vos commandes. Vous avez certains droits à votre disposition, notamment le droit d'accès, de rectification, de mise à jour, d'effacement, et le droit de retirer votre consentement à tout moment. De plus, vous avez le droit à la limitation du traitement, le droit d'opposition, le droit à la portabilité, le droit de définir des directives concernant vos données après votre décès, et enfin, le droit d'introduire une réclamation auprès de la CNIL.
+                    Kolibri Network SARL collecte vos données personnelles afin de gérer et suivre vos contrats, ainsi que de traiter et suivre vos commandes. Vous avez certains droits à votre disposition, notamment le droit d'accès, de rectification, de mise à jour, d'effacement, et le droit de retirer votre consentement à tout moment. De plus, vous avez le droit à la limitation du traitement, le droit d'opposition, le droit à la portabilité, le droit de définir des directives concernant vos données après votre décès, et enfin, le droit d'introduire une réclamation auprès de la CNIL.
                     Pour obtenir davantage d'informations sur la protection de vos données personnelles, les traitements effectués par Kolibri Network SARL, ainsi que les démarches pour exercer vos droits, veuillez consulter notre <a href="{{ route('pages.content', ['page' => 'grpd']) }}">politique de confidentialité</a>.
                 </div>
             </div>

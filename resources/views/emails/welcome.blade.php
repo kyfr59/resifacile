@@ -14,7 +14,7 @@ Votre espace client est accessible à l'adresse suivante :
 
 Pour vous identifier, vous recevrez un email contenant un lien sécurisé qui vous permettra d'accéder à votre compte.
 
-Pour toutes demandes supplémentaires, notre service client se tient à votre entière disposition du lundi au vendredi de 08h00 à 20h00 par téléphone au 0 800 942 588 (appel gratuit) ou par email à {{ config('mail.from.address') }}.
+Pour toutes demandes supplémentaires, notre service client se tient à votre entière disposition du lundi au vendredi de 08h00 à 20h00 par téléphone au 0805 690 500 (appel gratuit) ou par email à {{ config('mail.from.address') }}.
 
 Merci de votre confiance et à bientôt sur {{ config('app.name') }}
 

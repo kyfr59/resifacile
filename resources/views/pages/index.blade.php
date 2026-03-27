@@ -34,7 +34,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                     "@type": "ContactPoint",
                     "email": "contact@resifacile.fr",
                     "url": "{{ url()->current() }}",
-                    "telephone": "0 800 942 588",
+                    "telephone": "0805 690 500",
                     "areaServed" : ["FR"],
                     "availableLanguage" : ["French"],
                     "hoursAvailable": [{

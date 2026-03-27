@@ -51,6 +51,7 @@ class HandleCaptured implements ShouldQueue
 
         $transactionStatus = TransactionStatus::code($transactionData['status']);
 
+        // Est-ce une transaction d'abonnement mensuel ?
         if ($transactionData['custom_data']['is_subscription_transaction']) {
 
             // Il s'agit d'une transaction d'abonnement mensuel
@@ -104,9 +105,10 @@ class HandleCaptured implements ShouldQueue
 
             $document = null;
 
-            if($transactionData['custom_data']['has_subscription']) { // Un abonnement est demandé
+            if($transactionData['custom_data']['has_subscription']) { // La création d'un abonnement est demandée
 
                 /*
+                // Stockage des infos de la carte de crédit
                 (new MakeNewPaymentMethod($transactionable->customer))(
                     $transactionData['payment_method']['card_id'],
                     [
@@ -127,19 +129,26 @@ class HandleCaptured implements ShouldQueue
                 );
                 */
 
-                (new CreateSubscriptionAction)(new SubscriptionData(
-                    designation: $subscriptionSettings->label,
-                    price: $subscriptionSettings->recurring_amount,
-                    status: SubscriptionStatus::TRIAL,
-                    meta_data: [
-                        'order_id' => $transactionData['custom_data']['order_id'],
-                        'mid' => $transactionData['mid'],
-                    ],
-                    customer_id: $transactionData['custom_data']['customer_id'],
+                // On vérifie si le client n'a pas encore d'abonnement
+                $existingSubscription = Subscription::where('customer_id', $transactionData['custom_data']['customer_id'])
+                    ->whereNotIn('status', [SubscriptionStatus::CANCELED])
+                    ->first();
 
-                    current_period_end_at: now()->addDays(16),
-                    discount_rate: $subscriptionSettings->discount,
-                ));
+                if (!$existingSubscription) {
+                    (new CreateSubscriptionAction)(new SubscriptionData(
+                        designation: $subscriptionSettings->label,
+                        price: $subscriptionSettings->recurring_amount,
+                        status: SubscriptionStatus::TRIAL,
+                        meta_data: [
+                            'order_id' => $transactionData['custom_data']['order_id'],
+                            'mid' => $transactionData['mid'],
+                        ],
+                        customer_id: $transactionData['custom_data']['customer_id'],
+
+                        current_period_end_at: now()->addDays(16),
+                        discount_rate: $subscriptionSettings->discount,
+                    ));
+                }
 
                 $document = (new CreateServiceAgreementAction())($transaction->transactionable);
 

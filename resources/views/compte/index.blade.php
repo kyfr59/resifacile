@@ -90,18 +90,23 @@
                                                         content: {location: {url: previewUrl }},
                                                         metaData: {fileName: previewName }
                                                     }, {
-                                                        embedMode: 'IN_LINE',
-                                                        showDownloadPDF: false,
-                                                        showPrintPDF: false,
+                                                        embedMode: 'SIZED_CONTAINER',
+                                                        showDownloadPDF: true,
+                                                        showPrintPDF: true,
                                                     })
 
-                                                    this.hidden = true
+                                                    this.hidden = true,
+                                                    document.body.style.overflow = 'hidden'
                                                 }
                                             }">
-                                                <div class="fixed z-50 inset-0 p-6 flex justify-center items-start bg-blue-700 bg-opacity-75" x-show="hidden" x-cloak>
+                                                <div class="fixed z-50 inset-0 p-6 flex justify-center items-start bg-blue-700 bg-opacity-75"
+                                                    x-show="hidden"
+                                                    x-cloak
+                                                    x-on:click="hidden = false; document.body.style.overflow = ''"
+                                                >
                                                     <div class="bg-[#7f7f7f] shadow-xl w-full max-w-4xl relative overflow-hidden rounded-md">
                                                         <button class="w-6 h-6 absolute top-4 right-4 cursor-pointer"
-                                                                x-on:click.prevent="hidden = false"
+                                                                x-on:click.prevent="hidden = false; document.body.style.overflow = ''"
                                                         >
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" class="w-6 h-6 text-blue-700">
                                                                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -109,7 +114,7 @@
                                                                 </g>
                                                             </svg>
                                                         </button>
-                                                        <div id="adobe-dc-view"></div>
+                                                        <div id="adobe-dc-view" style="height:95vh;"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex flex-col sm:flex-row sm:gap-3 px-3 cursor-pointer divide-y divide-gray-200 sm:divide-y-0" x-on:click.prevent="show = !show">

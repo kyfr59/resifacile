@@ -87,7 +87,7 @@ class Customer extends Authenticatable
 
     public function subscription(): HasOne
     {
-        return $this->hasOne(Subscription::class);
+        return $this->hasOne(Subscription::class)->latestOfMany('created_at');
     }
 
     public function routeNotificationForVonage(): string

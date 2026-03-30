@@ -19,6 +19,8 @@
         <a href="https://www.laposte.fr/outils/suivre-vos-envois" target="_blank">Suivre un envoi</a>
         <a href="{{ route('pages.acces-plus') }}">Accès+</a>
         <a href="{{ route('guides.index') }}">Guides</a>
-        <a class="font-semibold" href="{{ route('login') }}">Se connecter</a>
+        @guest
+            <a class="font-semibold" href="{{ route('login') }}">Se connecter</a>
+        @endguest
     </nav>
 </div>

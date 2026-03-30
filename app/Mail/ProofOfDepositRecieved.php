@@ -35,7 +35,7 @@ class ProofOfDepositRecieved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            // subject: Str::of($this->payload['payload']['Subject'])->lower()->ucfirst() . ' | ' . config('app.name'),
+            subject: "Suivi de votre courrier / preuve de dépôt - ".config('app.name'),
             tags: ['preuve de depot'],
         );
     }

@@ -20,10 +20,10 @@ class LetterController extends Controller
      */
     public function edit(?string $slug = null, Cart $cart): View
     {
-        if($cart->getProduct() !== $slug) {
+        //if($cart->getProduct() !== $slug) {
             $cart->destroy();
             $cart->addProduct($slug);
-        }
+        //}
 
         $product = null;
         $templateModel = null;

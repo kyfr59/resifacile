@@ -148,13 +148,13 @@ class HandleCaptured implements ShouldQueue
                         current_period_end_at: now()->addDays(16),
                         discount_rate: $subscriptionSettings->discount,
                     ));
+
+                    $document = (new CreateServiceAgreementAction())($transaction->transactionable);
+
+                    Mail::to($transaction->transactionable->customer->email)->send(
+                        new SubcriptionCreated(transaction: $transaction, service_agreement: $document)
+                    );
                 }
-
-                $document = (new CreateServiceAgreementAction())($transaction->transactionable);
-
-                Mail::to($transaction->transactionable->customer->email)->send(
-                    new SubcriptionCreated(transaction: $transaction, service_agreement: $document)
-                );
             }
 
             $body = (new InvoiceCreated(transaction: $transaction))->render();

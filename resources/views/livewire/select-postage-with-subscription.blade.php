@@ -12,7 +12,7 @@
                 </g>
             </svg>
         </div>
-        <div class="text-2xl md:text-3xl font-semibold pb-2 relative z-[2]">Lettre recommandé</div>
+        <div class="text-2xl md:text-3xl font-semibold pb-2 relative z-[2]">Lettre recommandée</div>
         <div class="font-semibold relative z-[2]">Lettre de résiliation + envoi</div>
         <ul class="relative z-[2]">
             <li>Distribution J+3</li>

@@ -5,7 +5,7 @@
             <div class="text-gradient">Rapide & facile</div>
         </div>
         <div class="text-2xl md:text-3xl leading-normal font-semibold md:pl-12">
-            <div>Gagnez du temps, simplifliez-vous cette tâche souvent très ennuyante !</div>
+            <div>Gagnez du temps, simplifiez-vous cette tâche souvent très ennuyante !</div>
             <div class="text-gradient">7/7 & 24/24</div>
         </div>
         <div class="bg-white flex items-center w-full md:ml-12 shadow-2xl rounded-2xl overflow-hidden">

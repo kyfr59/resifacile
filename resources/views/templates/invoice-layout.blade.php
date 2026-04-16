@@ -41,15 +41,15 @@
             <tr>
                 <td></td>
                 <td style="color: #1d4ed8;">
+                    @php
+                        $address = $customer->addresses()->where('is_billing_address', true)->first() ?? $customer->addresses()->first();
+                    @endphp
                     @if($customer->compagny)
                         <div style="font-size: 18px;">{{ $customer->compagny }}</div>
                     @endif
-                    <div style="font-size: 18px;">{{ $customer->name }}</div>
+                    <div style="font-size: 18px;">{{ $address->first_name }} {{ $address->last_name }}</div>
                     <div>{{ $customer->email }}</div>
                     <div>
-                        @php
-                            $address = $customer->addresses()->where('is_billing_address', true)->first() ?? $customer->addresses()->first();
-                        @endphp
                         @if($address->address_line_2)
                             {{ $address->address_line_2 }}<br/>
                         @endif

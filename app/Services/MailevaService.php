@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\LaravelData\DataCollection;
+use Illuminate\Support\Facades\DB;
 
 class MailevaService implements PostLetter
 {
@@ -60,24 +61,32 @@ class MailevaService implements PostLetter
      */
     public function newSending(): SendingData
     {
-        $mailevaSettings = $this->mailevaSettings;
-        ++$mailevaSettings->sending_number;
+        return DB::transaction(function () {
+            DB::table('settings')
+                ->where('group', 'maileva')
+                ->lockForUpdate()
+                ->first();
 
-        $sending = new SendingData(
-            user: new UserData(
-                auth_type: 'PLAINTEXT',
-                login: $this->login,
-                password: $this->password,
-            ),
-            requests: RequestData::collection([]),
-            version: $mailevaSettings->version,
-            name: $mailevaSettings->name,
-            track_id: Accounting::makeNumber($mailevaSettings->sending_prefix, $mailevaSettings->sending_number),
-        );
+            $mailevaSettings = $this->mailevaSettings;
+            $mailevaSettings->refresh();
+            ++$mailevaSettings->sending_number;
 
-        $mailevaSettings->save();
+            $sending = new SendingData(
+                user: new UserData(
+                    auth_type: 'PLAINTEXT',
+                    login: $this->login,
+                    password: $this->password,
+                ),
+                requests: RequestData::collection([]),
+                version: $mailevaSettings->version,
+                name: $mailevaSettings->name,
+                track_id: Accounting::makeNumber($mailevaSettings->sending_prefix, $mailevaSettings->sending_number),
+            );
 
-        return $sending;
+            $mailevaSettings->save();
+
+            return $sending;
+        });
     }
 
     /**

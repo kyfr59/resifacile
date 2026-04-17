@@ -16,6 +16,7 @@ use App\Http\Controllers\UnsubscribeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Account\PreviewDocumentController;
+use App\Http\Controllers\Account\PreviewProofController;
 use App\Http\Controllers\Account\PreviewInvoiceController;
 
 //include_once __DIR__ . '/test.php';
@@ -193,3 +194,10 @@ Route::get(
 )
     ->middleware('auth:site')
     ->name('frontend.account.preview.document');
+
+Route::get(
+    '/account/preview/proof/{id}',
+    PreviewProofController::class,
+)
+    ->middleware('auth:site')
+    ->name('frontend.account.preview.proof');

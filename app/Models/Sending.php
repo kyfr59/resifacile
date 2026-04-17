@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\DataTransferObjects\PostLetter\SendingData;
 use App\Enums\SendingStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Sending extends Model
 {
@@ -49,5 +50,18 @@ class Sending extends Model
     public static function fromMailevaId($mailevaId)
     {
         return static::where('maileva->sending_id', $mailevaId)->first();
+    }
+
+    public function hasProofOfDeposit(): bool
+    {
+        $mailevaSendingId = $this->maileva['sending_id'] ?? null;
+
+        if (!$mailevaSendingId) {
+            return false;
+        }
+
+        $path = "proofs-of-deposit/{$mailevaSendingId}.pdf";
+
+        return Storage::disk('local')->exists($path);
     }
 }

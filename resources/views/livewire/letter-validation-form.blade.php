@@ -22,6 +22,10 @@
     <form wire:submit.prevent="save" class="relative flex flex-col-reverse md:grid md:grid-cols-3 gap-6 md:gap-12 items-start">
         <div class="w-full col-span-1 md:col-span-2 flex flex-col gap-6">
             <div class="bg-white overflow-hidden shadow-md shadow-gray-200/20 sm:border border-gray-200 sm:rounded-[17px] flex flex-col">
+            <div id="custom-loader" style="justify-content: center; margin-top: 100px; color: #666">
+                <p>Ouverture du document en cours...</p>
+            </div>
+            <div id="adobe-dc-view"></div>
                 <div id="adobe-dc-view" class="w-full" wire:ignore></div>
             </div>
         </div>
@@ -207,7 +211,20 @@
                     divId: 'preview-' + index
                 })
 
-                adobeDCView.previewFile({
+            document.getElementById("custom-loader").style.display = "flex";
+            document.getElementById("adobe-dc-view").style.visibility = "hidden";
+
+            adobeDCView.registerCallback(
+                AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
+                function(event) {
+                    if (event.type === "APP_RENDERING_DONE") {
+                        document.getElementById("custom-loader").style.display = "none";
+                        document.getElementById("adobe-dc-view").style.visibility = "visible";
+                    }
+                }
+            );
+
+            adobeDCView.previewFile({
                     content: {location: {url: route('frontend.letter.preview', {id: index})}},
                     metaData: {fileName: doc['readable_file_name']}
                 }, {
@@ -224,6 +241,7 @@
             } else {
                 Object.keys(documentViewers).map((key) => pdfViewer(key, documentViewers[key]))
             }
+
         })
     </script>
 @endpush

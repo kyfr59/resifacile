@@ -37,7 +37,7 @@
             <li>&nbsp;</li>
         </ul>
         <div class="relative z-[2] mt-3 w-full bg-gradient-to-tl from-blue-700 to-blue-500 text-white h-16 px-6 rounded-xl inline-flex items-center gap-6 justify-center text-lg font-semibold">
-            J'envoie une lettre suivi
+            J'envoie une lettre suivie
         </div>
         <div class="flex justify-end w-full pt-6 relative z-[2]">
             <div class="text-gray-400 italic mr-3 pt-4">À partir de</div>

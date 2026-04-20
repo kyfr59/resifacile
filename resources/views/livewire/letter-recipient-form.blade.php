@@ -66,7 +66,7 @@
     <div class="pt-6 flex flex-col">
         <div class="pb-6 flex flex-col-reverse sm:flex-row gap-6 justify-between">
             <a
-                href="{{ url()->previous() }}"
+                href="{{ session('brand_url') }}"
                 class="hover:outline hover:outline-offset-2 hover:outline-4 hover:outline-blue-100 text-gray-800 border border-gray-300 h-14 px-6 rounded-xl inline-flex items-center gap-6 justify-center">
                 Retour
             </a>

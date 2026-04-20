@@ -63,6 +63,8 @@ class LetterEditForm extends Component
 
     public function mount(): void
     {
+        session(['brand_url' => $_SERVER['REQUEST_URI']]);
+
         $document = App::make(Cart::class)
             ->getDocuments()
             ->filter(

@@ -22,7 +22,7 @@
         </div>
         <div style="position:relative;width:100%;">
             <div style="box-sizing: border-box;position:relative;margin-left:49.44444444%;padding:0 0 0.2cm 1cm;">
-                À {{ $data['from_city'] }}, le {{ $data['date'] }}
+                 {{ $data['clean_city'] }}, le {{ $data['date'] }}
             </div>
             @if($data['reference'])
                 <div><span style="font-weight: bold;">Réf. :</span> {{ $data['reference'] }}</div>

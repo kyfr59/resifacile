@@ -35,12 +35,16 @@ class DomPdfService implements Pdf
         $path = 'documents/' . $documentData->file_name;
         $localPath = 'temp/' . $documentData->file_name;
 
+        $data = $documentData->toArray()['model']['group_fields'];
+        $data['clean_city'] = $this->fixArticle("À ".$data['from_city']);
+
         $stream = DomPdf::loadView('templates.letter', [
             'recipient' => $recipientData->toArray(),
             'sender' => $senderData->toArray(),
             'letter' => $documentData->toArray()['letter'],
-            'data' => $documentData->toArray()['model']['group_fields'],
+            'data' => $data,
         ])->stream();
+
 
         Storage::put(
             $path,
@@ -108,4 +112,36 @@ class DomPdfService implements Pdf
             $this->cart->updateAllDocuments($documents);
         }
     }
+
+    private function fixArticle(string $text): string {
+    // "à le" → "au"
+    $text = preg_replace_callback(
+        '/\b([Àà]) [Ll]e\b/u',
+        fn($m) => ctype_upper($m[1]) ? 'Au' : 'au',
+        $text
+    );
+
+    // "à les" → "aux"
+    $text = preg_replace_callback(
+        '/\b([Àà]) [Ll]es\b/u',
+        fn($m) => ctype_upper($m[1]) ? 'Aux' : 'aux',
+        $text
+    );
+
+    // "de le" → "du"
+    $text = preg_replace_callback(
+        '/\b([Dd])e [Ll]e\b/u',
+        fn($m) => ctype_upper($m[1]) ? 'Du' : 'du',
+        $text
+    );
+
+    // "de les" → "des"
+    $text = preg_replace_callback(
+        '/\b([Dd])e [Ll]es\b/u',
+        fn($m) => ctype_upper($m[1]) ? 'Des' : 'des',
+        $text
+    );
+
+    return ucfirst($text);
+}
 }

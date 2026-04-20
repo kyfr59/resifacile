@@ -3,7 +3,7 @@ Bienvenue sur {{ config('app.name') }},
 
 Merci pour votre inscription !
 
-Vous trouverez ci-dessous votre identifiant de connexion :
+Vous trouverez ci-dessous votre identifiant de connexion :<br />
 Identifiant : {{ $data->transactionable->customer->email }}
 
 Votre espace client est accessible à l'adresse suivante :
@@ -19,5 +19,5 @@ Pour toutes demandes supplémentaires, notre service client se tient à votre en
 Merci de votre confiance et à bientôt sur {{ config('app.name') }}
 
 Bien à vous,<br>
-L'équipe d'{{ config('app.name') }}
+L'équipe {{ config('app.name') }}
 </x-mail::message>

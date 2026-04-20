@@ -49,7 +49,7 @@ class LetterValidationForm extends Component
     public bool $customerCertifiesDocumentsAreCompliant = false;
 
     protected $messages = [
-        'customerCertifiesDocumentsAreCompliant' => "Vous devez certfier votre commande",
+        'customerCertifiesDocumentsAreCompliant' => "Vous devez certifier votre commande",
     ];
 
     private function postageAmount(mixed $cart): void

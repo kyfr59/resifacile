@@ -19,9 +19,11 @@ class SendingResource extends Resource
 {
     protected static ?string $model = Sending::class;
 
+    protected static ?string $navigationGroup = 'CRM';
+
     protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
 
-    protected static ?string $navigationGroup = 'Courriers';
+    protected static ?string $navigationLabel = 'Courriers';
 
     public static function form(Form $form): Form
     {
@@ -37,6 +39,7 @@ class SendingResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
+                    ->label('ID')
                     ->sortable(),
 
                 TextColumn::make('status')
@@ -47,13 +50,21 @@ class SendingResource extends Resource
                         SendingStatus::ACCEPTED => 'info',
                         SendingStatus::PROCESSED => 'success',
                     })
+                    ->label('Statut')
                     ->sortable(),
 
                 TextColumn::make('maileva_sending_id')
-                    ->label('Maileva ID'),
+                    ->label('ID Maileva')
+                    ->default('-'),
 
                 TextColumn::make('created_at')
                     ->dateTime()
+                    ->label('Créé le')
+                    ->sortable(),
+
+                TextColumn::make('executed_at')
+                    ->dateTime()
+                    ->label('Envoyé le')
                     ->sortable(),
             ])
             ->defaultSort('created_at', 'desc');

@@ -31,6 +31,7 @@ class SendingResource extends Resource
             ]);
     }
 
+
     public static function table(Table $table): Table
     {
         return $table
@@ -42,15 +43,14 @@ class SendingResource extends Resource
                     ->badge()
                     ->color(fn (SendingStatus $state) => match ($state) {
                         SendingStatus::DRAFT => 'gray',
-                        SendingStatus::ACTIVE => 'warning',
-                        SendingStatus::PENDING_EXECUTION => 'info',
-                        SendingStatus::EXECUTED => 'success',
+                        SendingStatus::SENDED => 'warning',
+                        SendingStatus::ACCEPTED => 'info',
+                        SendingStatus::PROCESSED => 'success',
                     })
                     ->sortable(),
 
-                TextColumn::make('provider_id')
-                    ->label('Maileva ID')
-                    ->searchable(),
+                TextColumn::make('maileva_sending_id')
+                    ->label('Maileva ID'),
 
                 TextColumn::make('created_at')
                     ->dateTime()

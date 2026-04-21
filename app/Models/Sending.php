@@ -52,6 +52,11 @@ class Sending extends Model
         return static::where('maileva->sending_id', $mailevaId)->first();
     }
 
+    public function getMailevaSendingIdAttribute()
+    {
+        return $this->maileva['sending_id'] ?? null;
+    }
+
     public function hasProofOfDeposit(): bool
     {
         $mailevaSendingId = $this->maileva['sending_id'] ?? null;

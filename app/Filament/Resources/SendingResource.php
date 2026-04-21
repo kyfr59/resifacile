@@ -57,6 +57,22 @@ class SendingResource extends Resource
                     ->label('ID Maileva')
                     ->default('-'),
 
+                TextColumn::make('customer')
+                    ->formatStateUsing(fn (object $state): string =>
+                        '<a href="' . route('filament.admin.resources.customers.view', ['record' => $state->id]) . '">' . $state->name . '</a>'
+                    )
+                    ->label('Client')
+                    ->alignCenter()
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('customer', function ($query) use ($search) {
+                            return $query
+                                ->where('first_name', 'ilike', "%{$search}%")
+                                ->orWhere('last_name', 'ilike', "%{$search}%")
+                                ->orWhere('email', 'ilike', "%{$search}%");
+                        });
+                    })
+                    ->html(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->label('Créé le')

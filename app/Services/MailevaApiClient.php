@@ -208,12 +208,12 @@ class MailevaApiClient
     public function submitSending(string $mailevaSendingId): void
     {
         // Fake for instant
-        Http::fake([
-            '*/sendings/*/submit' => Http::response(
-                null,
-                204
-            ),
-        ]);
+        //Http::fake([
+        //    '*/sendings/*/submit' => Http::response(
+        //        null,
+        //        204
+        //    ),
+        //]);
 
         $response = Http::withToken($this->token)
             ->post($this->baseUrl . "/sendings/{$mailevaSendingId}/submit");

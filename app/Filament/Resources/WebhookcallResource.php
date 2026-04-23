@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\WebhookCallResource\Pages;
 use App\Models\WebhookCall;
-use App\Models\Sending;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -112,15 +111,10 @@ class WebhookCallResource extends Resource
                         );
                     }),
 
-                Tables\Columns\TextColumn::make('sending_id')
-                    ->label('ID Sending')
-                    ->alignCenter()
-                    ->getStateUsing(fn ($record) => Sending::fromMailevaId($record->payload['resource_id'])?->id ?? '-')
-                    ->url(fn ($record) =>
-                        ($sending = Sending::fromMailevaId($record->payload['resource_id']))
-                            ? route('filament.admin.resources.sendings.view', ['record' => $sending->id])
-                            : null
-                    ),
+                Tables\Columns\TextColumn::make('from_maileva_id')
+                    ->label('ID Maileva')
+                    ->getStateUsing(fn ($record) => data_get($record->maileva, 'sending_id'))
+                    ->default('-'),
 
                 Tables\Columns\TextColumn::make('payload_event_type')
                     ->label('Événement')

@@ -55,6 +55,8 @@ class SendingResource extends Resource
 
                 TextColumn::make('maileva_sending_id')
                     ->label('ID Maileva')
+                    ->copyable()
+                    ->copyMessage('ID Maileva copié')
                     ->default('-'),
 
                 TextColumn::make('customer')

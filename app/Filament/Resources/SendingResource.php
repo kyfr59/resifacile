@@ -33,6 +33,12 @@ class SendingResource extends Resource
             ]);
     }
 
+    /*
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
+        */
 
     public static function table(Table $table): Table
     {

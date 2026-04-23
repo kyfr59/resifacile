@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -39,14 +40,19 @@ class UserResource extends Resource
                     ->placeholder(__('Email')),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
                     ->minLength(8)
+                    ->required(fn($context) => $context === 'create')
                     ->placeholder(__('Password')),
                 Forms\Components\TextInput::make('password_confirmation')
                     ->password()
-                    ->required()
                     ->minLength(8)
+                    ->required(fn($context) => $context === 'create')
                     ->placeholder(__('Confirm Password')),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->label('Rôles')
             ]);
     }
 
@@ -60,6 +66,9 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->badge()
+                    ->label('Rôles'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('d/m/Y'),
                 Tables\Columns\TextColumn::make('created_at')

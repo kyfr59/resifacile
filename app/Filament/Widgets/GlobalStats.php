@@ -8,9 +8,13 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Flowframe\Trend\Trend;
 use Illuminate\Support\Facades\DB;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
+
 
 class GlobalStats extends BaseWidget
 {
+    use HasWidgetShield;
+
     protected function getStats(): array
     {
         return [
@@ -33,11 +37,6 @@ class GlobalStats extends BaseWidget
 
     public static function canView(): bool
     {
-        return match (auth()->user()->email) {
-            'jofrey@qilink.fr' => true,
-            'samuel@eurocb.net' => true,
-            'thomas@mediagroup.app' => true,
-            default => false,
-        };
+        return true;
     }
 }

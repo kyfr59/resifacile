@@ -13,6 +13,7 @@
         "ext-simplexml": "*",
         "ext-zip": "*",
         "barryvdh/laravel-dompdf": "^2.0",
+        "bezhansalleh/filament-shield": "^3.9",
         "creagia/filament-code-field": "^2.0",
         "filament/filament": "^3.0-stable",
         "filament/spatie-laravel-settings-plugin": "^3.0-stable",
@@ -38,15 +39,16 @@
         "spatie/array-to-xml": "^3.2",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-data": "^3.9",
+        "spatie/laravel-permission": "^6.25",
         "spatie/laravel-settings": "^3.2",
         "spatie/laravel-sitemap": "^7.0",
         "spatie/laravel-sluggable": "^3.5",
         "spatie/laravel-webhook-client": "^3.2",
         "spatie/yaml-front-matter": "^2.0",
         "spiral/roadrunner": "^2023.3",
-        "tightenco/ziggy": "^1.8",
         "symfony/http-client": "^7.4",
-        "symfony/postmark-mailer": "^7.1"
+        "symfony/postmark-mailer": "^7.1",
+        "tightenco/ziggy": "^1.8"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

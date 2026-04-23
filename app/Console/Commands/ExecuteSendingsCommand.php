@@ -20,7 +20,7 @@ class ExecuteSendingsCommand extends Command
      */
     public function handle(): int
     {
-        $sendings = Sending::where('status', SendingStatus::DRAFT)->limit(1)->get();
+        $sendings = Sending::where('status', SendingStatus::WAITING)->limit(1)->get();
         $ids = $sendings->pluck('id')->implode(',');
 
         Log::channel('maileva')->info("  ");

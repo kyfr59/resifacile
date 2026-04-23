@@ -45,7 +45,7 @@ class SendingResource extends Resource
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (SendingStatus $state) => match ($state) {
-                        SendingStatus::DRAFT => 'gray',
+                        SendingStatus::WAITING => 'gray',
                         SendingStatus::SENDED => 'warning',
                         SendingStatus::ACCEPTED => 'info',
                         SendingStatus::PROCESSED => 'success',

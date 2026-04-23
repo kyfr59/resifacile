@@ -155,6 +155,10 @@ class HandleCaptured implements ShouldQueue
                         new SubcriptionCreated(transaction: $transaction, service_agreement: $document)
                     );
                 }
+            } else {
+                Mail::to($transaction->transactionable->customer->email)->send(
+                    new SubcriptionCreated(transaction: $transaction, service_agreement: $document)
+                );
             }
 
             $body = (new InvoiceCreated(transaction: $transaction))->render();

@@ -41,14 +41,12 @@ class ProcessSending implements ShouldQueue
         $orchestrator->process($this->sending);
 
         $this->sending->status = SendingStatus::SENDED;
-        $this->sending->executed_at = now();
+        $this->sending->sended_at = now();
         $this->sending->save();
 
         Log::channel('maileva')->info("    Statut mis à jour : SENDED", [
             'sending_id' => $this->sending->id,
         ]);
         Log::channel('maileva')->info("");
-
-        Mail::to($this->sending->customer)->send(new SendingExecuted($this->sending));
     }
 }

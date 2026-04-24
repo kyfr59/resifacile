@@ -46,7 +46,7 @@ class HandleProcessed implements ShouldQueue
             throw new MailevaException(
                 message  : "Impossible de récupérer l'envoi depuis un appel Maileva",
                 context  : self::class . '::handle',
-                extraData: ['resource_id' => $resource_id],
+                extraData: ['resource_id' => $resource_id, 'payload' => $payload],
             );
         }
 

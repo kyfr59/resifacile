@@ -39,12 +39,13 @@ class DeleteAccount extends Component
             ->log('Le client a supprimé son compte');
 
         // Account deleting
+        $customer->documents()->delete();
         $customer->delete();
 
         $this->showModal = false;
 
         // Redirects to homepage
-        return redirect()->route('home');
+        return redirect('/');
     }
 
     public function render()

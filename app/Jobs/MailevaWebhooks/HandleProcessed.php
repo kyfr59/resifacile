@@ -52,13 +52,6 @@ class HandleProcessed implements ShouldQueue
 
         if ($sending->status === SendingStatus::PROCESSED) {
             return response()->json(['ok' => true], 201);
-            /*
-            throw new MailevaException(
-                message  : "L'envoi a déjà été traité",
-                context  : self::class . '::handle',
-                extraData: ['resource_id' => $resource_id],
-            );
-            */
         }
 
         // Get and store proof of déposit

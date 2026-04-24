@@ -81,17 +81,25 @@ class SendingResource extends Resource
                     })
                     ->html(),
 
-                TextColumn::make('created_at')
+                TextColumn::make('waiting_at')
                     ->dateTime()
                     ->label('Créé le')
                     ->sortable(),
 
-                TextColumn::make('executed_at')
+                TextColumn::make('sended_at')
                     ->dateTime()
                     ->label('Envoyé le')
                     ->sortable(),
+                TextColumn::make('accepted_at')
+                    ->dateTime()
+                    ->label('Accepté le')
+                    ->sortable(),
+                TextColumn::make('processed_at')
+                    ->dateTime()
+                    ->label('Traité le')
+                    ->sortable(),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('waiting_at', 'desc');
     }
 
     public static function infolist(Infolist $infolist): Infolist

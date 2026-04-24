@@ -22,6 +22,7 @@ class AddRequestToSending
         $sending->status = SendingStatus::WAITING;
         $sending->customer_id = $order->customer->id;
         $sending->order_id = $order->id;
+        $sending->waiting_at = now();
 
         $data = App::make(PostLetter::class)->newSending();
         $data->requests[] = $requestData;

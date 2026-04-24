@@ -13,22 +13,28 @@ class Sending extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'data',
         'provider_id',
         'status',
-        'sent_at',
-        'delivered_at',
         'campaign_id',
         'maileva',
+        'waiting_at',
+        'sended_at',
+        'accepted_at',
+        'processed_at',
     ];
 
     protected $casts = [
-        'data' => SendingData::class,
-        'status' => SendingStatus::class,
-        'sent_at' => 'datetime',
-        'delivered_at' => 'datetime',
-        'maileva' => 'array',
+        'data'         => SendingData::class,
+        'status'       => SendingStatus::class,
+        'maileva'      => 'array',
+        'waiting_at'   => 'datetime',
+        'sended_at'    => 'datetime',
+        'accepted_at'  => 'datetime',
+        'processed_at' => 'datetime',
     ];
 
     public function order(): BelongsTo
@@ -41,18 +47,17 @@ class Sending extends Model
         return $this->belongsTo(Customer::class);
     }
 
-
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
     }
 
-    public static function fromMailevaId($mailevaId)
+    public static function fromMailevaId($mailevaId): ?static
     {
         return static::where('maileva->sending_id', $mailevaId)->first();
     }
 
-    public function getMailevaSendingIdAttribute()
+    public function getMailevaSendingIdAttribute(): ?string
     {
         return $this->maileva['sending_id'] ?? null;
     }
@@ -61,12 +66,10 @@ class Sending extends Model
     {
         $mailevaSendingId = $this->maileva['sending_id'] ?? null;
 
-        if (!$mailevaSendingId) {
+        if (! $mailevaSendingId) {
             return false;
         }
 
-        $path = "proofs-of-deposit/{$mailevaSendingId}.pdf";
-
-        return Storage::disk('local')->exists($path);
+        return Storage::disk('local')->exists("proofs-of-deposit/{$mailevaSendingId}.pdf");
     }
 }

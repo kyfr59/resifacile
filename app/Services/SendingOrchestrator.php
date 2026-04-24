@@ -6,6 +6,7 @@ use App\Actions\GetDocumentFromSending;
 use App\Actions\GetSenderFromSending;
 use App\Models\Sending;
 use Illuminate\Support\Facades\Log;
+use App\Exceptions\MailevaException;
 
 class SendingOrchestrator
 {
@@ -37,19 +38,46 @@ class SendingOrchestrator
             $this->client->submitSending($mailevaSendingId);
 
         } catch (\RuntimeException $e) {
-            if (isset($mailevaSendingId)) {
-                try {
-                    $this->client->deleteSending($mailevaSendingId);
-                } catch (\RuntimeException $deleteException) {
-                    Log::channel('maileva')->error("Échec du rollback Maileva", [
-                        'maileva_sending_id' => $mailevaSendingId,
-                        'error'              => $deleteException->getMessage(),
-                    ]);
-                }
-            }
-            throw $e;
+
+            $this->rollback($mailevaSendingId, $sending, $e);
+
+            throw new MailevaException(
+                message    : "Échec de la transmission de l'envoi #{$sending->id} : {$e->getMessage()}",
+                context    : self::class . '::process',
+                extraData  : [
+                    'sending_id'          => $sending->id,
+                    'maileva_sending_id'   => $mailevaSendingId,
+                    'maileva'             => $maileva,
+                ],
+                previous   : $e,
+            );
         }
 
         Log::channel('maileva')->info("    Envoi {$sending->id} transmis avec succès");
+    }
+
+    private function rollback(?string $mailevaSendingId, Sending $sending, \RuntimeException $origin): void
+    {
+        if (! $mailevaSendingId) {
+            return;
+        }
+
+        try {
+            $this->client->deleteSending($mailevaSendingId);
+        } catch (\RuntimeException $e) {
+            // On logue le rollback raté mais on ne re-throw pas :
+            // c'est l'exception d'origine qui doit remonter.
+            throw new MailevaException(
+                message    : "Échec du rollback Maileva pour l'envoi #{$sending->id}",
+                context    : self::class . '::rollback',
+                extraData  : [
+                    'sending_id'        => $sending->id,
+                    'maileva_sending_id' => $mailevaSendingId,
+                    'rollback_error'    => $e->getMessage(),
+                    'origin_error'      => $origin->getMessage(),
+                ],
+                previous   : $e,
+            );
+        }
     }
 }

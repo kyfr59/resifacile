@@ -133,7 +133,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                 <h2 class="text-3xl md:text-4xl text-blue-700 font-semibold">Deux options pour résilier</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mt-6">
                     <div class="relative bg-white shadow-xl rounded-xl p-6 overflow-hidden">
-                        <div class="text-2xl md:text-3xl font-semibold pb-2 relative z-[2]">Lettre recommandé</div>
+                        <div class="text-2xl md:text-3xl font-semibold pb-2 relative z-[2]">Lettre recommandée</div>
                         <div class="font-semibold relative z-[2]">Lettre de résiliation + envoi</div>
                         <ul class="relative z-[2]">
                             <li>Distribution J+3</li>

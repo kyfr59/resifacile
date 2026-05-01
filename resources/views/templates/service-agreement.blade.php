@@ -88,7 +88,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="text-align: center;font-size: 9px;">Euro CB SAS - Société par actions simplifiée au capital de 10 500€, 2 rue Buhan 33000 Bordeaux — RCS Bordeaux 821030574 - APE 6312Z - TVA FR28821030574</td>
+                    <td colspan="3" style="text-align: center;font-size: 9px;">Kolibri Network - Société à responsabilité limitée au capital de 1000 €, 19 boulevard lelasseur 44000 Nantes  -RCS Nantes 995038577 - APE 6201Z - TVA FR10995038577</td>
                 </tr>
             </table>
         </footer>

@@ -48,7 +48,15 @@ class GuideResource extends Resource
                             ->visibility('public'),
                         MarkdownEditor::make('article')
                             ->autofocus()
-                            ->required(),
+                            ->required()
+                            ->reactive()
+                            ->afterStateHydrated(function ($state, callable $set) {
+                                $set('word_count', str_word_count(strip_tags($state ?? '')));
+                            })
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('word_count', str_word_count(strip_tags($state ?? '')));
+                            })
+                            ->helperText(fn ($get) => ($get('word_count') ?? 0) . ' mots'),
                         Fieldset::make('SEO')
                             ->schema([
                                 TextInput::make('seo_title')
@@ -58,7 +66,7 @@ class GuideResource extends Resource
                                 Textarea::make('seo_description')
                                     ->label('Description')
                                     ->autofocus()
-                                    ->required(),
+                                    ->required()
                             ])->columns(1),
                     ]),
             ]);

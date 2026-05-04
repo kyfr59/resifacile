@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('execute-sendings')->everyTwoMinutes();
 
+	$schedule->command('check-sendings')->dailyAt('10:00');
+
         //$schedule->command('mail:send-proof')->everyThirtyMinutes()->onOneServer();
         //$schedule->command('tracking:get')->dailyAt('8:00')->onOneServer();
 

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BrandResource\Pages;
 use App\Models\Brand;
 use App\Models\Template;
+use App\Enums\PageStatus;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MarkdownEditor;
@@ -50,6 +51,10 @@ class BrandResource extends Resource
                                         $set('word_count', str_word_count(strip_tags($state ?? '')));
                                     })
                                     ->helperText(fn ($get) => ($get('word_count') ?? 0) . ' mots'),
+                                Select::make('status')
+                                    ->options(\App\Enums\PageStatus::class)
+                                    ->default(\App\Enums\PageStatus::DRAFT)
+                                    ->required(),
                                 Fieldset::make('SEO')
                                     ->schema([
                                         TextInput::make('seo_title')
@@ -106,6 +111,13 @@ class BrandResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->label('Statut')
+                    ->color(fn ($state): string => match ($state instanceof \App\Enums\PageStatus ? $state->value : $state) {
+                        'DRAFT'     => 'gray',
+                        'VISIBLE'   => 'success',
+                        default     => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -127,10 +139,17 @@ class BrandResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+        ->bulkActions([
+                Tables\Actions\BulkAction::make('publish')
+                    ->label('Publier la sélection')
+                    ->icon('heroicon-o-check')
+                    ->action(fn ($records) => $records->each->update(['status' => 'VISIBLE']))
+                    ->requiresConfirmation(),
+
+                Tables\Actions\BulkAction::make('draft')
+                    ->label('Mettre en brouillon')
+                    ->icon('heroicon-o-pencil')
+                    ->action(fn ($records) => $records->each->update(['status' => 'DRAFT'])),
             ]);
     }
 

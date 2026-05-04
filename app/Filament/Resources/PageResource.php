@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -38,7 +39,15 @@ class PageResource extends Resource
                             ->required(),
                         MarkdownEditor::make('article')
                             ->autofocus()
-                            ->required(),
+                            ->required()
+                            ->reactive()
+                            ->afterStateHydrated(function ($state, callable $set) {
+                                $set('word_count', str_word_count(strip_tags($state ?? '')));
+                            })
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('word_count', str_word_count(strip_tags($state ?? '')));
+                            })
+                            ->helperText(fn ($get) => ($get('word_count') ?? 0) . ' mots'),
                         Fieldset::make('SEO')
                             ->schema([
                                 TextInput::make('seo_title')
@@ -74,16 +83,11 @@ class PageResource extends Resource
                     ->searchable()
                     ->sortable()
             ])
-            ->filters([
-                //
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+
             ]);
     }
 

@@ -21,7 +21,11 @@ class Guide extends Model
         'seo_title',
         'seo_description',
         'data',
+        'status',
     ];
+
+    const STATUS_DRAFT     = 'draft';
+    const STATUS_PUBLISHED = 'published';
 
     protected $casts = [
         'data' => 'object',
@@ -30,6 +34,16 @@ class Guide extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function scopeDraft(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_DRAFT);
+    }
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_PUBLISHED);
     }
 
     public function getSlugOptions() : SlugOptions

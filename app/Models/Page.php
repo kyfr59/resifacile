@@ -18,11 +18,25 @@ class Page extends Model
         'article',
         'seo_title',
         'seo_description',
+        'status',
     ];
+
+    const STATUS_DRAFT     = 'draft';
+    const STATUS_PUBLISHED = 'published';
 
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function scopeDraft(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_DRAFT);
+    }
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_PUBLISHED);
     }
 
     public function getSlugOptions() : SlugOptions

@@ -46,6 +46,16 @@ class Brand extends Model
         return 'slug';
     }
 
+    public function scopeDraft(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_DRAFT);
+    }
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_PUBLISHED);
+    }
+
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()

@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Cache;
 
 class MailevaAuthService
 {
-    private string $baseUrl = 'https://connexion.sandbox.maileva.net';
+    private string $baseUrl = 'https://connexion.maileva.com';
 
     public function getAccessToken(): string
     {
+        Cache::forget('maileva_access_token');
+
         return Cache::remember('maileva_access_token', 3500, function () {
             $response = Http::asForm()->post(
                 $this->baseUrl . '/auth/realms/services/protocol/openid-connect/token',

@@ -12,6 +12,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -46,6 +47,13 @@ class GuideResource extends Resource
                             ->disk('public')
                             ->directory('guides')
                             ->visibility('public'),
+                        Select::make('status')
+                            ->options([
+                                'draft'     => 'Brouillon',
+                                'published' => 'Publié',
+                            ])
+                            ->default('draft')
+                            ->required(),
                         MarkdownEditor::make('article')
                             ->autofocus()
                             ->required()
@@ -79,6 +87,18 @@ class GuideResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->label('Statut')
+                    ->formatStateUsing(function ($state) {
+                    return $state instanceof PageStatus
+                        ? $state->value
+                        : $state;
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'draft'     => 'gray',
+                        'published' => 'success',
+                        default     => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
@@ -95,15 +115,27 @@ class GuideResource extends Resource
                     ->sortable()
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Statut')
+                    ->options([
+                        'draft'     => 'Brouillon',
+                        'published' => 'Publié',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkAction::make('publish')
+                    ->label('Publier la sélection')
+                    ->icon('heroicon-o-check')
+                    ->action(fn ($records) => $records->each->update(['status' => 'published']))
+                    ->requiresConfirmation(),
+
+                Tables\Actions\BulkAction::make('draft')
+                    ->label('Mettre en brouillon')
+                    ->icon('heroicon-o-pencil')
+                    ->action(fn ($records) => $records->each->update(['status' => 'draft'])),
             ]);
     }
 

@@ -82,6 +82,10 @@ class Order extends Model
     {
         static::updated(function (Order $order) {
 
+            if (!$order->wasChanged('status') || $order->status !== OrderStatus::PAID) {
+                return;
+            }
+
             (new AddRequestToSending())->handle(
                 requestData: (App::make(PostLetter::class))->newRequest(
                     trackId: 'CUS_' . $order->customer->id . '_' . now()->timestamp,

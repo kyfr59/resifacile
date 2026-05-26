@@ -1,7 +1,7 @@
 <x-mail::message>
 Chère cliente, cher client,
 
-Merci pour votre commande récente sur {{ config('mail.from.name') }}.
+Merci pour votre commande récente sur https://resifacile.fr.
 
 Avez-vous été satisfait ?
 
@@ -14,5 +14,6 @@ Votre expérience client est importante pour nous et votre avis sera immédiatem
 Merci pour votre aide.
 
 Bien à vous,<br>
-L'équipe de {{ config('app.name') }}
+L'équipe de Résifacile
+https://resifacile.fr
 </x-mail::message>

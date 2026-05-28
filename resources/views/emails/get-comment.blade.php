@@ -14,6 +14,6 @@ Votre expérience client est importante pour nous et votre avis sera immédiatem
 Merci pour votre aide.
 
 Bien à vous,<br>
-L'équipe de Résifacile
+L'équipe de Resifacile
 https://resifacile.fr
 </x-mail::message>

@@ -349,7 +349,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                             y="65.223694"
                             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000"
                             dy="2.6500001"
-                            rotate="0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0">Résifacile</tspan></text>
+                            rotate="0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0">Resifacile</tspan></text>
                         <rect
                             style="fill:#ffffff"
                             id="rect1005"
@@ -365,7 +365,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                             id="text1063"><tspan
                             id="tspan1061"
                             x="121.10986"
-                            y="66.628784">&amp; Résifacile</tspan><tspan
+                            y="66.628784">&amp; Resifacile</tspan><tspan
                             x="121.10986"
                             y="96.628784"
                             id="tspan1065">s'occupe</tspan><tspan

@@ -11,7 +11,7 @@ class DownloadProof extends Command
 {
     protected $signature = 'maileva:download-proof {sending_id}';
     protected $description = 'Download a PDF proof document and store it on current dir';
-    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
+    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
 
     public function handle(MailevaAuthService $auth)
     {

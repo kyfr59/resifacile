@@ -11,7 +11,7 @@ class ListSubscriptions extends Command
     protected $signature = 'maileva:list-subscriptions';
     protected $description = 'List all subscriptions';
     private $sendingId = null;
-    private $baseUrl = 'https://api.sandbox.maileva.net/notification_center/v2';
+    private $baseUrl = 'https://api.maileva.com/notification_center/v2';
 
     public function handle(MailevaAuthService $auth)
     {

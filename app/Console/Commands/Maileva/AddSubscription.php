@@ -18,10 +18,10 @@ class AddSubscription extends Command
         // Inscription à un abonnement
         $response = Http::withToken($token)
         ->acceptJson()
-        ->post('https://api.sandbox.maileva.net/notification_center/v2/subscriptions', [
+        ->post('https://api.maileva.com/notification_center/v2/subscriptions', [
             "event_type"     => "ON_STATUS_PROCESSED",
             "resource_type"  => "registered_mail/v4/sendings",
-            "callback_url"   => "https://admin:Tinyfox@preprod.resifacile.fr/webhook-maileva",
+            "callback_url"   => "https://resifa12:Kolibri-4478!@preprod.resifacile.fr/webhook-maileva",
             "authentication" => [
                 "basic" => [
                     "login"    => config('maileva.username'),
@@ -29,19 +29,6 @@ class AddSubscription extends Command
                 ]
             ]
         ]);
-
-        // Liste des abonnements
-        /*
-        $response = Http::withToken($token)
-        ->get('https://api.sandbox.maileva.net/notification_center/v2/subscriptions');
-        */
-
-        // Détail d'un abonnement
-        /*
-        $subscriptionId = '2305bf46-eab6-4505-a566-304fb4e48e22';
-        $response = Http::withToken($token)
-        ->get('https://api.sandbox.maileva.net/notification_center/v2/subscriptions/'.$subscriptionId);
-        */
 
         dd(json_decode($response->body()));
     }

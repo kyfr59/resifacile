@@ -12,7 +12,7 @@ class AddRecipient extends Command
 {
     protected $signature = 'maileva:add-recipient {sending_id}';
     protected $description = 'Add recipient existing sending {$sending_id}';
-    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
+    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
     private $sendingId = null;
 
     public function handle(MailevaAuthService $auth)
@@ -36,12 +36,12 @@ class AddRecipient extends Command
         $data = [
             'custom_id' => 'custom',
             'custom_data' => 'order_1234',
-            'address_line_1' => 'La Poste',
-            'address_line_2' => 'Me Eva DUPONT',
-            'address_line_3' => 'Résidence des Peupliers',
-            'address_line_4' => '33 avenue de Paris',
-            'address_line_5' => 'BP 356',
-            'address_line_6' => '75000 Paris',
+            'address_line_1' => '4AP SARL', // Société
+            'address_line_2' => '', // Civilité, nom, prénom
+            'address_line_3' => '', // Résidence, batiment
+            'address_line_4' => '19 boulevard lelasseur', // Numéro et libellé de la voie
+            'address_line_5' => '', // Lieu dit, boite postale
+            'address_line_6' => '44000 Nantes', // Code postal et ville
             'country_code' => 'FR',
             /*
             'documents_override' => [

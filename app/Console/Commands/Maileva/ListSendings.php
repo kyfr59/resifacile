@@ -11,7 +11,7 @@ class ListSendings extends Command
 {
     protected $signature = 'maileva:list-sendings';
     protected $description = 'List all sendings';
-    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
+    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
 
     public function handle(MailevaAuthService $auth)
     {
@@ -24,6 +24,7 @@ class ListSendings extends Command
             $this->error($e->getMessage());
         }
         $this->token = $token;
+
         $this->listSendings();
     }
 
@@ -35,6 +36,7 @@ class ListSendings extends Command
                 'Content-Type' => 'application/json',
             ])
             ->get($this->baseUrl . '/sendings');
+
 
        if ($response->successful()) {
             $this->info('✅ Appel API test réussi');

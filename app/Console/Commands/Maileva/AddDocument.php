@@ -12,7 +12,7 @@ class AddDocument extends Command
 {
     protected $signature = 'maileva:add-document {sending_id}';
     protected $description = 'Add document existing sending {$sending_id}';
-    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
+    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
     private $sendingId = null;
 
     public function handle(MailevaAuthService $auth)
@@ -33,7 +33,7 @@ class AddDocument extends Command
     private function createNewSending()
     {
         // Retrieve the document of a sending
-        $sending = Sending::latest()->first();
+        $sending = Sending::latest('waiting_at')->first();
         $request = $sending->data->requests->first();
         $document = $request->documentData->first();
         $documentPath = $document->content->uri;

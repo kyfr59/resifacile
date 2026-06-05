@@ -10,7 +10,7 @@ class CreateSending extends Command
 {
     protected $signature = 'maileva:create-sending';
     protected $description = 'Create sending';
-    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
+    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
 
     public function handle(MailevaAuthService $auth)
     {
@@ -28,11 +28,11 @@ class CreateSending extends Command
     private function createNewSending()
     {
         $data = [
-            'name' => "Résiiation de Franck",
+            'name' => "Résiliation de Franck",
             'custom_id' => time(),
             'custom_data' => time(),
-            'color_printing' => true,
-            'duplex_printing' => true,
+            'color_printing' => false,
+            'duplex_printing' => false,
             'optional_address_sheet' => false,
             'notification_email' => 'do_not_reply@maileva.com',
             'print_sender_address' => false,
@@ -43,7 +43,7 @@ class CreateSending extends Command
             'sender_address_line_5' => '',
             'sender_address_line_6' => '94673 Charenton-Le-Pont',
             'sender_country_code' => 'FR',
-            'archiving_duration' => 0,
+            'archiving_duration' => 3,
             'envelope_windows_type' => 'SIMPLE',
             'postage_type' => 'FAST',
             'treat_undelivered_mail' => false,

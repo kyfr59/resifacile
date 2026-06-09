@@ -28,7 +28,7 @@ class SimulateWebhook extends Command
             'event_date'          => now()->toIso8601String(),
             'resource_type'       => 'registered_mail/v4/sendings',
             'resource_id'         => $this->argument('resource_id'),
-            'resource_location'   => 'https://api.sandbox.maileva.net/registered_mail/v4/sendings/' . $this->argument('resource_id'),
+            'resource_location'   => 'https://api.maileva.com/registered_mail/v4/sendings' . $this->argument('resource_id'),
             'resource_name'       => 'sendings',
             'resource_custom_id'  => 'sending_'.$sending->id,
             'resource_custom_data'=> $this->option('custom_data'),
@@ -36,10 +36,11 @@ class SimulateWebhook extends Command
         ];
 
         $this->info('Envoi du webhook simulé...');
+
         $this->line(json_encode($payload, JSON_PRETTY_PRINT));
 
         $response = Http::
-            withBasicAuth('admin', 'Tinyfox')
+            withBasicAuth('resifa12', 'Kolibri-4478!')
             ->post(config('app.url') . '/webhook-maileva', $payload);
 
         if ($response->successful()) {

@@ -31,12 +31,21 @@ class MailevaException extends Exception
         int $code = 0,
         ?\Throwable $previous = null,
         string $description = '',
+        protected int $httpCode = 500,
     ) {
         $this->context     = $context;
         $this->description = $description;
         $this->extraData   = $extraData;
 
         parent::__construct($message, $code, $previous);
+    }
+
+
+    public function render(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'message' => $this->getMessage(),
+        ], $this->httpCode);
     }
 
     /**

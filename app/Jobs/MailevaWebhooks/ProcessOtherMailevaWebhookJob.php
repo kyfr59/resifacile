@@ -28,6 +28,7 @@ class ProcessOtherMailevaWebhookJob implements ShouldQueue
             message  : "Un envoi est passé en statut \"".$eventType."\" chez Maileva",
             context  : self::class . '::handle',
             extraData: ['payload' => $webhookCall->payload],
+            httpCode: 201,
         );
 
         return response()->json(['ok' => true], 201);

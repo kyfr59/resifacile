@@ -52,7 +52,7 @@ class MailevaAuthService
                     'grant_type' => 'urn:ietf:params:oauth:grant-type:token-exchange',
                     'subject_token' => $token2,
                     'requested_token_type' => 'urn:ietf:params:oauth:token-type:access_token',
-                    'requested_subject' => config('maileva.username'),
+                    'requested_subject' => 'KOLIBRINETWORK.GANDILLON',
                 ]
             );
 

@@ -48,6 +48,7 @@ return [
                 'processed' => \App\Jobs\MailevaWebhooks\HandleProcessed::class,
                 'accepted' => \App\Jobs\MailevaWebhooks\HandleAccepted::class,
                 'rejected' => \App\Jobs\MailevaWebhooks\HandleRejected::class,
+                'processed_with_errors' => \App\Jobs\MailevaWebhooks\HandleProcessedWithErrors::class,
             ],
         ]
     ],

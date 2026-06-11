@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendingExecuted;
 use App\Enums\SendingStatus;
 
-class HandleProcessedWithErrors implements ShouldQueue
+class ProcessOtherMailevaWebhookJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -23,8 +23,9 @@ class HandleProcessedWithErrors implements ShouldQueue
 
     public function __construct(WebhookCall $webhookCall)
     {
+        $eventType = $webhookCall->payload['event_type'];
         throw new MailevaException(
-            message  : "Un envoi est passé en statut \"PROCESSED_WITH_ERRORS\" chez Maileva",
+            message  : "Un envoi est passé en statut \"".$eventType."\" chez Maileva",
             context  : self::class . '::handle',
             extraData: ['payload' => $webhookCall->payload],
         );

@@ -36,10 +36,16 @@ class ProcessMailevaWebhookJob extends ProcessWebhookJob
 
     protected function determineJobClass(string $eventType): string
     {
-        $enum = MailevaStatus::from($eventType);
-        $status = $enum->short();
-
         $defaultJob = config('webhook-client.configs.2.default_job', '');
+
+        try {
+            $enum = MailevaStatus::from($eventType);
+            $enum = MailevaStatus::from($eventType);
+            $status = $enum->short();
+        } catch (\ValueError $e) {
+            return $defaultJob;
+        }
+
         return config("webhook-client.configs.2.jobs.{$status}", $defaultJob);
     }
 }

@@ -43,12 +43,11 @@ return [
             'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
             'store_headers' => [],
             'process_webhook_job' => \App\WebhookClient\Jobs\ProcessMailevaWebhookJob::class,
-            'default_job' => \App\WebhookClient\Jobs\ProcessOtherMailevaWebhookJob::class,
+            'default_job' => \App\Jobs\MailevaWebhooks\ProcessOtherMailevaWebhookJob::class,
             'jobs' => [
                 'processed' => \App\Jobs\MailevaWebhooks\HandleProcessed::class,
                 'accepted' => \App\Jobs\MailevaWebhooks\HandleAccepted::class,
                 'rejected' => \App\Jobs\MailevaWebhooks\HandleRejected::class,
-                'processed_with_errors' => \App\Jobs\MailevaWebhooks\HandleProcessedWithErrors::class,
             ],
         ]
     ],

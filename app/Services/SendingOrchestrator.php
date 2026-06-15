@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Actions\GetDocumentFromSending;
+use App\Actions\GetDocumentsFromSending;
 use App\Actions\GetSenderFromSending;
 use App\Models\Sending;
 use Illuminate\Support\Facades\Log;
@@ -26,8 +26,8 @@ class SendingOrchestrator
             $sending->update(['maileva' => $maileva]);
             $sending->refresh();
 
-            $mailevaDocumentId = $this->client->addDocument($mailevaSendingId, $sending);
-            $maileva['document_id'] = $mailevaDocumentId;
+            $mailevaDocumentIds = $this->client->addDocuments($mailevaSendingId, $sending);
+            $maileva['documents_id'] = $mailevaDocumentIds;
             $sending->update(['maileva' => $maileva]);
             $sending->refresh();
 
@@ -35,7 +35,9 @@ class SendingOrchestrator
             $maileva['recipient_id'] = $mailevaRecipientId;
             $sending->update(['maileva' => $maileva]);
 
-            $this->client->submitSending($mailevaSendingId);
+            if (config('app.env') === 'staging') {
+                $this->client->submitSending($mailevaSendingId);
+            }
 
         } catch (\RuntimeException $e) {
 

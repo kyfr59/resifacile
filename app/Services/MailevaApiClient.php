@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Actions\GetDocumentFromSending;
+use App\Actions\GetDocumentsFromSending;
 use App\Actions\GetSenderFromSending;
 use App\Actions\GetRecipientFromSending;
 use App\Models\Sending;
@@ -73,74 +73,82 @@ class MailevaApiClient
         return $response['id'];
     }
 
-    public function addDocument(string $mailevaSendingId, Sending $sending): string
+    public function addDocuments(string $mailevaSendingId, Sending $sending): array
     {
-        $document = (new GetDocumentFromSending())->handle($sending->data);
-        $uri = $document->content->uri;
-        $fullPath = Storage::path($uri);
+        $documents = (new GetDocumentsFromSending())->handle($sending->data);
 
-        if (!Storage::disk('public')->exists($uri)) {
-            Log::channel('maileva')->error("    Erreur de création de l'envoi : le document à envoyer n'existe pas sur le serveur");
+        $priority = 1;
+        foreach($documents as $document) {
 
-            throw new \RuntimeException(
-                "Erreur lors de la création de l'envoi : le document à envoyer n'existe pas sur le serveur"
-            );
-        }
+            $uri = $document->content->uri;
+            $fullPath = Storage::path($uri);
 
-        $size = Storage::size($uri);
-        $filename = basename($uri);
+            if (!file_exists($fullPath)) {
+                Log::channel('maileva')->error("    Erreur de création de l'envoi : le document à envoyer n'existe pas sur le serveur");
 
-        // Preparing payload
-        $documentPayload = [
-            'id' => $id = (string) \Illuminate\Support\Str::uuid(),
-            'type' => 'application/pdf',
-            'pages_count' => 1,
-            'sheets_count' => 1,
-            'size' => $size,
-            'converted_size' => $size,
-        ];
+                throw new \RuntimeException(
+                    "Erreur lors de la création de l'envoi : le document à envoyer n'existe pas sur le serveur"
+                );
+            }
 
-        $response = Http::withToken($this->token)
-            ->acceptJson()
-            ->attach(
-                'document',
-                fopen($fullPath, 'r'),
-                $filename
-            )
-            ->attach(
-                'metadata',
-                json_encode([
-                    'priority' => 1,
-                    'name' => $filename,
-                    'shrink' => true,
-                ]),
-                'metadata.json'
-            )
-            ->post($this->baseUrl."/sendings/{$mailevaSendingId}/documents", $documentPayload);
+            $size = Storage::size($uri);
+            $filename = basename($uri);
 
-        if (!$response->successful()) {
+            // Preparing payload
+            $documentPayload = [
+                'id' => $id = (string) \Illuminate\Support\Str::uuid(),
+                'type' => 'application/pdf',
+                // 'pages_count' => 1,
+                'sheets_count' => 1,
+                'size' => $size,
+                'converted_size' => $size,
+            ];
 
-            Log::channel('maileva')->error("    Erreur de création de l'envoi", [
+            $response = Http::withToken($this->token)
+                ->acceptJson()
+                ->attach(
+                    'document',
+                    fopen($fullPath, 'r'),
+                    $filename
+                )
+                ->attach(
+                    'metadata',
+                    json_encode([
+                        'priority' => $priority,
+                        'name' => $filename,
+                        'shrink' => true,
+                    ]),
+                    'metadata.json'
+                )
+                ->post($this->baseUrl."/sendings/{$mailevaSendingId}/documents", $documentPayload);
+
+            if (!$response->successful()) {
+
+                Log::channel('maileva')->error("    Erreur de création de l'envoi", [
+                    'sending_id' => $sending->id,
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                ]);
+
+                throw new \RuntimeException(
+                    "   Erreur avec l'API Maileva : ({$response->status()}): ".$response->body()
+                );
+            }
+
+            Log::channel('maileva')->info("    Ajout du document réussi", [
                 'sending_id' => $sending->id,
-                'status' => $response->status(),
-                'body' => $response->body(),
+                'maileva_id' => $mailevaSendingId,
+                'document_id' => $response['id'],
             ]);
 
-            throw new \RuntimeException(
-                "   Erreur avec l'API Maileva : ({$response->status()}): ".$response->body()
-            );
-        }
+            $priority++;
 
-        $mailevaDocumentId = $response['id'];
+            $mailevaDocumentsIds[] = $response['id'];
+       }
 
-        Log::channel('maileva')->info("    Ajout du document réussi", [
-            'sending_id' => $sending->id,
-            'maileva_id' => $mailevaSendingId,
-            'document_id' => $mailevaDocumentId,
-        ]);
-
-        return $mailevaDocumentId;
+       return $mailevaDocumentsIds;
     }
+
 
     public function addRecipient(string $mailevaSendingId, Sending $sending): string
     {

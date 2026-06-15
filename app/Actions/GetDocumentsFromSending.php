@@ -5,13 +5,13 @@ namespace App\Actions;
 use App\DataTransferObjects\PostLetter\SendingData;
 use App\DataTransferObjects\PostLetter\DocumentData;
 
-class GetDocumentFromSending
+class GetDocumentsFromSending
 {
     /**
-     * @param CampaignData $campaign
+     * @param SendingData $sending
      * @return array
      */
-    public function handle(SendingData $sending): DocumentData
+    public function handle(SendingData $sending): array
     {
         $documents = [];
 
@@ -21,6 +21,6 @@ class GetDocumentFromSending
             }
         }
 
-        return $documents[0];
+        return $documents;
     }
 }

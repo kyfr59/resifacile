@@ -24,6 +24,10 @@ class MailevaApiClient
 
     public function createSending(Sending $sending): string
     {
+        if (!empty($sending->maileva['sending_id'])) {
+            throw new \Exception("Cet envoi est déjà créé chez Maileva");
+        }
+
         $sender = (new GetSenderFromSending())->handle($sending->data);
         $address = $sender->paper_address->address_lines;
 

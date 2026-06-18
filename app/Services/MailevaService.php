@@ -259,8 +259,7 @@ class MailevaService implements PostLetter
     }
 
     /**
-     *
-     * @retuns Array :
+     * @retun Array :
      * - The registered number
      * - The proof PDF file
      */
@@ -274,5 +273,16 @@ class MailevaService implements PostLetter
         Storage::disk('local')->put($path, $pdf);
 
         return [$number, $pdf];
+    }
+
+    /**
+     * @return void
+     */
+    public function storeProofOfContent(Sending $sending): array
+    {
+        $mailevaSendingId = $sending->maileva['sending_id'];
+        $pdf = $this->mailevaApiClient->getProofOfContent($mailevaSendingId);
+        $path = "proofs-of-content/{$mailevaSendingId}.pdf";
+        Storage::disk('local')->put($path, $pdf);
     }
 }

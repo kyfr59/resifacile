@@ -250,7 +250,7 @@ class MailevaApiClient
 
     /**
      *
-     * @retuns Array :
+     * @return Array :
      * - The registered number
      * - The proof PDF file
      */
@@ -270,6 +270,22 @@ class MailevaApiClient
         ];
 
     }
+
+    /**
+     * @return PDF file stream
+     */
+    public function getProofOfContent($sendingId): array
+    {
+        $recipient = $this->getRecipientFromSendingId($sendingId);
+        $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sendingId}/recipients/{$recipient->id}/download_content_proof");
+        if (!$response->successful()) {
+            throw new \RuntimeException(
+                "Preuve de contenu indisponible pour {$sendingId} : ({$response->status()}) {$response->body()}"
+            );
+        }
+        return $response->body();
+    }
+
 
     private function getRecipientFromSendingId($sendingId)
     {

@@ -54,7 +54,7 @@ class HandleProcessed implements ShouldQueue
             return response()->json(['ok' => true], 201);
         }
 
-        // Get and store proof of déposit
+        // Get and store proof of deposit
         try {
             $pdfAndNumber = $mailevaService->storeProofOfDeposit($sending);
             $number = $pdfAndNumber[0];
@@ -73,6 +73,21 @@ class HandleProcessed implements ShouldQueue
             );
         }
 
+        try {
+            $mailevaService->storeProofOfContent($sending);
+        } catch (\Exception $e) {
+            throw new MailevaException(
+                message  : "Impossible de stocker la preuve de contenu sur le serveur",
+                context  : self::class . '::' . __FUNCTION__,
+                extraData: [
+                    'sending_id'   => $sending->id,
+                    'customer_id'  => $sending->customer_id,
+                    'customer_mail'=> $sending->customer->email,
+                ],
+                description: $e->getMessage(),
+                previous : $e,
+            );
+        }
 
         try {
             Mail::to($sending->customer->email)->send(new ProofOfDepositRecieved($sending, $number, $pdf));

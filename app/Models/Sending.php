@@ -87,4 +87,14 @@ class Sending extends Model
 
         return Storage::disk('local')->exists("proofs-of-content/{$mailevaSendingId}.pdf");
     }
+
+    public function hasAcknowledgementOfReceipt(): bool
+    {
+        $mailevaSendingId = $this->maileva['sending_id'] ?? null;
+        if (! $mailevaSendingId) {
+            return false;
+        }
+
+        return Storage::disk('local')->exists("acknowledgements-of-receipt/{$mailevaSendingId}.pdf");
+    }
 }

@@ -19,6 +19,7 @@ use App\Http\Controllers\Account\PreviewDocumentController;
 use App\Http\Controllers\Account\PreviewProofController;
 use App\Http\Controllers\Account\PreviewProofOfContentController;
 use App\Http\Controllers\Account\PreviewInvoiceController;
+use App\Http\Controllers\Account\PreviewAcknowledgementOfReceiptController;
 
 //include_once __DIR__ . '/test.php';
 
@@ -209,3 +210,10 @@ Route::get(
 )
     ->middleware('auth:site')
     ->name('frontend.account.preview.proof-of-content');
+
+Route::get(
+    '/account/preview/acknowledgement-of-receipt/{id}',
+    PreviewAcknowledgementOfReceiptController::class,
+)
+    ->middleware('auth:site')
+    ->name('frontend.account.preview.acknowledgement-of-receipt');

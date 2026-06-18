@@ -213,6 +213,19 @@
                                                                     </div>
                                                                 </div>
                                                             @endif
+                                                            @if($order->sending && $order->sending->hasAcknowledgementOfReceipt())
+                                                                <div class="flex items-center bg-[#64605e] text-white rounded-[7px] h-[40px] gap-2 px-4 text-sm shadow-document" x-on:click.prevent="previewUrl('{{ route('frontend.account.preview.acknowledgement-of-receipt', ['id' => auth()->guard('site')->user()->id, 'sending_id' => $order->sending->id, 'filename' => 'Accusé de réception']) }}', 'Accusé de réception')">
+                                                                        <div class="flex-auto text-sm whitespace-nowrap overflow-hidden text-ellipsis">Accusé de réception</div>
+                                                                        <div class="pl-2 flex items-center justify-end">
+                                                                <span class="cursor-pointer">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" class="h-4 stroke-current">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.23 6.246c.166.207.258.476.258.754 0 .279-.092.547-.258.754C12.18 9.025 9.79 11.5 7 11.5c-2.79 0-5.18-2.475-6.23-3.746A1.208 1.208 0 0 1 .512 7c0-.278.092-.547.258-.754C1.82 4.975 4.21 2.5 7 2.5c2.79 0 5.18 2.475 6.23 3.746Z"/>
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                                                    </svg>
+                                                                </span>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div>

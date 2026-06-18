@@ -6,13 +6,16 @@
 <x-mail::message>
 Chère cliente, cher client,
 
-Nous avons le plaisir de vous informer que votre commande n° {{ $data->order->number }} a été transmise à notre partenaire logistique, Docapost, pour entamer le processus de production. Les différentes étapes de ce processus sont les suivantes :
+Nous avons le plaisir de vous informer que votre commande n°COM0000000079 a été transmise à notre partenaire Docaposte, filiale du groupe La Poste, pour entamer le processus de production.
 
-1. Impression de vos documents ;
-2. Mise sous pli et affranchissement conformément à vos choix d'options ;
-3. Dépôt à La Poste en vue de l'acheminement vers votre destinataire.
+Les différentes étapes de ce processus de mise en production sont les suivantes :
+<ul>
+<li>Impression de vos documents ;</li>
+<li>Mise sous pli et affranchissement conformément à vos choix d'options ;</li>
+<li>Dépôt à La Poste en vue de l'acheminement vers votre destinataire.</li>
+</ul>
 
-Veuillez noter que le processus de production peut prendre jusqu'à 24 heures avant le dépôt effectif à La Poste. Pour les commandes passées le vendredi après-midi, le dépôt aura lieu le lundi suivant.
+Le processus de production nécessite généralement quelques heures et peut, dans certains cas, prendre jusqu'à 24 heures avant le dépôt à La Poste. Pour les commandes passées le vendredi après-midi, le dépôt aura lieu le lundi suivant.
 
 **Information d'expédition :**
 <br>
@@ -77,19 +80,22 @@ Veuillez noter que le processus de production peut prendre jusqu'à 24 heures av
 </table>
 <br>
 
-**Pour les envois en recommandé avec accusé de réception :**
+<strong>Pour les envois en recommandé avec accusé de réception :</strong>
 
-- Votre numéro de suivi sera envoyé par courrier électronique et éventuellement par SMS dans un délai de 24 heures suivant l'affranchissement de vos documents. L'activation de ce numéro interviendra quelques heures après le dépôt de votre courrier à La Poste ;
-- Vous recevrez une confirmation de dépôt exclusivement par courrier électronique. Cette confirmation comprendra la preuve électronique du dépôt de votre lettre recommandée électronique, ainsi que sa représentation graphique associée.
+Votre numéro de suivi vous sera envoyé par e-mail dans un délai de 24 heures suivant l'affranchissement de vos documents. L'activation de ce numéro interviendra quelques heures après le dépôt de votre courrier à La Poste ;
 
-Le délai de livraison de vos documents à leur destinataire commence dès le dépôt à La Poste et est généralement de 3 jours ouvrés, auxquels s'ajoutent les éventuels week-ends et jours fériés.
+Une confirmation de dépôt vous sera ensuite adressée par courrier électronique. Cette confirmation comprendra la preuve électronique du dépôt de votre lettre recommandée électronique, ainsi que sa représentation graphique associée.
 
-En cas de recommandé avec accusé de réception, veuillez noter que l'avis d'accusé de réception sera déposé dans votre boîte aux lettres dans un délai d'environ 7 à 10 jours ouvrés par le facteur de votre commune.
+Vous recevrez également une preuve de contenu attestant du contenu de votre envoi. Ce document peut être utile pour démontrer juridiquement les documents transmis.
+
+Enfin, votre accusé de réception sera envoyé par email (ou la preuve de non distribution le cas échéant), ce dernier sera également disponible dans votre espace client.
+
+Le délai de livraison de vos documents à leur destinataire commence dès le dépôt à La Poste et est généralement de 3 jours ouvrés à compter du dépôt à La Poste, auxquels s'ajoutent les éventuels week-ends et jours fériés.
 
 Nous restons à votre disposition pour toute question ou clarification supplémentaire.
 
-Madame, Monsieur, toute l’équipe {{ config('app.name') }} vous remercie pour votre confiance.
+Madame, Monsieur, toute l’équipe de Resifacile vous remercie pour votre confiance.
 
-Bien à vous,<br>
-L'équipe de {{ config('app.name') }}
+Bien cordialement,<br />
+L'équipe de Resifacile
 </x-mail::message>

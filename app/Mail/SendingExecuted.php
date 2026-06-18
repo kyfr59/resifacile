@@ -28,7 +28,7 @@ class SendingExecuted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mise en production | ' . config('app.name'),
+            subject: 'Mise en production de votre courrier | Resifacile',
             tags: ['sending'],
         );
     }

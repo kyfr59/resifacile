@@ -60,7 +60,7 @@
                                 @unless(auth()->guard('site')->user()->orders)
                                 @else
                                     <div class="grid grid-cols-1 gap-3">
-                                        @foreach(auth()->guard('site')->user()->orders()->orderBy('number')->get() as $order)
+                                        @foreach(auth()->guard('site')->user()->orders()->orderBy('number', 'desc')->get() as $order)
                                             @php
                                                 $number_of_recipients = collect($order->details->recipients)->count();
                                                 $number_of_pages = collect($order->details->documents)->sum('number_of_pages');

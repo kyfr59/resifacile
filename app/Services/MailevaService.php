@@ -278,7 +278,7 @@ class MailevaService implements PostLetter
     /**
      * @return void
      */
-    public function storeProofOfContent(Sending $sending): array
+    public function storeProofOfContent(Sending $sending): void
     {
         $mailevaSendingId = $sending->maileva['sending_id'];
         $pdf = $this->mailevaApiClient->getProofOfContent($mailevaSendingId);

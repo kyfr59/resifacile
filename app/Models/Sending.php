@@ -72,4 +72,14 @@ class Sending extends Model
 
         return Storage::disk('local')->exists("proofs-of-deposit/{$mailevaSendingId}.pdf");
     }
+
+    public function hasProofOfContent(): bool
+    {
+        $mailevaSendingId = $this->maileva['sending_id'] ?? null;
+        if (! $mailevaSendingId) {
+            return false;
+        }
+
+        return Storage::disk('local')->exists("proofs-of-content/{$mailevaSendingId}.pdf");
+    }
 }

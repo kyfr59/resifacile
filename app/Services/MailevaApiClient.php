@@ -274,7 +274,7 @@ class MailevaApiClient
     /**
      * @return PDF file stream
      */
-    public function getProofOfContent($sendingId): array
+    public function getProofOfContent($sendingId): string
     {
         $recipient = $this->getRecipientFromSendingId($sendingId);
         $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sendingId}/recipients/{$recipient->id}/download_content_proof");

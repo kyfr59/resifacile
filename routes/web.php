@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Account\PreviewDocumentController;
 use App\Http\Controllers\Account\PreviewProofController;
+use App\Http\Controllers\Account\PreviewProofOfContentController;
 use App\Http\Controllers\Account\PreviewInvoiceController;
 
 //include_once __DIR__ . '/test.php';
@@ -201,3 +202,10 @@ Route::get(
 )
     ->middleware('auth:site')
     ->name('frontend.account.preview.proof');
+
+Route::get(
+    '/account/preview/proof-of-content/{id}',
+    PreviewProofOfContentController::class,
+)
+    ->middleware('auth:site')
+    ->name('frontend.account.preview.proof-of-content');

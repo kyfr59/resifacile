@@ -285,4 +285,17 @@ class MailevaService implements PostLetter
         $path = "proofs-of-content/{$mailevaSendingId}.pdf";
         Storage::disk('local')->put($path, $pdf);
     }
+
+     /**
+     * @return PDF file stream
+     */
+    public function storeAcknowledgementOfReceipt(Sending $sending): string
+    {
+        $mailevaSendingId = $sending->maileva['sending_id'];
+        $pdf = $this->mailevaApiClient->getAcknowledgementOfReceipt($mailevaSendingId);
+        $path = "acknowledgements-of-receipt/{$mailevaSendingId}.pdf";
+        Storage::disk('local')->put($path, $pdf);
+        return $pdf;
+    }
+
 }

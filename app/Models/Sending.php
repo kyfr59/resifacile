@@ -57,6 +57,11 @@ class Sending extends Model
         return static::where('maileva->sending_id', $mailevaId)->first();
     }
 
+    public static function fromMailevaRecipientId($mailevaRecipientId): ?static
+    {
+        return static::where('maileva->recipient_id', $mailevaRecipientId)->first();
+    }
+
     public function getMailevaSendingIdAttribute(): ?string
     {
         return $this->maileva['sending_id'] ?? null;

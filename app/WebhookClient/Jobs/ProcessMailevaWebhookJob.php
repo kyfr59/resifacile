@@ -40,7 +40,6 @@ class ProcessMailevaWebhookJob extends ProcessWebhookJob
 
         try {
             $enum = MailevaStatus::from($eventType);
-            $enum = MailevaStatus::from($eventType);
             $status = $enum->short();
         } catch (\ValueError $e) {
             return $defaultJob;

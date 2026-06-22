@@ -55,6 +55,7 @@ class SendingResource extends Resource
                         SendingStatus::SENDED => 'warning',
                         SendingStatus::ACCEPTED => 'info',
                         SendingStatus::PROCESSED => 'success',
+                        SendingStatus::DELIVERED  => 'delivered',
                     })
                     ->label('Statut')
                     ->sortable(),

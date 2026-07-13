@@ -51,9 +51,6 @@
         <div class="relative flex md:grid flex-col-reverse md:grid-cols-2 gap-6 items-start">
             <div class="relative bg-gradient-to-r from-amber-500 to-pink-500 p-1.5 rounded-xl w-full">
                 <div class="relative h-full w-full bg-white rounded-lg p-6 flex flex-col justify-between">
-                    <div class="bg-white h-20 w-20 absolute right-0 top-0 -mt-6 -mr-6 shadow-2xl z-10 rounded-full overflow-hidden flex items-center justify-center">
-                        <img src="{{ asset('images/laposte.png') }}" width="54px"/>
-                    </div>
                     <div class="bg-white">
                         <div class="font-semibold">
                             <div class="inline-block">

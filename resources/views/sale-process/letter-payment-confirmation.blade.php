@@ -12,9 +12,6 @@
             <div class="max-w-screen-lg mx-auto py-12 md:py-24 px-6 flex flex-col-reverse md:flex-row items-center justify-center">
                 <div class="w-full md:w-1/2">
                     <div class="p-1 bg-gradient-to-r from-[#FB29CD] to-[#FDC51D] rounded-xl text-lg relative">
-                        <div class="bg-white h-20 w-20 absolute right-0 top-0 -mt-6 -mr-6 shadow-xl z-10 rounded-full overflow-hidden flex items-center justify-center">
-                            <img src="{{ asset('images/laposte.png') }}" width="54px"/>
-                        </div>
                         <div class="bg-white p-6 rounded-lg">
                             <div class="font-semibold text-gradient mt-6">
                                 <div class="inline-block">

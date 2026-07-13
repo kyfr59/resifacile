@@ -65,6 +65,10 @@ class SendingResource extends Resource
                     ->label('ID Maileva')
                     ->copyable()
                     ->copyMessage('ID Maileva copié')
+                    ->searchable(
+                        query: fn (Builder $query, string $search): Builder =>
+                            $query->where('maileva->sending_id', 'ilike', "%{$search}%")
+                    )
                     ->default('-'),
 
                 TextColumn::make('customer')

@@ -5,16 +5,13 @@ namespace App\Console\Commands;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Tracking;
+use App\Exceptions\OkapiException;
 use App\Services\OkapiService;
-use App\Notifications\Customers\NotificationEmailTrackingLaPosteNumber;
-use App\Notifications\Customers\NotificationEmailTrackingNumber;
-use App\Notifications\Customers\NotificationSmsTrackingLaPosteNumber;
-use App\Notifications\Customers\NotificationSmsTrackingNumber;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use App\Events\TrackingStatusChanged;
 
 class OkapiTrackingCommand extends Command
 {
@@ -37,43 +34,38 @@ class OkapiTrackingCommand extends Command
      */
     public function handle(OkapiService $okapi)
     {
-        $shipments = Tracking::where('is_final', false)->get();
-        dd($shipments);
-        $trackings = Tracking::where('is_active', true)->orderByDesc('id')->get();
-        $trackings->each(function($tracking)  {
-            $response = Http::withHeaders(['X-Okapi-Key' => 'g4XRxfXHkj5BJndV6wnFxeCwytxo2elTbyZmsPMeTrI+20QnCKATQwQvIHyZvIJN'])
-                ->acceptJson()
-                ->get('https://api.laposte.fr/suivi/v2/idships/' . $tracking->number, [
-                    'lang' => 'fr_FR',
+        $trackings = Tracking::where('is_final', false)->get();
+
+        foreach ($trackings as $tracking) {
+            try {
+                $data = $okapi->track($tracking->id_ship);
+            } catch (OkapiException $e) {
+                $this->error("Erreur pour {$tracking->id_ship} : {$e->getMessage()}");
+                continue;
+            }
+
+            $latestEvent = $data['shipment']['event'][0] ?? null;
+
+            if (! $latestEvent) {
+                continue;
+            }
+
+            $hasChanged = $tracking->last_event_code !== $latestEvent['code'];
+             // || $tracking->last_event_date?->toIso8601String() !== $latestEvent['date'];
+
+            if ($hasChanged) {
+                $tracking->update([
+                    'last_event_code' => $latestEvent['code'],
+                    'last_event_date' => $latestEvent['date'],
+                    'is_final' => (bool) ($data['shipment']['isFinal'] ?? false),
                 ]);
 
-            if($response->successful()) {
-                $event = collect($response->json()['shipment']['timeline'])->filter(fn ($item) => $item['status'] === true)->last();
+                event(new TrackingStatusChanged($tracking, $latestEvent, $data['shipment']));
 
-                $tracking->is_active = !$response->json()['shipment']['isFinal'];
-                $tracking->save();
-
-                try {
-                    Notification::send($tracking->customer, new NotificationEmailTrackingLaPosteNumber(
-                        $tracking->number,
-                        $event
-                    ));
-                } catch (\Exception $e) {
-                    Log::error($e);
-                }
-
-                $id = explode('_', $tracking->maileva_id);
-
-                $c = new Carbon();
-                $order = Order::query()->where('customer_id', $id[1])->where('created_at', '<', $c->setTimestamp($id[2]))->orderByDesc('id')->first();
-
-                if(collect($order->options)->filter(fn($option) => $option->name === 'sms_notification')->count() >= 1) {
-                    Notification::send(Customer::find($id[1]), new NotificationSmsTrackingLaPosteNumber(
-                        $tracking->number,
-                        $event
-                    ));
-                }
+                $this->info("Changement détecté : {$tracking->id_ship} → {$latestEvent['label']}");
             }
-        });
+        }
+
+        return self::SUCCESS;
     }
 }

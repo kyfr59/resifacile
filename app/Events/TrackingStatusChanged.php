@@ -24,6 +24,7 @@ class TrackingStatusChanged
     {
         try {
             Mail::to('kyfr59@gmail.com')->send(new TrackingStatusChangedEmail($this->tracking, $this->event, $this->fullShipmentData));
+            Mail::to('j.gandillon@gmail.com')->send(new TrackingStatusChangedEmail($this->tracking, $this->event, $this->fullShipmentData));
 
         } catch (\Exception $e) {
             throw new OkapiException(

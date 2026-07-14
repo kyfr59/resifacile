@@ -55,6 +55,7 @@ class TrackingStatusChanged extends Mailable
 
         return <<<HTML
             <h2>Changement de statut d'un envoi Okapi</h2>
+            <p><strong>Numero de suivi :</strong> {$this->tracking->id_ship}</p>
             <p><strong>Code :</strong> {$newStatus['code']}</p>
             <p><strong>Libellé :</strong> {$newStatus['label']}</p>
             <p><strong>Date :</strong> {$newStatus['date']}</p>

@@ -14,8 +14,10 @@ use App\Models\Sending;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendingExecuted;
 use App\Enums\SendingStatus;
+use App\Enums\OkapiStatus;
 use App\Services\MailevaService;
 use App\Mail\ProofOfDepositRecieved;
+use App\Models\Tracking;
 
 class HandleProcessed implements ShouldQueue
 {
@@ -72,6 +74,14 @@ class HandleProcessed implements ShouldQueue
                 previous : $e,
             );
         }
+
+        // Store tracking number in Tracking table
+        Tracking::create([
+            'id_ship' => $number,
+            'last_event_code' => OkapiStatus::DR1,
+            'last_event_date' => now(),
+            'is_final' => false,
+        ]);
 
         try {
             Mail::to($sending->customer->email)->send(new ProofOfDepositRecieved($sending, $number, $pdf));

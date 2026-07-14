@@ -14,16 +14,19 @@ use App\Services\MailevaApiClient;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Settings\MailevaSettings;
-
+use App\Services\OkapiService;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
-        //
+        $this->app->singleton(OkapiService::class, function () {
+            return new OkapiService(
+                apiKey: config('services.laposte.okapi_key'),
+                baseUrl: config('services.laposte.suivi_base_url'),
+            );
+        });
     }
 
     /**

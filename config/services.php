@@ -30,5 +30,8 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'laposte' => [
+        'okapi_key' => env('LAPOSTE_OKAPI_KEY'),
+        'suivi_base_url' => env('LAPOSTE_SUIVI_URL', 'https://api.laposte.fr/suivi/v2'),
+    ],
 ];

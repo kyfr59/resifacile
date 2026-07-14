@@ -2,29 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Tracking extends Model
 {
-    use HasFactory;
+    protected $table = 'tracking';
 
     protected $fillable = [
-        'number',
-        'file_name',
-        'maileva_id',
-        'is_active',
-        'customer_id',
+        'id_ship', 'last_event_code', 'last_event_date', 'is_final',
     ];
 
-    protected  $casts = [
-        'is_active' => 'boolean',
-        'date' => 'datetime',
+    protected $casts = [
+        'last_event_date' => 'datetime',
+        'is_final' => 'boolean',
     ];
-
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(Customer::class);
-    }
 }

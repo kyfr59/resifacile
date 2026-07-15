@@ -53,12 +53,21 @@ class TrackingStatusChanged extends Mailable
 
         $newStatus = $this->fullShipmentData['event'][0];
 
+        $url = route('tracking', ['tracking_number' => $this->tracking->id_ship]);
+
         return <<<HTML
             <h2>Changement de statut d'un envoi Okapi</h2>
+            <p><strong>Sending ID :</strong> {$this->tracking->sending->id}</p>
+            <p><strong>Maileva sending ID :</strong> {$this->tracking->sending->getMailevaSendingIdAttribute()}</p>
             <p><strong>Numero de suivi :</strong> {$this->tracking->id_ship}</p>
             <p><strong>Code :</strong> {$newStatus['code']}</p>
             <p><strong>Libellé :</strong> {$newStatus['label']}</p>
             <p><strong>Date :</strong> {$newStatus['date']}</p>
+            <p>
+                <a href="{$url}">
+                    Suivre sur le site
+                </a>
+            </p>
         HTML;
     }
 }

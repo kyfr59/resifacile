@@ -81,6 +81,7 @@ class HandleProcessed implements ShouldQueue
             'last_event_code' => OkapiStatus::DR1,
             'last_event_date' => now(),
             'is_final' => false,
+            'sending_id' => $sending->id
         ]);
 
         try {

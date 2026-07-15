@@ -97,4 +97,9 @@ class Sending extends Model
 
         return Storage::disk('local')->exists("acknowledgements-of-receipt/{$mailevaSendingId}.pdf");
     }
+
+    public function tracking(): HasOne
+    {
+        return $this->hasOne(Tracking::class);
+    }
 }

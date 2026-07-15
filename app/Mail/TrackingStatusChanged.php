@@ -47,11 +47,7 @@ class TrackingStatusChanged extends Mailable
 
      private function buildHtml(): string
     {
-        $label = htmlspecialchars($this->event['shortLabel'] ?? '', ENT_QUOTES, 'UTF-8');
-        $date  = htmlspecialchars($this->event['date'] ?? '', ENT_QUOTES, 'UTF-8');
-        $url   = htmlspecialchars($this->fullShipmentData['url'] ?? '#', ENT_QUOTES, 'UTF-8');
-
-        $newStatus = $this->fullShipmentData['event'][0];
+        $newStatus = $this->fullShipmentData['events'][0];
 
         $url = route('tracking', ['tracking_number' => $this->tracking->id_ship]);
 

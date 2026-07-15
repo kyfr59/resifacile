@@ -177,6 +177,9 @@ Route::get('/mon-compte', HomePageController::class)
 Route::get('/suivre-votre-envoi/{tracking_number?}', TrackingController::class)
     ->name('tracking');
 
+Route::post('/suivre-votre-envoi/{tracking_number?}', [TrackingController::class, 'search'])
+    ->name('tracking.number');
+
 /**
  * Webhooks
  */

@@ -25,26 +25,23 @@ class OkapiService
                 'Accept' => 'application/json',
             ])
             ->timeout(10)
-            ->retry(2, 200) // 2 tentatives, 200ms entre chaque
             ->get("{$this->baseUrl}/idships/{$idShip}", [
                 'lang' => $lang,
             ]);
 
-        if ($response->failed()) {
-            Log::warning('Erreur API Suivi La Poste', [
-                'idShip' => $idShip,
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
 
-            throw new OkapiException(
-                message: "Échec de l'appel Suivi pour {$idShip}",
-                httpStatus: $response->status(),
-                payload: $response->json(),
-            );
+        if ($response->json('returnCode') != 200 || $response->failed()) {
+            return [
+                'success' => false,
+                'message' => $response->json('returnMessage') ?? 'Numéro de suivi invalide',
+                'events' => [],
+            ];
         }
 
-        return $response->json();
+        return [
+            'success' => true,
+            'events' => $response->json('shipment.event', []),
+        ];
     }
 
     /**

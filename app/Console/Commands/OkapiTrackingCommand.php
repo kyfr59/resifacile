@@ -44,7 +44,7 @@ class OkapiTrackingCommand extends Command
                 continue;
             }
 
-            $latestEvent = $data['shipment']['event'][0] ?? null;
+            $latestEvent = $data['events'][0] ?? null;
 
             if (! $latestEvent) {
                 continue;
@@ -60,7 +60,7 @@ class OkapiTrackingCommand extends Command
                     'is_final' => (bool) ($data['shipment']['isFinal'] ?? false),
                 ]);
 
-                event(new TrackingStatusChanged($tracking, $latestEvent, $data['shipment']));
+                event(new TrackingStatusChanged($tracking, $latestEvent, $data));
 
                 $this->info("Changement détecté : {$tracking->id_ship} → {$latestEvent['label']}");
             }

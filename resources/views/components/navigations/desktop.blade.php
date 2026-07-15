@@ -16,7 +16,7 @@
     <nav class="hidden md:flex items-center justify-center gap-4">
         <a href="{{ route('pages.categories') }}">Modèles de lettre</a>
         <a href="{{ route('pages.trouvez-une-marque') }}">Trouvez une marque</a>
-        <a href="https://www.laposte.fr/outils/suivre-vos-envois" target="_blank">Suivre un envoi</a>
+        <a href="{{ route('tracking') }}"">Suivre un envoi</a>
         <a href="{{ route('pages.acces-plus') }}">Accès+</a>
         <a href="{{ route('guides.index') }}">Guides</a>
         @guest

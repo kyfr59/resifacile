@@ -20,6 +20,7 @@ use App\Http\Controllers\Account\PreviewProofController;
 use App\Http\Controllers\Account\PreviewProofOfContentController;
 use App\Http\Controllers\Account\PreviewInvoiceController;
 use App\Http\Controllers\Account\PreviewAcknowledgementOfReceiptController;
+use App\Http\Controllers\TrackingController;
 
 //include_once __DIR__ . '/test.php';
 
@@ -172,6 +173,9 @@ Route::post(
 Route::get('/mon-compte', HomePageController::class)
     ->middleware('auth:site')
     ->name('auth.account');
+
+Route::get('/suivre-votre-envoi/{tracking_number?}', TrackingController::class)
+    ->name('tracking');
 
 /**
  * Webhooks

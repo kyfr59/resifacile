@@ -71,7 +71,7 @@
                         type="button"
                         class="w-full md:w-auto bg-blue-700 text-white py-3 md:py-0 h-14 md:h-12 px-6 rounded-[7px] flex gap-2 items-center justify-center text-base md:text-lg leading-tight"
                         x-on:click.prevent="
-                        if ($wire.customerCertifiesHavingReadTheGeneralConditionsOfSale || $wire.expresslyRequestsTheStartOfTheService) {
+                        if ($wire.customerCertifiesHavingReadTheGeneralConditionsOfSale && $wire.expresslyRequestsTheStartOfTheService) {
                             document.getElementById('payment-fake-form').submit();
                         }
                         "

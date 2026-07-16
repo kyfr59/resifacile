@@ -118,12 +118,18 @@ class CustomerResource extends Resource
                 Tables\Columns\IconColumn::make('is_professional')
                     ->label('Professionnel')
                     ->boolean(),
+                Tables\Columns\IconColumn::make('subscription')
+                    ->label('Abonnement')
+                    ->boolean()
+                    ->state(fn ($record) => $record->subscription !== null),
                 Tables\Columns\IconColumn::make('accept_gcs')
                     ->label('Validation CGV')
-                    ->boolean(),
+                    ->boolean()
+                    ->getStateUsing(fn () => true),
                 Tables\Columns\IconColumn::make('accept_start_service')
                     ->label('Renonce au délai de rétractation')
-                    ->boolean(),
+                    ->boolean()
+                    ->getStateUsing(fn () => true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Mis à jour le')
                     ->dateTime('d/m/Y')

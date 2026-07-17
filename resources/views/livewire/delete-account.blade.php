@@ -2,9 +2,9 @@
     class="flex flex-col-reverse md:flex-row gap-3 md:gap-6 items-center p-3 md:p-6 bg-red-50 rounded-[7px] justify-between"
     wire:submit.prevent="save"
 >
-    <div class="w-full md:w-auto bg-red-50 text-center text-red-500 rounded-[7px] p-2 leading-tight text-sm md:text-base">Cela supprimera toutes vos données !</div>
+    <div class="md:w-85 bg-red-50 text-left text-red-500 rounded-[7px] p-2 leading-tight text-sm md:text-base">{{ $subscriptionIsActive ? 'Suppression du compte indisponible. Un abonnement Accès+ est actuellement actif sur votre compte. Vous devez d’abord résilier cet abonnement avant de pouvoir supprimer votre compte.' : 'Cela supprimera toutes vos données !' }}</div>
         <div>
-        <button wire:click="$set('showModal', true)" class="bg-red-600 text-white px-4 py-2 rounded">
+        <button {{ $subscriptionIsActive ? 'disabled' : '' }} wire:click="$set('showModal', true)" class="{{ $subscriptionIsActive ? 'opacity-50' : '' }} bg-red-600 text-white px-4 py-2 rounded whitespace-nowrap">
             Supprimer mon compte
         </button>
 

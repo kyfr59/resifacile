@@ -5,16 +5,23 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\SubscriptionStatus;
 use Spatie\Activitylog\Models\Activity;
 
 class DeleteAccount extends Component
 {
     public $showModal = false;
     public $email;
+    public $subscriptionIsActive;
 
     protected $rules = [
         'email' => 'required|email|exists:customers,email',
     ];
+
+    public function mount() {
+        $user = Auth::user();
+        $this->subscriptionIsActive  = $user->subscription && $user->subscription->status !== SubscriptionStatus::CANCELED;
+    }
 
     protected $messages = [
         'email.required' => 'Vous devez renseigner votre email.',

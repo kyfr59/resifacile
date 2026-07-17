@@ -33,6 +33,7 @@ class SubscriptionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->groups([
                 Tables\Grouping\Group::make('status')
                     ->getTitleFromRecordUsing(fn (Subscription $record): string => ucfirst($record->status->value))

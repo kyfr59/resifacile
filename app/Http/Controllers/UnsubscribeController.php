@@ -35,11 +35,13 @@ class UnsubscribeController extends Controller
                         $subscription = $paymentMethod->cancelSubscription($subscription->meta_data->subscription_id);
                     }
 
+                    /*
                     try {
                         Mail::to($unsubscribe->customer->email)->send(new UnsubcribeConfirmation($subscription));
                     } catch (\Exception $e) {
                         Log::error($e);
                     }
+                    */
 
                     activity()
                         ->withProperties([

@@ -7,6 +7,8 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\SubscriptionStatus;
 use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountDeletedConfirmation;
 
 class DeleteAccount extends Component
 {
@@ -48,6 +50,12 @@ class DeleteAccount extends Component
         // Account deleting
         $customer->documents()->delete();
         $customer->delete();
+
+        try {
+            Mail::to($customer->email)->send(new AccountDeletedConfirmation());
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         $this->showModal = false;
 

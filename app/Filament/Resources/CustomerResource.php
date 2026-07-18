@@ -46,45 +46,58 @@ class CustomerResource extends Resource
                 TextEntry::make('email'),
                 TextEntry::make('phone')->label('Téléphone'),
                 Fieldset::make('Abonnement')
-                    ->relationship('subscription')
-                    ->schema([
-                        Grid::make()->schema([
-                            TextEntry::make('designation')
-                                ->label('Désignation'),
-                            TextEntry::make('price')
-                                ->label('Prix')
-                                ->formatStateUsing(fn (string $state): string => Accounting::priceFormat(Accounting::addTax($state))),
-                            TextEntry::make('status')
-                                ->label('Statut')
-                                ->badge()
-                                ->color(fn (SubscriptionStatus $state): string => match ($state) {
-                                    SubscriptionStatus::TRIAL => 'gray',
-                                    SubscriptionStatus::CANCELED, SubscriptionStatus::CANCEL_REQUEST => 'danger',
-                                    SubscriptionStatus::RECURRING => 'success',
-                                    SubscriptionStatus::LATE_PAYMENT => 'warning',
-                                }),
-                                RepeatableEntry::make('transactions')
-                                    ->label('Transactions')
-                                    ->schema([
-                                        Grid::make()->schema([
-                                            TextEntry::make('transaction_id')
-                                                ->label('Transaction ID'),
-                                            TextEntry::make('amount')
-                                                ->label('Montant')
-                                                ->formatStateUsing(fn (string $state): string => Accounting::priceFormat(Accounting::addTax($state))),
-                                            TextEntry::make('status')
-                                                ->label('Statut')
-                                                ->badge()
-                                                ->color(fn (TransactionStatus $state): string => match ($state) {
-                                                    TransactionStatus::CAPTURED, TransactionStatus::SUCCEEDED => 'success',
-                                                    TransactionStatus::BLOCKED, TransactionStatus::AUTHENTICATION_FAILED, TransactionStatus::DENIED, TransactionStatus::REFUSED => 'warning',
-                                                    TransactionStatus::CHARGED_BACK => 'error',
-                                                    default => 'gray'
-                                                }),
-                                        ])->columns(3),
-                                    ])->columnSpanFull(),
-                        ])->columns(3),
-                    ])
+                ->schema([
+                    Grid::make()->schema([
+                        TextEntry::make('subscription.designation')
+                            ->label('Désignation'),
+                        TextEntry::make('subscription.price')
+                            ->label('Prix')
+                            ->formatStateUsing(fn ($state): string => Accounting::priceFormat(Accounting::addTax($state))),
+                        TextEntry::make('subscription.status')
+                            ->label('Statut')
+                            ->badge()
+                            ->color(fn (?SubscriptionStatus $state): string => match ($state) {
+                                SubscriptionStatus::TRIAL => 'gray',
+                                SubscriptionStatus::CANCELED, SubscriptionStatus::CANCEL_REQUEST => 'danger',
+                                SubscriptionStatus::RECURRING => 'success',
+                                SubscriptionStatus::LATE_PAYMENT => 'warning',
+                                default => 'gray',
+                            }),
+                        TextEntry::make('subscription.created_at')
+                            ->label('Date de début')
+                            ->dateTime('d/m/Y H:i')
+                            ->placeholder('—'),
+                        TextEntry::make('subscription.current_period_end_at')
+                            ->label('Date d\'expiration')
+                            ->dateTime('d/m/Y H:i')
+                            ->placeholder('—'),
+                        TextEntry::make('subscription.cancellation_request_at')
+                            ->label('Date de résiliation')
+                            ->dateTime('d/m/Y H:i')
+                            ->placeholder('—')
+                            ->color(fn ($state) => $state ? 'danger' : null),
+                        RepeatableEntry::make('subscription.transactions')
+                            ->label('Transactions')
+                            ->schema([
+                                Grid::make()->schema([
+                                    TextEntry::make('transaction_id')
+                                        ->label('Transaction ID'),
+                                    TextEntry::make('amount')
+                                        ->label('Montant')
+                                        ->formatStateUsing(fn ($state): string => Accounting::priceFormat(Accounting::addTax($state))),
+                                    TextEntry::make('status')
+                                        ->label('Statut')
+                                        ->badge()
+                                        ->color(fn (TransactionStatus $state): string => match ($state) {
+                                            TransactionStatus::CAPTURED, TransactionStatus::SUCCEEDED => 'success',
+                                            TransactionStatus::BLOCKED, TransactionStatus::AUTHENTICATION_FAILED, TransactionStatus::DENIED, TransactionStatus::REFUSED => 'warning',
+                                            TransactionStatus::CHARGED_BACK => 'error',
+                                            default => 'gray',
+                                        }),
+                                ])->columns(3),
+                            ])->columnSpanFull(),
+                    ])->columns(3),
+                ]),
             ]);
     }
 
@@ -140,7 +153,7 @@ class CustomerResource extends Resource
                     ->label('Créé le')
                     ->dateTime('d/m/Y')
                     ->searchable()
-                    ->sortable()
+                    ->sortable(),
             ])
             ->filters([])
             ->actions([

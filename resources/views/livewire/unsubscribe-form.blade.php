@@ -11,7 +11,7 @@
             class="w-full border-2 px-3 rounded-xl outline-none h-14 border-gray-300 @error('email') outline outline-offset-2 outline-4 outline-red-100 @enderror"
         />
         @error('email')
-            <div class="text-sm text-red-500 pt-1">{{ $message }}</div>
+            <div class="text-sm text-red-500 pt-1">{!! $message !!}</div>
         @enderror
     </div>
     @if($success)

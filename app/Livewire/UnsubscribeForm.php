@@ -19,9 +19,38 @@ class UnsubscribeForm extends Component
 
     public string $message = '';
 
-    protected $rules = [
-        'email' => 'required|email|exists:customers,email',
+    protected $messages = [
+        'email.required' => 'Vous devez renseigner votre email.',
+        'email.email'    => "L'email n'est pas valide.",
+        'email.exists'   => "Nous n'avons pas trouvé d'abonnement lié à votre email. Contactez notre service client par téléphone au 0 805 080 190 ou via notre <a style='text-decoration:underline' href='/contact'>page de contact</a>.",
     ];
+
+    protected function rules(): array
+    {
+        return [
+            'email' => [
+                'required',
+                'email',
+                'exists:customers,email',
+                function ($attribute, $value, $fail) {
+                    $customer = Customer::where('email', $value)->first();
+
+                    if (! $customer || ! $customer->subscription) {
+                        $fail("Nous n'avons pas trouvé d'abonnement lié à votre email. Contactez notre service client par téléphone au 0 805 080 190.");
+                        return;
+                    }
+
+                    if ($customer->subscription->status === SubscriptionStatus::CANCELED) {
+                        $fail(
+                            "Votre abonnement a été annulé le "
+                            . $customer->subscription->cancellation_request_at->format('d/m/Y')
+                            . ". Si vous avez des questions, contactez notre service client par téléphone au 0 805 080 190."
+                        );
+                    }
+                },
+            ],
+        ];
+    }
 
     public function save(): void
     {
@@ -52,6 +81,7 @@ class UnsubscribeForm extends Component
             $this->error = true;
             $this->message = "Votre abonnement a été annulé le " . $customer->subscription->cancellation_request_at->format('d/m/Y') . ". Si vous avez des questions, contactez notre service client par téléphone au 0 805 080 190.";
         } else {
+            dd("dd");
             $this->error = true;
             $this->message = "Nous n'avons pas trouver d'abonnement lié avec votre email. Contactez notre service client par téléphone au 0 805 080 190.";
         }

@@ -132,7 +132,7 @@
                                 @endif
                                 <li><span class="bg-white h-6 w-6 rounded-full inline-flex items-center justify-center text-blue-700">✔︎</span> Un service support 7J/7</li>
                                 <li><span class="bg-white h-6 w-6 rounded-full inline-flex items-center justify-center text-blue-700">✔︎</span> -50% sur vos courriers</li>
-                                <li><span class="bg-white h-6 w-6 rounded-full inline-flex items-center justify-center text-blue-700">✔︎</span> Plus de 500 modèles</li>
+                                <li><span class="bg-white h-6 w-6 rounded-full inline-flex items-center justify-center text-blue-700">✔︎</span> Plus de 1200 modèles</li>
                             </ul>
                         </div>
                     </div>

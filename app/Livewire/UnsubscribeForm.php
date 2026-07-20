@@ -22,7 +22,7 @@ class UnsubscribeForm extends Component
     protected $messages = [
         'email.required' => 'Vous devez renseigner votre email.',
         'email.email'    => "L'email n'est pas valide.",
-        'email.exists'   => "Nous n'avons pas trouvé d'abonnement lié à votre email. Contactez notre service client par téléphone au 0 805 080 190 ou via notre <a style='text-decoration:underline' href='/contact'>page de contact</a>.",
+        'email.exists'   => "Nous n’avons trouvé aucun abonnement associé à votre adresse e-mail. Veuillez vérifier votre saisie ou contacter notre service client par téléphone au 0805 690 500 ou via notre <a style='text-decoration:underline' href='/contact'>page de contact</a>.",
     ];
 
     protected function rules(): array

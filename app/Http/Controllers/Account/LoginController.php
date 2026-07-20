@@ -14,15 +14,24 @@ class LoginController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->validate([
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                'exists:customers,email',
+        $request->validate(
+            [
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    'exists:customers,email',
+                ],
+            ],
+            [
+                'email.required' => 'L\'adresse email est obligatoire.',
+                'email.string'   => 'L\'adresse email doit être une chaîne de caractères.',
+                'email.email'    => 'Veuillez saisir une adresse email valide.',
+                'email.max'      => 'L\'adresse email ne doit pas dépasser 255 caractères.',
+                'email.exists'   => 'Cette adresse email ne correspond à aucun compte utilisé sur resifacile.fr. Merci de vérifier l’adresse saisie ou de nous contacter.',
             ]
-        ]);
+        );
 
         $user = Customer::where('email', $request->input('email'))->firstOrFail();
 

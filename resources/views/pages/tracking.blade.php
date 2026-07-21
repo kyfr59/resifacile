@@ -85,7 +85,7 @@
                         <div>
                             <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
                             <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
-                                {{$tracking['steps'][$currentStep-1]['word']}}
+                                {{ $tracking['steps'][$currentStep > 0 ? $currentStep - 1 : 0]['word'] }}
                             </span>
                             <h2 class="mt-2 text-xl font-semibold text-slate-900">
                             {{ $tracking['lastStatusLabel'] }}
@@ -163,7 +163,7 @@
                             @endforeach
                         </div>
                         <div class="ml-2 mt-4 block font-bold sm:hidden">
-                            Etape {{$currentStep}}/5 - <span class="text-blue-600">{{$tracking['steps'][$currentStep-1]['word']}}</span>
+                            Etape {{ $currentStep }}/5 - <span class="text-blue-600">{{ $tracking['steps'][$currentStep > 0 ? $currentStep - 1 : 0]['word'] }}</span>
                         </div>
                     </div>
 

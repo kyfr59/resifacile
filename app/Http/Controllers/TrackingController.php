@@ -19,16 +19,17 @@ class TrackingController extends Controller
     public function __invoke(?string $tracking_number = null): View
     {
         $tracking = null;
+        $currentStep = null;
 
         if ($tracking_number) {
             $tracking = $this->okapiService->track($tracking_number);
-        }
-
-        $currentStep = null;
-        foreach ($tracking['steps'] as $step) {
-            if ($step['status'] == false) {
-                $currentStep = $step['number'];
-                break;
+            if ($tracking['success']) {
+                foreach ($tracking['steps'] as $step) {
+                    if ($step['status'] == false) {
+                        $currentStep = $step['number'];
+                        break;
+                    }
+                }
             }
         }
 

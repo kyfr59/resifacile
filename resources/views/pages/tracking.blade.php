@@ -2,7 +2,7 @@
     <x-slot:head>
         <title>Suivre votre courrier en ligne | Resifacile</title>
         <meta name="description" content="Suivez facilement l’acheminement de votre courrier grâce à votre numéro de suivi La Poste et consultez les principales étapes de sa distribution."/>
-        <meta name="robots" content="{{ $trackingNumber ? 'nonidex' : 'index' }}, follow"/>
+        <meta name="robots" content="{{ $trackingNumber ? 'noindex' : 'index' }}, follow"/>
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
     </x-slot:head>
@@ -76,7 +76,7 @@
                 @elseif(!empty($tracking))
 
                     <!-- Status card -->
-                    <div class="mt-6 rounded-2xl border border-slate-200/70 bg-white p-6 shadow-sm sm:p-7">
+                    <div class=" mt-6 rounded-2xl border border-slate-200/70 bg-white p-6 shadow-sm sm:p-7">
                     <div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
                         <div class="flex gap-4">
                         <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
@@ -88,11 +88,10 @@
                             En cours
                             </span>
                             <h2 class="mt-2 text-xl font-semibold text-slate-900">
-                            Votre courrier est prêt à être acheminé
+                            {{ $tracking['lastStatusLabel'] }}
                             </h2>
                             <p class="mt-1 max-w-md text-[15px] leading-relaxed text-slate-500">
-                            Votre courrier a été imprimé et préparé. Il va maintenant être
-                            acheminé dans le réseau postal.
+                            {{ $tracking['lastStatusDescription'] }}
                             </p>
                         </div>
                         </div>
@@ -110,46 +109,58 @@
                     </div>
 
                     <!-- Stepper -->
+                    @php
+                        $totalSteps = count($tracking['steps']);
+
+                        $lastTrueIndex = 0;
+                        foreach ($tracking['steps'] as $index => $step) {
+                            if ($step['status'] == 'true') {
+                                $lastTrueIndex = $index + 1; // +1 car on veut aller jusqu'au CENTRE du cercle
+                            }
+                        }
+
+                        $progressPercent = $totalSteps > 0
+                            ? ((($lastTrueIndex - 0.5) / $totalSteps) * 100)
+                            : 0;
+                    @endphp
+
                     <div class="mt-9 px-1">
                         <div class="relative flex items-start justify-between">
-                        <div class="absolute left-4 right-4 top-4 h-0.5 -translate-y-1/2 bg-slate-200"></div>
-                        <div class="absolute left-4 top-4 h-0.5 w-1/3 -translate-y-1/2 bg-blue-600"></div>
 
-                        <!-- Step 1 -->
-                        <div class="relative z-10 flex w-1/4 flex-col items-center text-center">
-                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm shadow-blue-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                            </div>
-                            <span class="mt-3 text-sm font-semibold text-slate-800">Préparation</span>
-                            <span class="mt-0.5 text-sm text-slate-400">Terminée</span>
-                        </div>
+                            {{-- Ligne de fond grise --}}
+                            <div class="absolute left-4 right-4 top-4 h-0.5 -translate-y-1/2 bg-slate-200"></div>
 
-                        <!-- Step 2 -->
-                        <div class="relative z-10 flex w-1/4 flex-col items-center text-center">
-                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm shadow-blue-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                            </div>
-                            <span class="mt-3 text-sm font-semibold text-slate-800">Prise en charge</span>
-                            <span class="mt-0.5 text-sm text-slate-400">Terminée</span>
-                        </div>
+                            {{-- Ligne rouge dynamique --}}
+                            <div
+                                class="absolute left-4 top-4 h-0.5 -translate-y-1/2 bg-blue-600"
+                                style="width: calc({{ $progressPercent }}% - 1rem);"
+                            ></div>
 
-                        <!-- Step 3 (active) -->
-                        <div class="relative z-10 flex w-1/4 flex-col items-center text-center">
-                            <div class="flex h-8 w-8 items-center justify-center rounded-full border-[3px] border-blue-600 bg-white">
-                            <div class="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
-                            </div>
-                            <span class="mt-3 text-sm font-semibold text-slate-800">Acheminement</span>
-                            <span class="mt-0.5 text-sm text-blue-600">En cours</span>
-                        </div>
+                            @foreach($tracking['steps'] as $step)
+                                <div class="relative z-10 flex w-1/4 flex-col items-center text-center">
 
-                        <!-- Step 4 -->
-                        <div class="relative z-10 flex w-1/4 flex-col items-center text-center">
-                            <div class="h-8 w-8 rounded-full border-2 border-slate-200 bg-white"></div>
-                            <span class="mt-3 text-sm font-semibold text-slate-800">Distribution</span>
-                            <span class="mt-0.5 text-sm text-slate-400">À venir</span>
+                                    @if ($step['state'] == 'done')
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm shadow-blue-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20 6 9 17l-5-5"/>
+                                            </svg>
+                                        </div>
+                                    @elseif ($step['state'] === 'active')
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-full border-[3px] border-blue-600 bg-white">
+                                            <div class="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
+                                        </div>
+                                    @else
+                                        <div class="h-8 w-8 rounded-full border-2 border-slate-200 bg-white"></div>
+                                    @endif
+
+                                    <span class="mt-3 text-sm font-semibold text-slate-800">{{ $step['word'] }}</span>
+                                    <span class="mt-0.5 text-sm {{ $step['status'] == 'true' ? 'text-blue-600' : 'text-slate-400' }}">
+                                        {{ $step['state'] == 'done' ? 'Terminé' : ($step['state'] == 'active' ? 'En cours' : 'A venir') }}
+                                    </span>
+                                </div>
+                            @endforeach
+
                         </div>
-                        </div>
-                    </div>
                     </div>
 
                     <!-- History card -->
@@ -172,10 +183,10 @@
                                 @endif
                                 <div class="-mt-0.5 flex flex-1 flex-col justify-between gap-1 sm:flex-row sm:items-start {{ $loop->first ? 'rounded-xl bg-blue-50/60 px-3 py-2' : '' }}">
                                     <div>
-                                        <p class="text-[15px] font-semibold {{ $loop->first ? 'text-blue-700' : 'text-slate-800' }} ">{{ $event['code'] }}</p>
+                                        <p class="text-[15px] font-semibold {{ $loop->first ? 'text-blue-700' : 'text-slate-800' }} ">{{ \Carbon\Carbon::parse($event['date'])->format('d/m/Y H:i') }}</p>
                                         <p class="mt-0.5 max-w-sm text-sm leading-relaxed text-slate-500">{{ $event['label'] }}</p>
                                     </div>
-                                    <span class="shrink-0 text-sm text-slate-400">{{ \Carbon\Carbon::parse($event['date'])->format('d/m/Y H:i') }}</span>
+                                    <span class="shrink-0 text-sm text-slate-400">Code de suivi : {{ $event['code'] }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -194,112 +205,4 @@
         </div>
     </form>
 </div>
-
-
-{{--
-    <div class="bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] pt-24 md:pt-32">
-        <div class="relative bg-white">
-            <div class="max-w-screen-xl mx-auto pt-20 pb-12 md:py-24 px-6 flex gap-6 md:gap-12 flex-col">
-                <div class="text-3xl leading-tight md:text-5xl font-semibold w-full">
-                    Suivre votre envoi
-                </div>
-                <form action="{{ route('tracking.number') }}" method="POST">
-                    @csrf
-
-                    <div>
-                        <div class="col-span-1 md:col-span-2 flex flex-col">
-                            <label for="tracking_number" class="mb-2 text-xs flex gap-2">
-                                Numéro de suivi La Poste
-                                <span class="text-red-500 italic inline-flex px-2 bg-red-50">requis</span>
-                            </label>
-
-                             <input
-                                type="text"
-                                placeholder="Saisissez votre numéro de suivi"
-                                id="tracking_number"
-                                name="tracking_number"
-                                value="{{ $trackingNumber ?? '' }}"
-                                class="w-full border-2 px-3 rounded-xl outline-none h-14 border-gray-300"
-                                required
-                                oninvalid="this.setCustomValidity('Veuillez saisir votre numéro de suivi La Poste.')"
-                                oninput="this.setCustomValidity('')"
-                            >
-                        </div>
-
-                        <div class="pb-6 flex flex-col-reverse sm:flex-row gap-6 justify-between mt-6">
-                            <button class="mt-5 w-auto bg-blue-700 text-white h-14 px-6 rounded-xl flex items-center justify-center" type="submit">Suivre l'envoi</button>
-                        </div>
-
-                        @if(isset($tracking) && $tracking['success'] === false)
-
-                            <div class="border-red-200 text-red-700 rounded-xl p-2 pt-6">
-                                <p class="font-semibold">
-                                    {{ $tracking['message']}}
-                                </p>
-                            </div>
-
-                        @elseif(!empty($tracking))
-                            <div class="space-y-4 mt-6 pl-2">
-                                <h2 class="text-xl font-semibold mb-4">
-                                    Historique du suivi
-                                </h2>
-                                <div class="relative ml-4 mt-8">
-                                    <!-- ligne verticale -->
-                                    <div class="absolute left-3 top-0 h-full w-0.5 bg-gray-200"></div>
-
-                                    @foreach($tracking['events'] as $event)
-                                        <div class="relative flex gap-6 pb-10">
-
-                                            <!-- Point sur la timeline -->
-                                            <div class="
-                                                relative z-10 flex items-center justify-center
-                                                w-6 h-6 rounded-full border-4
-                                                {{ $loop->first
-                                                    ? 'bg-blue-600 border-blue-100'
-                                                    : 'bg-gray-300 border-white'
-                                                }}
-                                            ">
-                                            </div>
-
-                                            <!-- Contenu -->
-                                            <div class="
-                                                flex-1 rounded-xl p-5 border
-                                                {{ $loop->first
-                                                    ? 'bg-gray-100 border-blue-300 shadow-md'
-                                                    : 'bg-white border-gray-200 opacity-70'
-                                                }}
-                                            ">
-                                                <div class="flex justify-between items-start gap-4">
-                                                    <h3 class="font-semibold">
-                                                        {{ $event['code'] }}
-                                                    </h3>
-
-                                                    <span class="text-xs text-gray-500 whitespace-nowrap">
-                                                        {{ \Carbon\Carbon::parse($event['date'])->format('d/m/Y H:i') }}
-                                                    </span>
-                                                </div>
-
-                                                <p class="mt-2 text-gray-700">
-                                                    {{ $event['label'] }}
-                                                </p>
-
-                                                @if($loop->first)
-                                                    <span class="inline-flex mt-3 px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
-                                                        Dernier statut
-                                                    </span>
-                                                @endif
-                                            </div>
-
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    --}}
 </x-layouts.app>

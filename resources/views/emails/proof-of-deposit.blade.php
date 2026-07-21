@@ -1,16 +1,21 @@
 <x-mail::message>
 Chère cliente, cher client,
 
-Nous vous confirmons le dépôt de votre courrier auprès de La Poste.
+Nous vous confirmons que votre courrier recommandé avec accusé de réception a bien été déposé auprès de La Poste et est en cours d'acheminement vers son destinataire.
 
-Vous pouvez suivre son acheminement à l’adresse suivante :<br />https://www.laposte.fr/outils/suivre-vos-envois?code={{$number}}
+Vous pouvez suivre son acheminement à l'aide du lien suivant :
 
-La preuve électronique de dépôt de votre Lettre Recommandée Électronique est jointe à ce message. Vous pouvez également la vérifier directement sur le site de La Poste à l’adresse suivante :<br />https://lastation.laposte.fr/verifier-preuve
+https://preprod.resifacile.fr/suivre-votre-envoi/{{$number}}
 
-Dès réception du courrier par son destinataire, la preuve de réception vous sera envoyée par e-mail.
+Votre numéro de suivi est le suivant : {{$number}}
+
+La preuve électronique de dépôt de votre courrier est jointe à ce message. Elle constitue un justificatif officiel du dépôt de votre envoi.
+
+Vous recevrez automatiquement l'accusé de réception électronique par e-mail dès que le courrier aura été distribué à son destinataire.
 
 Nous vous remercions pour votre confiance.
 
 Bien cordialement,
-L'équipe {{ config('app.name') }}
+
+L'équipe Resifacile
 </x-mail::message>

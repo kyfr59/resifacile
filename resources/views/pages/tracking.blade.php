@@ -85,7 +85,7 @@
                         <div>
                             <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
                             <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
-                            En cours
+                                {{$tracking['steps'][$currentStep-1]['word']}}
                             </span>
                             <h2 class="mt-2 text-xl font-semibold text-slate-900">
                             {{ $tracking['lastStatusLabel'] }}
@@ -122,6 +122,8 @@
                         $progressPercent = $totalSteps > 0
                             ? ((($lastTrueIndex - 0.5) / $totalSteps) * 100)
                             : 0;
+
+                        if($progressPercent == 90) $progressPercent = 100;
                     @endphp
 
                     <div class="mt-9 px-1">
@@ -137,7 +139,7 @@
                             ></div>
 
                             @foreach($tracking['steps'] as $step)
-                                <div class="relative z-10 flex w-1/4 flex-col items-center text-center">
+                                <div class="relative z-10 flex sm:w-1/4 flex-col items-center text-center">
 
                                     @if ($step['state'] == 'done')
                                         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm shadow-blue-200">
@@ -153,13 +155,15 @@
                                         <div class="h-8 w-8 rounded-full border-2 border-slate-200 bg-white"></div>
                                     @endif
 
-                                    <span class="mt-3 text-sm font-semibold text-slate-800">{{ $step['word'] }}</span>
-                                    <span class="mt-0.5 text-sm {{ $step['status'] == 'true' ? 'text-blue-600' : 'text-slate-400' }}">
+                                    <span class="mt-3 hidden text-sm font-semibold text-slate-800 sm:block">{{ $step['word'] }}</span>
+                                    <span class="mt-0.5 hidden text-sm sm:block {{ $step['status'] == 'true' ? 'text-blue-600' : 'text-slate-400' }}">
                                         {{ $step['state'] == 'done' ? 'Terminé' : ($step['state'] == 'active' ? 'En cours' : 'A venir') }}
                                     </span>
                                 </div>
                             @endforeach
-
+                        </div>
+                        <div class="ml-2 mt-4 block font-bold sm:hidden">
+                            Etape {{$currentStep}}/5 - <span class="text-blue-600">{{$tracking['steps'][$currentStep-1]['word']}}</span>
                         </div>
                     </div>
 

@@ -24,8 +24,17 @@ class TrackingController extends Controller
             $tracking = $this->okapiService->track($tracking_number);
         }
 
+        $currentStep = null;
+        foreach ($tracking['steps'] as $step) {
+            if ($step['status'] == false) {
+                $currentStep = $step['number'];
+                break;
+            }
+        }
+
         return view('pages.tracking', [
             'trackingNumber' => $tracking_number,
+            'currentStep' => $currentStep,
             'tracking' => $tracking,
         ]);
     }

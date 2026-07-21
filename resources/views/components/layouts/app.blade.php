@@ -85,7 +85,7 @@
                 <nav class="flex flex-col md:flex-row justify-center items-center divide-y md:divide-y-0 md:divide-x divide-gray-600">
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'cgv']) }}">Conditions générales de vente</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'envoi-lettre-recommandee']) }}">Envoi de lettre recommandée</a>
-                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'suivi-courrier']) }}">Suivi de lettre</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('tracking') }}">Suivi de lettre</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'mentions-legales']) }}">Mentions légales</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.contact') }}">Contact</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.se-desabonner') }}">Se désabonner</a>

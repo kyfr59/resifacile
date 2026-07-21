@@ -92,6 +92,7 @@
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.plan-site') }}">Plan du site</a>
                 </nav>
                 <div class="flex justify-center items-center text-gray-400">{{ config('app.name') . ' - ©' . now()->format('Y') . ' tous droits réservés' }}</div>
+                <div class="w-8/10 text-center mx-auto">resifacile.fr est un site commercial privé et indépendant, proposant une offre d’abonnement mensuel en option, sans engagement et résiliable à tout moment depuis notre page de désabonnement. resifacile.fr n’est pas affilié aux services de La Poste.</div>
             </div>
         </footer>
         @livewireScriptConfig

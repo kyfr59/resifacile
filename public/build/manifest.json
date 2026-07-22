@@ -1,8 +1,4 @@
 {
-  "images/sav.jpg": {
-    "file": "assets/sav.jpg",
-    "src": "images/sav.jpg"
-  },
   "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-ext-wght-normal.woff2": {
     "file": "assets/montserrat-cyrillic-ext-wght-normal.woff2",
     "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-ext-wght-normal.woff2"
@@ -27,6 +23,10 @@
     "file": "assets/app.css",
     "isEntry": true,
     "src": "resources/css/app.css"
+  },
+  "resources/css/assets/sav.jpg": {
+    "file": "assets/sav.jpg",
+    "src": "resources/css/assets/sav.jpg"
   },
   "resources/js/app.css": {
     "file": "assets/app2.css",

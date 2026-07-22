@@ -8,6 +8,7 @@ use App\DataTransferObjects\PostLetter\SendingData;
 use App\Enums\SendingStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Sending extends Model
 {

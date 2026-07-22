@@ -9,6 +9,7 @@ enum SendingStatus: string
     case ACCEPTED   = 'ACCEPTED';
     case PROCESSED  = 'PROCESSED';
     case DELIVERED  = 'DELIVERED';
+    case UNDELIVERED  = 'UNDELIVERED';
 
     public function label(): string
     {
@@ -18,6 +19,7 @@ enum SendingStatus: string
             self::ACCEPTED => 'Acceptée par Maileva',
             self::PROCESSED => 'Traitée par Maileva',
             self::DELIVERED => 'Distribué par La Poste',
+            self::UNDELIVERED => 'Non distribué',
         };
     }
 
@@ -29,6 +31,7 @@ enum SendingStatus: string
             self::ACCEPTED->value => self::PENDING_EXECUTION->label(),
             self::PROCESSED->value => self::EXECUTED->label(),
             self::DELIVERED->value => self::DELIVERED->label(),
+            self::UNDELIVERED->value => self::UNDELIVERED->label(),
         ];
     }
 }

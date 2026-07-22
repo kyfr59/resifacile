@@ -4,7 +4,7 @@ Nous vous confirmons que votre courrier recommandé avec accusé de réception a
 
 Vous pouvez suivre son acheminement à l'aide du lien suivant :
 
-https://preprod.resifacile.fr/suivre-votre-envoi/{{$number}}
+{{ config('app.url') }}/suivre-votre-envoi/{{$number}}
 
 Votre numéro de suivi est le suivant : {{$number}}
 

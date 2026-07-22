@@ -298,4 +298,16 @@ class MailevaService implements PostLetter
         return $pdf;
     }
 
+    /**
+     * @return void
+     */
+    public function storePND(Sending $sending): string
+    {
+        $mailevaSendingId = $sending->maileva['sending_id'];
+        $pdf = $this->mailevaApiClient->getPND($mailevaSendingId);
+        $path = "pnd/{$mailevaSendingId}.pdf";
+        Storage::disk('local')->put($path, $pdf);
+        return $pdf;
+    }
+
 }

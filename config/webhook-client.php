@@ -50,6 +50,7 @@ return [
                 'rejected' => \App\Jobs\MailevaWebhooks\HandleRejected::class,
                 'content_proof_received' => \App\Jobs\MailevaWebhooks\HandleContentProofReceived::class,
                 'acknowledgement_of_receipt_received' => \App\Jobs\MailevaWebhooks\HandleAcknowledgementOfReceiptReceived::class,
+                'undelivered_mail_received' => \App\Jobs\MailevaWebhooks\HandleUndeliveredMailReceived::class,
             ],
         ]
     ],

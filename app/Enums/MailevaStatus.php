@@ -9,6 +9,7 @@ enum MailevaStatus: string
     case ON_STATUS_PROCESSED = 'ON_STATUS_PROCESSED';
     case ON_CONTENT_PROOF_RECEIVED = 'ON_CONTENT_PROOF_RECEIVED';
     case ON_ACKNOWLEDGEMENT_OF_RECEIPT_RECEIVED = 'ON_ACKNOWLEDGEMENT_OF_RECEIPT_RECEIVED';
+    case ON_UNDELIVERED_MAIL_RECEIVED = 'ON_UNDELIVERED_MAIL_RECEIVED';
 
     public function label(): string
     {
@@ -18,7 +19,8 @@ enum MailevaStatus: string
             self::ON_STATUS_REJECTED => "Envoi rejeté",
             self::ON_STATUS_PROCESSED => "Envoi traité",
             self::ON_CONTENT_PROOF_RECEIVED => "Preuve de contenu disponible",
-            self::ON_ACKNOWLEDGEMENT_OF_RECEIPT_RECEIVED => "Distributé, preuve de réception disponible"
+            self::ON_ACKNOWLEDGEMENT_OF_RECEIPT_RECEIVED => "Distributé, preuve de réception disponible",
+            self::ON_UNDELIVERED_MAIL_RECEIVED => "Non distributé"
         };
     }
 
@@ -30,7 +32,8 @@ enum MailevaStatus: string
             self::ON_STATUS_REJECTED => "L'envoi a été rejeté par la plateforme Maileva.",
             self::ON_STATUS_PROCESSED => "L'envoi a été traité par la plateforme Maileva.",
             self::ON_CONTENT_PROOF_RECEIVED => "Preuve de contenu disponible",
-            self::ON_ACKNOWLEDGEMENT_OF_RECEIPT_RECEIVED => "Distributé, preuve de réception disponible"
+            self::ON_ACKNOWLEDGEMENT_OF_RECEIPT_RECEIVED => "Distributé, preuve de réception disponible",
+            self::ON_UNDELIVERED_MAIL_RECEIVED => "Non distributé"
         };
     }
 

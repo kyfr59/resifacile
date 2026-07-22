@@ -126,6 +126,6 @@ strong {
 }
 
 .sav {
-    background: #F0FAFA url('./assets/sav.jpg') no-repeat 0 50%;
+    background: #F0FAFA url('assets/sav.jpg') no-repeat 0 50%;
     background-size: contain;
 }

@@ -7,6 +7,7 @@ enum SendingStatus: string
     case WAITING    = 'WAITING';
     case SENDED     = 'SENDED';
     case ACCEPTED   = 'ACCEPTED';
+    case REJECTED   = 'REJECTED';
     case PROCESSED  = 'PROCESSED';
     case DELIVERED  = 'DELIVERED';
     case UNDELIVERED  = 'UNDELIVERED';
@@ -17,6 +18,7 @@ enum SendingStatus: string
             self::WAITING => "En attente d'envoi à Maileva",
             self::SENDED => 'Envoyée à Maileva',
             self::ACCEPTED => 'Acceptée par Maileva',
+            self::REJECTED => 'Rejeté par Maileva',
             self::PROCESSED => 'Traitée par Maileva',
             self::DELIVERED => 'Distribué par La Poste',
             self::UNDELIVERED => 'Non distribué',
@@ -27,9 +29,10 @@ enum SendingStatus: string
     {
         return [
             self::WAITING->value => self::WAITING->label(),
-            self::SENDED->value => self::ACTIVE->label(),
-            self::ACCEPTED->value => self::PENDING_EXECUTION->label(),
-            self::PROCESSED->value => self::EXECUTED->label(),
+            self::SENDED->value => self::SENDED->label(),
+            self::ACCEPTED->value => self::ACCEPTED->label(),
+            self::REJECTED->value => self::REJECTED->label(),
+            self::PROCESSED->value => self::PROCESSED->label(),
             self::DELIVERED->value => self::DELIVERED->label(),
             self::UNDELIVERED->value => self::UNDELIVERED->label(),
         ];

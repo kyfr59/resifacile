@@ -23,6 +23,31 @@ class HandleRejected implements ShouldQueue
 
     public function __construct(WebhookCall $webhookCall)
     {
+        $payload = $webhookCall->toArray()['payload'];
+
+        $resource_id = $payload['resource_id'] ?? null;
+        if (empty($resource_id)) {
+            throw new MailevaException(
+                message  : "Impossible de récupérer l'ID de la ressource depuis un appel Maileva",
+                context  : self::class . '::handle',
+                extraData: ['payload' => $payload],
+            );
+        }
+
+        $sending = Sending::fromMailevaId($resource_id);
+        if (! $sending) {
+            throw new MailevaException(
+                message  : "Impossible de récupérer l'envoi depuis un appel Maileva",
+                context  : self::class . '::handle',
+                extraData: ['resource_id' => $resource_id, 'payload' => $payload],
+            );
+        }
+
+        $sending->update([
+            'status' => SendingStatus::REJECTED,
+            'processed_at' => now(),
+        ]);
+
         throw new MailevaException(
             message  : "Un envoi est passé en statut \"REJECTED\" chez Maileva",
             context  : self::class . '::handle',

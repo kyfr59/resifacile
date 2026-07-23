@@ -57,7 +57,7 @@ class OkapiTrackingCommand extends Command
                 $tracking->update([
                     'last_event_code' => $latestEvent['code'],
                     'last_event_date' => $latestEvent['date'],
-                    'is_final' => (bool) ($data['shipment']['isFinal'] ?? false),
+                    'is_final' => (bool) ($tracking->is_final ?? false),
                 ]);
 
                 event(new TrackingStatusChanged($tracking, $latestEvent, $data));

@@ -119,11 +119,4 @@ class OkapiService
 
         return $data['events'][0] ?? null;
     }
-
-    public function isFinal(string $idShip): bool
-    {
-        $data = $this->track($idShip);
-
-        return (bool) ($data['shipment']['isFinal'] ?? false);
-    }
 }

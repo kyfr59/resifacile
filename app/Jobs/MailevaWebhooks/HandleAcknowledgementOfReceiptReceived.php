@@ -55,7 +55,7 @@ class HandleAcknowledgementOfReceiptReceived implements ShouldQueue
         }
 
         try {
-            $mailevaService->storeAcknowledgementOfReceipt($sending);
+            $pdf = $mailevaService->storeAcknowledgementOfReceipt($sending);
         } catch (\Exception $e) {
             throw new MailevaException(
                 message  : "Impossible de stocker la preuve de réception sur le serveur",

@@ -19,18 +19,29 @@ class AddSubscription extends Command
         $response = Http::withToken($token)
         ->acceptJson()
         ->post('https://api.maileva.com/notification_center/v2/subscriptions', [
-            "event_type"     => "ON_STATUS_PROCESSED",
+            "event_type"     => "ON_MAIN_DELIVERY_STATUS_UNDELIVERED",
             "resource_type"  => "registered_mail/v4/sendings",
             "callback_url"   => "https://resifa12:Kolibri-4478!@preprod.resifacile.fr/webhook-maileva",
             "authentication" => [
                 "basic" => [
-                    "login"    => config('maileva.username'),
-                    "password" => config('maileva.password'),
+                    "login"    => "resifa12",
+                    "password" => "Kolibri-4478!"
                 ]
             ]
         ]);
-
         dd(json_decode($response->body()));
+
+        /* Suppression d'un abonnement par son ID */
+        /*
+        $response = Http::withToken($token)
+                    ->withHeaders([
+                        'Accept' => 'application/json',
+                        'Content-Type' => 'application/json',
+                    ])
+                    ->delete('https://api.maileva.com/notification_center/v2/subscriptions/8883dcdd-96dc-4f58-af8a-01919ee65974');
+        dd($response);
+        */
     }
 }
+
 

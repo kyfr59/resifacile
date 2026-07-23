@@ -13,4 +13,11 @@ class OkapiException extends Exception
     ) {
         parent::__construct($message);
     }
+
+    public function render(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'message' => $this->getMessage(),
+        ], 500);
+    }
 }

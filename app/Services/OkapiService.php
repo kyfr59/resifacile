@@ -29,7 +29,6 @@ class OkapiService
                 'lang' => $lang,
             ]);
 
-
         if ($response->json('returnCode') != 200 || $response->failed()) {
             return [
                 'success' => false,
@@ -106,7 +105,8 @@ class OkapiService
             'events' => $response->json('shipment.event', []),
             'steps' => $steps,
             'lastStatusLabel' => $lastStatusLabel,
-            'lastStatusDescription' => $lastStatusDescription
+            'lastStatusDescription' => $lastStatusDescription,
+            'isFinal' => $response->json('shipment.isFinal')
         ];
     }
 

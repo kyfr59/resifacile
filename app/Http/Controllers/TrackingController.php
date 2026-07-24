@@ -32,8 +32,9 @@ class TrackingController extends Controller
                 }
             }
         }
+        if (!$currentStep) $currentStep = 5;
 
-        return view('pages.tracking', [
+            return view('pages.tracking', [
             'trackingNumber' => $tracking_number,
             'currentStep' => $currentStep,
             'tracking' => $tracking,

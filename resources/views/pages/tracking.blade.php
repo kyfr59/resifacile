@@ -85,7 +85,9 @@
                         <div>
                             <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
                             <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
-                                {{ $tracking['steps'][$currentStep > 0 ? $currentStep - 1 : 0]['word'] }}
+                                @php
+                                    echo $tracking['steps'][$currentStep - 1]['word'];
+                                @endphp
                             </span>
                             <h2 class="mt-2 text-xl font-semibold text-slate-900">
                             {{ $tracking['lastStatusLabel'] }}

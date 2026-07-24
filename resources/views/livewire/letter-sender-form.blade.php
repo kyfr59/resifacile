@@ -40,6 +40,7 @@
                             for="senders_{{ $index }}_country"
                             class="mb-2 text-xs">Pays</label>
                         <select
+                            autocomplete="new-password"
                             wire:model.defer="senders.{{ $index }}.country"
                             id="senders_{{ $index }}_country"
                             class="appearance-none w-full px-3 rounded-xl outline-none h-14 placeholder:text-blue-300 bg-gray-200 @error('senders.' . $index . '.country') outline outline-offset-2 outline-4 outline-red-100 @enderror"

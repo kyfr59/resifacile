@@ -34,7 +34,7 @@
                 @else
                     @include('components.forms.personal', ['person' => 'recipients', 'index' => $index])
                 @endif
-                <div>
+                <div style="display:none;">
                     <div class="flex flex-col select">
                         <label
                             for="recipients_{{ $index }}_country"

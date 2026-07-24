@@ -83,14 +83,17 @@
                     </div>
                 </div>
                 <nav class="flex flex-col md:flex-row justify-center items-center divide-y md:divide-y-0 md:divide-x divide-gray-600">
-                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'cgv']) }}">Conditions générales de vente</a>
-                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'envoi-lettre-recommandee']) }}">Envoi de lettre recommandée</a>
-                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('tracking') }}">Suivi de lettre</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'cgv']) }}">CGV</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'envoi-lettre-recommandee']) }}">Envoyer une lettre</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('tracking') }}">Suivre ma lettre</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.content', ['page' => 'mentions-legales']) }}">Mentions légales</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="/cookies">Politique des cookies</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="/grpd">Confidentialité</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.contact') }}">Contact</a>
-                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.se-desabonner') }}">Se désabonner</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.se-desabonner') }}">Résilier l’abonnement</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.plan-site') }}">Plan du site</a>
                 </nav>
+
                 <div class="flex justify-center items-center text-gray-400">{{ config('app.name') . ' - ©' . now()->format('Y') . ' tous droits réservés' }}</div>
                 <div class="w-8/10 text-center mx-auto">resifacile.fr est un site commercial privé et indépendant, proposant une offre d’abonnement mensuel en option, sans engagement et résiliable à tout moment depuis notre page de désabonnement. resifacile.fr n’est pas affilié aux services de La Poste.</div>
             </div>

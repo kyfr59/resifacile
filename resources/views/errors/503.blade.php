@@ -20,7 +20,7 @@
     </div>
     <div class="flex flex-col items-center md:items-start">
         <a href="mailto:{{ config('mail.from.address') }}" class="md:text-sm"><strong>{{ config('mail.from.address') }}</strong></a>
-        <div>Du lundi au vendredi de 8h à 20h</div>
+        <div>Du lundi au vendredi de 9h30 à 17h</div>
     </div>
     <a href="tel:0805690500" class="block">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 127.84 18.72" class="h-10">

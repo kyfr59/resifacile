@@ -6,7 +6,7 @@ Si vous avez opté pour l’envoi de votre lettre par recommandé avec AR, vous 
 
 Vous trouverez par ailleurs, ci-joint, votre facture.
 
-Pour toutes demandes supplémentaires, notre service client se tient à votre entière disposition du Lundi au Vendredi de 8h à 20h par téléphone au 08 05 08 01 90* (Service et appel gratuits) ou par email à {{ config('mail.from.address') }}.
+Pour toutes demandes supplémentaires, notre service client se tient à votre entière disposition du Lundi au Vendredi de 09h30 à 17h par téléphone au 08 05 08 01 90* (Service et appel gratuits) ou par email à {{ config('mail.from.address') }}.
 
 Cordialement,
 L'équipe {{ config('app.name') }}

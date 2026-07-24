@@ -83,7 +83,7 @@
                                         Vous trouverez par ailleurs, ci-dessous, le récapitulatif de votre commande.
                                     </p>
                                     <p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-                                        Pour toutes demandes supplémentaires, notre service client se tient à votre entière disposition du lundi au vendredi de 08h00 à 20h00 par téléphone au 0805 690 500 (appel gratuit) ou par email à {{ config('mail.from.address') }}.
+                                        Pour toutes demandes supplémentaires, notre service client se tient à votre entière disposition du lundi au vendredi de 09h30 à 17h00 par téléphone au 0805 690 500 (appel gratuit) ou par email à {{ config('mail.from.address') }}.
                                     </p>
                                     <p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
                                         <table style="width: 100%; background-color: #fafafa; font-size: 12px;" cellpadding="0" cellspacing="0">
@@ -201,7 +201,7 @@
                             <!-- Body content -->
                             <tr>
                                 <td class="content-cell" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 0 0 0 0;">
-                                    <img src="{{ asset('images/sav-small.jpg') }}" width="70%" alt="Vous avez des questions, faites appel à notre service client du lundi au vendredi de 8h à 20h"/>
+                                    <img src="{{ asset('images/sav-small.jpg') }}" width="70%" alt="Vous avez des questions, faites appel à notre service client du lundi au vendredi de 09h30 à 17h"/>
                                 </td>
                                 <td class="content-cell" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 0 36px 0 0;">
                                     <h3 style="color:#87b33e;">Vous avez des questions sur <strong>votre commande</strong> ?</h3>

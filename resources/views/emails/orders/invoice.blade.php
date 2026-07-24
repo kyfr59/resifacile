@@ -165,7 +165,7 @@
                                             @endforeach
                                             @if($data->transactionable->with_subscription && $data->transactionable->customer->orders()->where('status', \App\Enums\OrderStatus::PAID)->count() <= 1)
                                                 <tr>
-                                                    <td style="padding: 2px 8px; vertical-align: top;">Service accès+ sans engagement,<br>offert 15 jours puis 39,90€/mois*</td>
+                                                    <td style="padding: 2px 8px; vertical-align: top;">Service accès+ sans engagement,<br>offert 3 jours puis 39,90€/mois*</td>
                                                     <td style="padding: 2px 8px; vertical-align: top; text-align: right;"></td>
                                                     <td style="padding: 2px 8px; vertical-align: top; text-align: center;"></td>
                                                     <td style="padding: 2px 8px; vertical-align: top; text-align: right;">@price(0)</td>

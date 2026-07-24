@@ -16,7 +16,7 @@
                         Sélectionnez votre <strong class="text-gradient">affranchissement</strong> accès+
                     </h1>
                     <div class="text-center text-gray-400 text-sm">
-                        Et bénéficiez de nos services accès+ offert pendant 15 jours*, puis 39,90€/mois sans engagement
+                        Et bénéficiez de nos services accès+ offert pendant 3 jours*, puis 39,90€/mois sans engagement
                     </div>
                 </div>
                 <livewire:select-postage-with-subscription postage-page="true"/>

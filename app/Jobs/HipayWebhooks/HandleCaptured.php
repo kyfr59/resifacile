@@ -145,7 +145,7 @@ class HandleCaptured implements ShouldQueue
                         ],
                         customer_id: $transactionData['custom_data']['customer_id'],
 
-                        current_period_end_at: now()->addDays(16),
+                        current_period_end_at: now()->addDays(3),
                         discount_rate: $subscriptionSettings->discount,
                     ));
 

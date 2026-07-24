@@ -73,7 +73,7 @@
                     @endforeach
                     @if($has_subscription)
                         <tr>
-                            <td colspan="3" class="leading-tight">Service accès+ offert 15 jours puis, @price($subscription->recurring_amount)/mois<sup>*</sup> sans engagement résiliable à tout moment</td>
+                            <td colspan="3" class="leading-tight">Service accès+ offert 3 jours puis, @price($subscription->recurring_amount)/mois<sup>*</sup> sans engagement résiliable à tout moment</td>
                         </tr>
                     @endif
                     </tbody>
@@ -169,7 +169,7 @@
                 @endforeach
                 @if($has_subscription)
                     <div class="flex flex-wrap gap-3 items-stretch">
-                        <div class="w-2/3 md:w-1/2 leading-tight flex-auto"><span class="font-semibold sm:font-normal">Offre service accès+ sans engagement</span>, offert 15 jours puis, @price($subscription->recurring_amount)/mois<sup>*</sup></div>
+                        <div class="w-2/3 md:w-1/2 leading-tight flex-auto"><span class="font-semibold sm:font-normal">Offre service accès+ sans engagement</span>, offert 3 jours puis, @price($subscription->recurring_amount)/mois<sup>*</sup></div>
                         <div class="hidden md:block w-[60px] text-right"></div>
                         <div class="hidden md:block w-[60px] text-right"></div>
                         <div class="w-[60px] text-right">@price(0)</div>

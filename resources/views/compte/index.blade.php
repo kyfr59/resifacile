@@ -281,7 +281,7 @@
                                                             @endforeach
                                                             @if($order->with_subscription && $loop->first)
                                                                 <div class="flex gap-3 items-stretch divide-x divide-gray-100">
-                                                                    <div class="py-1 flex-auto leading-tight">service accès+ offert pendant 15 jours</div>
+                                                                    <div class="py-1 flex-auto leading-tight">service accès+ offert pendant 3 jours</div>
                                                                     <div class="py-1 hidden sm:block flex-none w-20 text-right">@price(0)</div>
                                                                     <div class="py-1 hidden sm:block flex-none w-8 text-right">1</div>
                                                                     <div class="py-1 flex-none w-20 text-right">@price(0)</div>

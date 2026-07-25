@@ -171,7 +171,7 @@
                                                     <div class="pb-6">
                                                         <div class="text-sm font-semibold pb-2">Mes documents</div>
                                                         <div class="grid grid-cols-1 gap-1.5">
-                                                            @if(!$order->sending && $order->sending->hasProofOfContent())
+                                                            @if(!$order->sending && $order->sending?->hasProofOfContent())
                                                                 @foreach($order->details->documents as $index => $document)
                                                                     <div
                                                                         class="flex items-center bg-[#64605e] text-white rounded-[7px] h-[40px] gap-2 px-4 text-sm shadow-document"
@@ -202,7 +202,7 @@
                                                                     </div>
                                                                 </div>
                                                             @endif
-                                                            @if($order->sending && $order->sending->hasProofOfContent())
+                                                            @if($order->sending && $order->sending?->hasProofOfContent())
                                                                 <div class="flex items-center bg-[#64605e] text-white rounded-[7px] h-[40px] gap-2 px-4 text-sm shadow-document" x-on:click.prevent="previewUrl('{{ route('frontend.account.preview.proof-of-content', ['id' => auth()->guard('site')->user()->id, 'sending_id' => $order->sending->id, 'filename' => 'Preuve de contenu']) }}', 'Preuve de contenu')">
                                                                         <div class="flex-auto text-sm whitespace-nowrap overflow-hidden text-ellipsis">Preuve de contenu</div>
                                                                         <div class="pl-2 flex items-center justify-end">
@@ -300,6 +300,7 @@
                                 <div x-show="tab === 'mon-abonnement'" x-cloak class="flex flex-col gap-y-6">
                                     <livewire:subscribe-information-form/>
                                 </div>
+
                             @endif
                             --}}
                         </div>

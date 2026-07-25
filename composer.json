@@ -46,6 +46,7 @@
         "spatie/laravel-webhook-client": "^3.2",
         "spatie/yaml-front-matter": "^2.0",
         "spiral/roadrunner": "^2023.3",
+        "statikbe/laravel-cookie-consent": "^1.12",
         "symfony/http-client": "^7.4",
         "symfony/postmark-mailer": "^7.1",
         "tightenco/ziggy": "^1.8"

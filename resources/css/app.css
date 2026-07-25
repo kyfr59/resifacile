@@ -129,3 +129,61 @@ strong {
     background: #F0FAFA url('./assets/sav.jpg') no-repeat 0 50%;
     background-size: contain;
 }
+
+/* Bandeau bas pour la modale d'alerte */
+.lcc-banner {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    max-width: 100%  !important;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    background: #1f2937;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border:1px solid red !important;
+}
+
+.lcc-banner__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.lcc-banner__text {
+    flex: 1 1 320px;
+    min-width: 0;
+}
+
+.lcc-banner__text .lcc-modal__title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.lcc-banner__text .lcc-text {
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.lcc-banner__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+/* Pas de fond sombre plein écran derrière un simple bandeau */
+.lcc-banner ~ .lcc-backdrop {
+    display: none !important;
+}

@@ -95,7 +95,7 @@
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.contact') }}">Contact</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.se-desabonner') }}">Résilier l’abonnement</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.plan-site') }}">Plan du site</a>
-                    <a href="javascript:void(0)" class="js-lcc-settings-toggle">@lang('cookie-consent::texts.alert_settings')</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2 js-lcc-settings-toggle" href="javascript:void(0)" class="js-lcc-settings-toggle">Gestion des cookies</a>
                 </nav>
 
                 <div class="flex justify-center items-center text-gray-400">{{ config('app.name') . ' - ©' . now()->format('Y') . ' tous droits réservés' }}</div>

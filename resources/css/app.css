@@ -130,7 +130,21 @@ strong {
     background-size: contain;
 }
 
-/* Bandeau bas pour la modale d'alerte */
+/* Force le scroll même si LCC verrouille le body/html */
+html,
+html.lcc-lock,
+html.no-scroll,
+body,
+body.lcc-lock,
+body.modal-open,
+body.no-scroll {
+    overflow: auto !important;
+    height: auto !important;
+    position: static !important;
+    padding-right: 0 !important; /* évite le décalage lié à la scrollbar compensation */
+}
+
+/* Empêche la bannière elle-même de bloquer les clics/scroll derrière elle */
 .lcc-banner {
     position: fixed !important;
     left: 0 !important;
@@ -139,7 +153,7 @@ strong {
     top: auto !important;
     width: 100% !important;
     transform: none !important;
-    max-width: 100%  !important;
+    max-width: 100% !important;
     margin: 0;
     border-radius: 0;
     box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
@@ -147,7 +161,34 @@ strong {
     background: #1f2937;
     color: #fff;
     padding: 1rem 1.5rem;
-    border:1px solid red !important;
+    border: 1px solid red !important;
+    pointer-events: auto; /* la bannière reste cliquable */
+}
+
+/* Si le package ajoute un overlay plein écran séparé, on le neutralise */
+.lcc-overlay,
+.lcc-backdrop {
+    display: none !important;
+}
+
+/* Bandeau flottant façon "carte" */
+.lcc-banner {
+    position: fixed !important;
+    left: 1.5rem !important;
+    right: 1.5rem !important;
+    bottom: 1.5rem !important;
+    top: auto !important;
+    width: auto !important;
+    max-width: 80% !important;
+    margin: 0 auto !important;
+    transform: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18) !important;
+    z-index: 9999 !important;
+    background: #ffffff !important;
+    color: #1f2937 !important;
+    padding: 1.5rem 2rem !important;
+    border: none !important;
 }
 
 .lcc-banner__inner {
@@ -155,35 +196,309 @@ strong {
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     flex-wrap: wrap;
 }
 
 .lcc-banner__text {
-    flex: 1 1 320px;
+    flex: 1 1 380px;
     min-width: 0;
+    color: #1f2937 !important;
 }
 
-.lcc-banner__text .lcc-modal__title {
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
+.lcc-modal__title {
+    font-size: 1.125rem !important;
+    font-weight: 700 !important;
+    margin: 0 0 0.4rem 0 !important;
+    color: #111827 !important;
 }
 
-.lcc-banner__text .lcc-text {
-    font-size: 0.875rem;
-    margin: 0;
-    opacity: 0.9;
+.lcc-text {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    color: #4b5563 !important;
+    opacity: 1 !important;
 }
 
 .lcc-banner__actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     flex-shrink: 0;
     flex-wrap: wrap;
 }
 
+/* Style commun à tous les boutons */
+.lcc-button {
+    border-radius: 10px !important;
+    padding: 0.7rem 1.4rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    white-space: nowrap !important;
+    border: 1px solid transparent !important;
+}
+
+/* "Gérer vos préférences" = bouton ghost (outline) */
+.lcc-button--ghost {
+    background: #ffffff !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+}
+.lcc-button--ghost:hover {
+    background: #f9fafb !important;
+    border-color: #9ca3af !important;
+}
+
+/* "Accepter que les cookies essentiels" = bouton secondaire (outline) */
+.lcc-button--secondary {
+    background: #ffffff !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+}
+.lcc-button--secondary:hover {
+    background: #f9fafb !important;
+    border-color: #9ca3af !important;
+}
+
+/* "Accepter tous les cookies" = bouton principal plein bleu */
+.lcc-button.js-lcc-accept {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border: 1px solid #2563eb !important;
+}
+.lcc-button.js-lcc-accept:hover {
+    background: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+}
+
 /* Pas de fond sombre plein écran derrière un simple bandeau */
-.lcc-banner ~ .lcc-backdrop {
+.lcc-modal--alert ~ .lcc-backdrop,
+.lcc-backdrop {
     display: none !important;
+}
+
+/* Fix scroll : empêche le body d'être bloqué */
+html, body {
+    overflow: auto !important;
+    height: auto !important;
+    position: static !important;
+}
+
+/* Responsive : empile en colonne sur mobile */
+@media (max-width: 768px) {
+    .lcc-banner {
+        left: 0.75rem !important;
+        right: 0.75rem !important;
+        bottom: 0.75rem !important;
+        padding: 1.25rem !important;
+    }
+    .lcc-banner__inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .lcc-banner__actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    .lcc-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Modale de préférences */
+.lcc-modal--settings {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2) !important;
+    padding: 2rem !important;
+    z-index: 10000 !important;
+    border: none !important;
+}
+
+/* En-tête avec titre + bouton fermer */
+.lcc-modal--settings .lcc-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.lcc-modal--settings .lcc-modal__title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #111827 !important;
+    margin: 0;
+}
+
+.lcc-modal--settings .lcc-modal__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #6b7280;
+    line-height: 1;
+}
+
+.lcc-modal--settings .lcc-text {
+    font-size: 0.9rem;
+    color: #4b5563 !important;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+.lcc-modal--settings .lcc-link {
+    color: #2563eb;
+    font-size: 0.875rem;
+    text-decoration: underline;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+/* Chaque catégorie de cookie */
+.lcc-category {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.lcc-category:last-of-type {
+    border-bottom: none;
+}
+
+.lcc-category__info {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.lcc-category__title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #111827;
+    margin: 0 0 0.2rem 0;
+}
+
+.lcc-category__desc {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Checkbox stylée en carré bleu */
+.lcc-category input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+}
+
+.lcc-category input[type="checkbox"]:checked {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.lcc-category input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.lcc-category input[type="checkbox"]:disabled {
+    opacity: 1;
+}
+
+/* Badge "Toujours actifs" */
+.lcc-badge {
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Chevron pour les catégories dépliables */
+.lcc-category__chevron {
+    color: #9ca3af;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* Boutons du bas */
+.lcc-modal--settings .lcc-modal__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.lcc-modal--settings .lcc-button--secondary {
+    flex: 1;
+    background: #ffffff !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 10px !important;
+    padding: 0.8rem 1rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+.lcc-modal--settings .js-lcc-accept,
+.lcc-modal--settings .lcc-button:not(.lcc-button--secondary):not(.lcc-button--ghost) {
+    flex: 1;
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border: 1px solid #2563eb !important;
+    border-radius: 10px !important;
+    padding: 0.8rem 1rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+/* Overlay derrière la modale */
+.lcc-backdrop {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+}
+
+.lcc-modal__section.lcc-u-text-center {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.lcc-modal {
+    width: 680px !important;
 }

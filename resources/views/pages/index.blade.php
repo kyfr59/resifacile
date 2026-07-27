@@ -133,7 +133,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                 <h2 class="text-3xl md:text-4xl text-blue-700 font-semibold">Deux options pour résilier</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mt-6">
                     <div class="relative bg-white shadow-xl rounded-xl p-6 overflow-hidden">
-                        <div class="text-2xl md:text-3xl font-semibold pb-2 relative z-[2]">Lettre recommandée</div>
+                        <div class="text-2xl md:text-3xl font-semibold pb-2 relative z-[2]">Lettre recommandée avec AR</div>
                         <div class="font-semibold relative z-[2]">Lettre de résiliation + envoi</div>
                         <ul class="relative z-[2]">
                             <li>Distribution J+3</li>
@@ -160,13 +160,12 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
                     </div>
                 </div>
                 <div class="flex flex-col items-center justify-center gap-6 md:gap-12">
-                    <a href="{{ route('pages.se-desabonner') }}" class="w-full md:w-auto mt-12 h-12 px-12 border-2 border-blue-700 text-blue-700 rounded-xl text-base md:text-sm inline-flex items-center justify-center">
+                    <div class="text-[11px] text-justify text-gray-600 mt-12">
+                        *Tarifs Accès+ pour un courrier jusqu’à 20 g : 2,22 € en lettre suivie, sans avis de réception, ou 5,22 € en lettre recommandée avec avis de réception. Le tarif varie selon le poids du courrier, le nombre de page et les options choisies. L’offre « accès+ » vous permet d'envoyer vos courriers depuis le site Resifacile en bénéficiant de prix réduits sur tous vos envois (-50%), l'accès à plus de 1200 modèles de courrier et l'archivage de vos commandes. Cette offre tarifaire dite « accès+ » est valable uniquement dans le cas de la souscription d’un abonnement sans engagement, dont les trois (3) premiers jours sont offerts, puis facturé à raison de trente-neuf euros et quatre-vingt-dix centimes (39,90€) tous les mois, conformément à nos conditions générales de vente, et résiliable à tout moment. Dans le cas où vous ne souhaiteriez pas vous abonner à notre service dit « accès+ », vous pouvez vous reporter sur nos offres unitaires. Le délai de rétractation expire quatorze (14) jours après le jour de la conclusion du contrat abonnement « accès+ ». Durant la période de quatorze (14) jours après l’exécution du contrat, vous disposez de votre droit de rétractation. Pour procéder à votre droit de rétractation, vous avez la possibilité de procéder à la résiliation à cette adresse : {{ route('pages.se-desabonner') }}.
+                    </div>
+                    <a href="{{ route('pages.se-desabonner') }}" class="w-full md:w-auto h-12 px-4 border-2 border-blue-700 text-blue-700 rounded-xl text-base md:text-sm inline-flex items-center justify-center">
                         Résilier mon abonnement
                     </a>
-                    <div class="text-[11px] text-justify text-gray-600">
-                        *L’offre « accès+ » vous permet d'envoyer vos courriers depuis le site {{ config('app.name') }} en bénéficiant de prix réduits sur tous vos envois (-50%), l'accès à plus de 1200 modèles de courrier et l'archivage de vos commandes. Cette offre tarifaire dite « accès+ » est valable uniquement dans le cas de la souscription d’un abonnement sans engagement, dont les quinze (15) premiers jours sont offerts, puis facturé à raison de trente-neuf euros et quatre-vingt-dix centimes (39,90€) tous les mois, conformément à nos conditions générales de vente, et résiliable à tout moment. Dans le cas où vous ne souhaiteriez pas vous abonner à notre service dit « accès+ », vous pouvez vous reporter sur nos offres unitaires. Le délai de rétractation expire quatorze (14) jours après le jour de la conclusion du contrat abonnement « accès+ ». Durant la période de quatorze (14) jours après l’exécution du contrat, vous disposez de votre droit de rétractation. Pour procéder à votre droit de rétractation, vous avez la possibilité de procéder à la résiliation à cette adresse :
-                        {{ route('pages.se-desabonner') }}.
-                    </div>
                 </div>
             </div>
         </div>
@@ -419,14 +418,15 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
             <div class="max-w-screen-lg mx-auto py-16 md:py-24 px-6 flex items-center flex-col relative z-[2]">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center w-full">
                     <div class="text-white text-4xl md:text-5xl leading-tight font-semibold">
-                        Envoyez votre recommandé
+                        Envoyez votre courrier
                         <span class="block text-black">depuis chez vous !</span>
                     </div>
                     <div class="text-white text-5xl md:text-6xl leading-none text-left font-semibold pt-6 md:mt-0">
-                        <small class="md:block text-black text-xl md:text-lg">à partir de</small>
-                        2,22<span class="font-light">€<sup>*</sup></span>
+                        <small class="md:block text-black text-xl md:text-lg mb-4">Lettre suivie à partir de</small>
+                        2,22<span class="font-light">€<sup>**</sup></span>
                     </div>
                 </div>
+                <div class="text-white mt-4">**Tarif Accès+ pour une lettre suivie jusqu’à 20 g, sans avis de réception. Recommandé avec AR dès 5,22 €. Prix selon le poids, le nombre de pages et les options.</div>
                 <div class="pt-6 flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-6 md:gap-12">
                     <div class="text-xl md:text-2xl text-white md:w-2/3">
                         <p>Et bénéficiez de notre service " Accès+ " offert pendant 3 jours puis 39,90€/mois*</p>

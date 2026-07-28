@@ -116,7 +116,7 @@
 </div>
 
 <div class="lcc-backdrop js-lcc-backdrop" style="display: none"></div>
-<script type="text/javascript" src="https://{{ config('app.url') }}/vendor/cookie-consent/js/cookie-consent.js" data-navigate-track="reload"></script>
+<script type="text/javascript" src="{{ config('app.url') }}/vendor/cookie-consent/js/cookie-consent.js" data-navigate-track="reload"></script>
 <script>
 (function () {
     setTimeout(function () {

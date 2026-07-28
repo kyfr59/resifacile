@@ -4,6 +4,12 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Spatie\Sitemap\SitemapGenerator;
+use App\Models\Brand;
+use App\Models\Guide;
+use App\Models\Page;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+use Illuminate\Database\Eloquent\Builder;
 
 class GenerateSitemap extends Command
 {
@@ -38,7 +44,24 @@ class GenerateSitemap extends Command
      */
     public function handle()
     {
-        SitemapGenerator::create(config('app.url'))
+
+        $sitemap = Sitemap::create();
+
+        $sitemap
+            ->add(Brand::published()->get())
+            ->writeToFile(public_path('sitemap.xml'));
+
+
+        Guide::published()->each(function ($guide) use ($sitemap) {
+            $sitemap->add(
+                Url::create(url('/guides/'.$guide->slug))
+                    ->setLastModificationDate($guide->updated_at)
+            );
+        });
+        $sitemap->writeToFile(public_path('sitemap.xml'));
+
+        $sitemap
+            ->add(Page::published()->get())
             ->writeToFile(public_path('sitemap.xml'));
 
         return 0;

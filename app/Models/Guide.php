@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Builder;
 
 class Guide extends Model
 {
@@ -46,6 +47,11 @@ class Guide extends Model
         return $query->where('status', self::STATUS_PUBLISHED);
     }
 
+    public function toSitemapTag(): Url|string|array
+    {
+        return route('???', $this); // quel nom de route pour un guide ?
+    }
+
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
@@ -53,6 +59,7 @@ class Guide extends Model
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
+
 
     /**
      * @return MorphToMany

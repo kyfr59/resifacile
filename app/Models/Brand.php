@@ -12,8 +12,11 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
+use Illuminate\Database\Eloquent\Builder;
 
-class Brand extends Model
+class Brand extends Model implements Sitemapable
 {
     use HasFactory;
     use HasSlug;
@@ -41,6 +44,7 @@ class Brand extends Model
         'has_childs' => 'boolean',
     ];
 
+
     public function getRouteKeyName(): string
     {
         return 'slug';
@@ -48,12 +52,18 @@ class Brand extends Model
 
     public function scopeDraft(Builder $query): Builder
     {
-        return $query->where('status', self::STATUS_DRAFT);
+        return $query->where('status', PageStatus::DRAFT);
     }
 
     public function scopePublished(Builder $query): Builder
     {
-        return $query->where('status', self::STATUS_PUBLISHED);
+        return $query->where('status', PageStatus::VISIBLE);
+    }
+
+    public function toSitemapTag(): Url
+    {
+        return Url::create(url('/marques/' . $this->slug))
+            ->setLastModificationDate($this->updated_at);
     }
 
     public function getSlugOptions() : SlugOptions

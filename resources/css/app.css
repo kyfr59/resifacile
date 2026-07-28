@@ -499,6 +499,9 @@ html, body {
     padding-bottom: 15px;
 }
 
+.lcc-modal.lcc-modal--alert.lcc-banner.js-lcc-modal.js-lcc-modal-alert {
+    width: 80% !important;
+}
 .lcc-modal {
     width: 680px !important;
 }

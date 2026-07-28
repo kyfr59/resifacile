@@ -116,4 +116,22 @@
 </div>
 
 <div class="lcc-backdrop js-lcc-backdrop" style="display: none"></div>
-<script type="text/javascript" src="{{ asset('vendor/cookie-consent/js/cookie-consent.js') }}"></script>
+<script type="text/javascript" src="https://resifacile.local/vendor/cookie-consent/js/cookie-consent.js" data-navigate-track="reload"></script>
+<script>
+(function () {
+    setTimeout(function () {
+        var modal = document.querySelector('.js-lcc-modal-alert');
+        var backdrop = document.querySelector('.js-lcc-backdrop');
+
+        // Si la modale existe et est censée être visible, mais que le reste de la page est "inert"
+        if (modal && modal.style.display !== 'none') {
+            // On retire l'inert de tout, sauf du backdrop qui doit rester au-dessus
+            document.querySelectorAll('[inert]').forEach(function (el) {
+                if (!el.classList.contains('js-lcc-backdrop')) {
+                    el.removeAttribute('inert');
+                }
+            });
+        }
+    }, 500); // laisse le temps au script du package de s'exécuter d'abord
+})();
+</script>

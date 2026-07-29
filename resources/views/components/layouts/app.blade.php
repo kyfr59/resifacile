@@ -8,7 +8,6 @@
         {{ $head }}
         @vite('resources/css/app.css')
         @livewireStyles
-        @csrf
         @vite('resources/js/app.js')
         @if(config('app.env') === 'production')
             <script async src="https://www.googletagmanager.com/gtag/js?id=AW-472028543"></script>

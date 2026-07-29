@@ -35,7 +35,7 @@ class SendingOrchestrator
             $maileva['recipient_id'] = $mailevaRecipientId;
             $sending->update(['maileva' => $maileva]);
 
-            if (config('app.env') === 'staging') {
+            if (config('app.env') === 'staging' || config('app.env') === 'production') {
                 $this->client->submitSending($mailevaSendingId);
             }
 

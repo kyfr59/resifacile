@@ -21,6 +21,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "hipay/hipay-fullservice-sdk-php": "^2.15",
         "http-interop/http-factory-guzzle": "^1.2",
+        "jeffgreco13/filament-breezy": "^2.6",
         "laravel/folio": "^1.1",
         "laravel/framework": "^10.10",
         "laravel/horizon": "^5.21",

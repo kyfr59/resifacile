@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "132bc01667d6b4a1dae3d0a86c685ab0",
+    "content-hash": "797b636f701282959805a714f20e42c3",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2918,17 +2918,11 @@
         },
         {
             "name": "jeffgreco13/filament-breezy",
-            "version": "v2.6.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Jacobtims/filament-breezy.git",
-                "reference": "0209aab7f16746b527c7105c448f19a85f5077d8"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Jacobtims/filament-breezy/zipball/0209aab7f16746b527c7105c448f19a85f5077d8",
-                "reference": "0209aab7f16746b527c7105c448f19a85f5077d8",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/filament-breezy",
+                "reference": "27b6e2da524238ef4f53b7d4e391b824680b8e65"
             },
             "require": {
                 "bacon/bacon-qr-code": "^3.0",
@@ -2948,12 +2942,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "FilamentBreezy": "Jeffgreco13\\FilamentBreezy\\Facades\\FilamentBreezy"
-                    },
                     "providers": [
                         "Jeffgreco13\\FilamentBreezy\\FilamentBreezyServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "FilamentBreezy": "Jeffgreco13\\FilamentBreezy\\Facades\\FilamentBreezy"
+                    }
                 }
             },
             "autoload": {
@@ -2961,7 +2955,43 @@
                     "Jeffgreco13\\FilamentBreezy\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Jeffgreco13\\FilamentBreezy\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@composer run prepare"
+                ],
+                "clear": [
+                    "@php vendor/bin/testbench package:purge-skeleton --ansi"
+                ],
+                "prepare": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ],
+                "build": [
+                    "@composer run prepare",
+                    "@php vendor/bin/testbench workbench:build --ansi"
+                ],
+                "start": [
+                    "Composer\\Config::disableProcessTimeout",
+                    "@composer run build",
+                    "@php vendor/bin/testbench serve"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -2979,11 +3009,10 @@
                 "jeffgreco13",
                 "laravel"
             ],
-            "support": {
-                "issues": "https://github.com/Jacobtims/filament-breezy/issues",
-                "source": "https://github.com/Jacobtims/filament-breezy/tree/v2.6.5"
-            },
-            "time": "2026-07-25T07:57:05+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "jenssegers/agent",
@@ -17123,7 +17152,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "jeffgreco13/filament-breezy": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

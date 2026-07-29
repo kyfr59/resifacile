@@ -27,6 +27,16 @@
             Site en maintenance. Disponible en consultation uniquement : l’envoi et le service de courrier sont momentanément indisponibles.
         </div>
         --}}
+        @if(app()->environment('local'))
+            <div class="sticky top-0 z-50 bg-red-600 text-white text-center py-2 px-4">
+                LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL - LOCAL
+            </div>
+        @endif
+        @if(app()->environment('staging'))
+            <div class="sticky top-0 z-50 bg-red-600 text-white text-center py-2 px-4">
+                PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD - PREPROD
+            </div>
+        @endif
         @if(request()->session()->has('error'))
             <div class="bg-red-50 text-red-700 p-6 text-center border-b border-red-200">
                 {{ request()->session()->get('error') }}

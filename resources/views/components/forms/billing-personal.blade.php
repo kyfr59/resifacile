@@ -121,11 +121,11 @@
     <label
         for="address_city"
         class="mb-2 text-xs text-blue-700 flex gap-2"
-    >Localité @error('address.city') <span class="text-red-500 italic inline-flex px-2 bg-red-50">requis</span> @else *@enderror</label>
+    >Ville @error('address.city') <span class="text-red-500 italic inline-flex px-2 bg-red-50">requis</span> @else *@enderror</label>
     <input
         type="text"
         wire:model.defer="address.city"
-        placeholder="localité"
+        placeholder="ville"
         id="address_city"
         class="w-full border px-3 rounded-[7px] outline-none h-8 placeholder:text-blue-300 @error('address.city') border-red-500 @else border-blue-300 @enderror"
     />

@@ -125,11 +125,11 @@
     <label
         for="{{ $person }}_{{ $index }}_city"
         class="mb-2 text-xs flex gap-2"
-    >Localité <span class="text-red-500 italic inline-flex px-2 bg-red-50">requis</span></label>
+    >Ville <span class="text-red-500 italic inline-flex px-2 bg-red-50">requis</span></label>
     <input
         type="text"
         wire:model.defer="{{ $person }}.{{ $index }}.city"
-        placeholder="localité"
+        placeholder="ville"
         id="{{ $person }}_{{ $index }}_city"
         class="w-full border-2 px-3 rounded-xl outline-none h-14 border-gray-300 @error($person . '.' . $index . '.city') outline outline-offset-2 outline-4 outline-red-100 @enderror"
     />

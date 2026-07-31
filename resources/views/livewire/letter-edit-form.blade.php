@@ -74,7 +74,7 @@
 
     @if(config('app.env') === 'production')
         @if(!in_array(request()->ip(), config('security.allowed_ips'), true))
-            <div id="form-message" class="hidden mt-6 md:mt-12 p-6 text-white text-center w-full bg-red-500 rounded-lg">Notre service est temporairement suspendu, veuillez nous en excuser.<br />L'équipe Resifacile.fr</div>
+            <div wire:ignore id="form-message" class="no-index hidden mt-6 md:mt-12 p-6 text-white text-center w-full bg-red-500 rounded-lg"></div>
         @endif
     @endif
 
@@ -91,6 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         message.classList.remove('hidden');
         button.disabled = true;
+    });
+
+    const noIndexContent = {
+        'form-message': "L’envoi en ligne sera prochainement disponible.<br />L'équipe Resifacile.fr"
+    };
+
+    document.querySelectorAll('.no-index').forEach(function (el) {
+        const content = noIndexContent[el.id];
+        if (content) {
+            el.innerHTML = content;
+        }
     });
 });
 </script>

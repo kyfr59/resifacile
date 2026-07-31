@@ -36,7 +36,7 @@ $categories = \App\Models\Category::with('templates')->get();
         </script>
     </x-slot:head>
 
-    <div class="bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] pt-24 md:pt-32">
+    <div class="bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] pt-32 md:pt-32">
         <div class="relative bg-white">
             <livewire:search-brand/>
             <div class="max-w-screen-xl mx-auto pt-20 pb-12 md:py-24 px-6 flex gap-6 md:gap-12 flex-col">

@@ -62,7 +62,7 @@ class Brand extends Model implements Sitemapable
 
     public function toSitemapTag(): Url
     {
-        return Url::create(url('/marques/' . $this->slug))
+        return Url::create(url('/lettre-resiliation/' . $this->slug))
             ->setLastModificationDate($this->updated_at);
     }
 

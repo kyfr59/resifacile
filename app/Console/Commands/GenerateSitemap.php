@@ -60,8 +60,20 @@ class GenerateSitemap extends Command
         });
         $sitemap->writeToFile(public_path('sitemap.xml'));
 
+        $accueil = Page::published()
+            ->where('slug', 'accueil')
+            ->first();
+
         $sitemap
-            ->add(Page::published()->get())
+            ->add(
+                Page::published()
+                    ->where('slug', '!=', 'accueil')
+                    ->get()
+            )
+            ->add(
+                Url::create('https://resifacile.fr/')
+                    ->setLastModificationDate($accueil?->updated_at)
+            )
             ->writeToFile(public_path('sitemap.xml'));
 
         return 0;

@@ -70,6 +70,7 @@ Route::get('login', function() {
     return redirect(secure_url('client/connexion'), 301);
 });
 
+Route::permanentRedirect('/accueil', '/');
 
 /*
 |--------------------------------------------------------------------------

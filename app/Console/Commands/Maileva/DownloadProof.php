@@ -11,10 +11,12 @@ class DownloadProof extends Command
 {
     protected $signature = 'maileva:download-proof {sending_id}';
     protected $description = 'Download a PDF proof document and store it on current dir';
-    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
+    private string $baseUrl;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
             $this->info('Connexion Maileva OK');
@@ -38,7 +40,7 @@ class DownloadProof extends Command
 
     private function getSending()
     {
-        $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$this->sendingId}");
+        $response = Http::withToken($this->token)->get($this->baseUrl . "/registered_mail/v4/sendings/{$this->sendingId}");
         $sending = json_decode($response->body());
         if ($sending->status != 'PROCESSED') {
             throw new \Exception("L'envoi n'a pas le statut PROCESSED");
@@ -49,7 +51,7 @@ class DownloadProof extends Command
 
     private function getRecipient($sending)
     {
-        $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}/recipients");
+        $response = Http::withToken($this->token)->get($this->baseUrl . "/registered_mail/v4/sendings/{$sending->id}/recipients");
         $recipient = json_decode($response->body());
         return $recipient->recipients[0];
     }
@@ -58,7 +60,7 @@ class DownloadProof extends Command
     // @see https://www.maileva.com/catalogue-api/envoi-et-suivi-de-maileva-lrel/
     private function getProof($sending, $recipient)
     {
-        $response = Http::withToken($this->token)->get($this->baseUrl . "/global_deposit_proofs");
+        $response = Http::withToken($this->token)->get($this->baseUrl . "/registered_mail/v4/global_deposit_proofs");
         return $response->body();
     }
 }

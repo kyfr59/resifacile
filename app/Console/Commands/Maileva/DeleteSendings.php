@@ -11,10 +11,12 @@ class DeleteSendings extends Command
 {
     protected $signature = 'maileva:delete-sendings';
     protected $description = 'Delete all sendings';
-    private $baseUrl = 'https://api.sandbox.maileva.net/registered_mail/v4';
+    private string $baseUrl;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
             $this->info('Connexion Maileva OK');
@@ -34,7 +36,7 @@ class DeleteSendings extends Command
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->get($this->baseUrl . '/sendings');
+            ->get($this->baseUrl . '/registered_mail/v4/sendings');
 
        if ($response->successful()) {
             $this->info('✅ Appel API test réussi');
@@ -43,7 +45,7 @@ class DeleteSendings extends Command
             foreach ($response->sendings as $sending) {
 
                 $response = Http::withToken($this->token)
-                    ->delete($this->baseUrl . "/sendings/{$sending->id}");
+                    ->delete($this->baseUrl . "/registered_mail/v4/sendings/{$sending->id}");
             }
 
         } else {

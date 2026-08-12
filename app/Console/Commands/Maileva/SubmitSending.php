@@ -12,11 +12,13 @@ class SubmitSending extends Command
 {
     protected $signature = 'maileva:submit-sending {sending_id}';
     protected $description = 'Submit a sending {$sending_id}';
-    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
+    private string $baseUrl;
     private $sendingId = null;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
             $this->info('Connexion Maileva OK');
@@ -34,7 +36,7 @@ class SubmitSending extends Command
 
     private function submitSending()
     {
-        $url = $this->baseUrl."/sendings/{$this->sendingId}/submit";
+        $url = $this->baseUrl."/registered_mail/v4/sendings/{$this->sendingId}/submit";
         $response = Http::withToken($this->token)
             ->post($url);
 

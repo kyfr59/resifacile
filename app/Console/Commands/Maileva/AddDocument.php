@@ -12,11 +12,13 @@ class AddDocument extends Command
 {
     protected $signature = 'maileva:add-document {sending_id}';
     protected $description = 'Add document existing sending {$sending_id}';
-    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
+    private string $baseUrl;
     private $sendingId = null;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
         } catch (\Throwable $e) {
@@ -51,7 +53,7 @@ class AddDocument extends Command
         ];
 
         // Document sending
-        $url = $this->baseUrl."/sendings/{$this->sendingId}/documents";
+        $url = $this->baseUrl."/registered_mail/v4/sendings/{$this->sendingId}/documents";
         $response = Http::withToken($this->token)
             ->acceptJson()
             ->attach(

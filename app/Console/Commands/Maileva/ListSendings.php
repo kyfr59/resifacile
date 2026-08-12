@@ -11,10 +11,12 @@ class ListSendings extends Command
 {
     protected $signature = 'maileva:list-sendings';
     protected $description = 'List all sendings';
-    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
+    private string $baseUrl;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
             $this->info('Connexion Maileva OK');
@@ -35,7 +37,7 @@ class ListSendings extends Command
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->get($this->baseUrl . '/sendings');
+            ->get($this->baseUrl . '/registered_mail/v4/sendings');
 
 
        if ($response->successful()) {
@@ -53,7 +55,7 @@ class ListSendings extends Command
                 . PHP_EOL;
 
                 if ($sending->documents_count > 0) {
-                    $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}/documents");
+                    $response = Http::withToken($this->token)->get($this->baseUrl . "/registered_mail/v4/sendings/{$sending->id}/documents");
                     $documents = json_decode($response->body());
                     foreach($documents->documents as $doc) {
                         echo "    - ".$doc->id . PHP_EOL;
@@ -64,11 +66,11 @@ class ListSendings extends Command
                 /*
                 if ($sending->id == 'd3472173-87e2-48b7-acde-71746e710b1e') {
                     continue;
-                    $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}");
+                    $response = Http::withToken($this->token)->get($this->baseUrl . "/registered_mail/v4/sendings/{$sending->id}");
                     $response = json_decode($response->body());
                     dd($response);
                     $recipient_id = $response->recipients[0]->id;
-                    $response = Http::withToken($this->token)->get($this->baseUrl . "/sendings/{$sending->id}/recipients/{$recipient_id}");
+                    $response = Http::withToken($this->token)->get($this->baseUrl . "/registered_mail/v4/sendings/{$sending->id}/recipients/{$recipient_id}");
                     $response = json_decode($response->body());
                     dd($response);
                     //dd(json_decode($response->body()));

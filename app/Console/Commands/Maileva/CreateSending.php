@@ -10,10 +10,12 @@ class CreateSending extends Command
 {
     protected $signature = 'maileva:create-sending';
     protected $description = 'Create sending';
-    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
+    private string $baseUrl;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
         } catch (\Throwable $e) {
@@ -58,7 +60,7 @@ class CreateSending extends Command
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->post($this->baseUrl . '/sendings', $data);
+            ->post($this->baseUrl . '/registered_mail/v4/sendings', $data);
 
 
         if ($response->successful()) {

@@ -12,11 +12,13 @@ class AddRecipient extends Command
 {
     protected $signature = 'maileva:add-recipient {sending_id}';
     protected $description = 'Add recipient existing sending {$sending_id}';
-    private $baseUrl = 'https://api.maileva.com/registered_mail/v4';
+    private string $baseUrl;
     private $sendingId = null;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
         } catch (\Throwable $e) {
@@ -54,7 +56,7 @@ class AddRecipient extends Command
             */
         ];
 
-        $url = $this->baseUrl."/sendings/{$this->sendingId}/recipients";
+        $url = $this->baseUrl."/registered_mail/v4/sendings/{$this->sendingId}/recipients";
         $response = Http::withToken($this->token)
             ->post($url, $data);
 

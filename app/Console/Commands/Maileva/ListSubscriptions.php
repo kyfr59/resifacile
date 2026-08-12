@@ -11,10 +11,12 @@ class ListSubscriptions extends Command
     protected $signature = 'maileva:list-subscriptions';
     protected $description = 'List all subscriptions';
     private $sendingId = null;
-    private $baseUrl = 'https://api.maileva.com/notification_center/v2';
+    private string $baseUrl;
 
     public function handle(MailevaAuthService $auth)
     {
+        $this->baseUrl = config('maileva.base_url');
+
         try {
             $token = $auth->getAccessToken();
         } catch (\Throwable $e) {
@@ -33,7 +35,7 @@ class ListSubscriptions extends Command
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ])
-            ->get($this->baseUrl . '/subscriptions');
+            ->get($this->baseUrl . '/notification_center/v2/subscriptions');
 
         if ($response->successful()) {
             $json = $response->body();

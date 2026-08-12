@@ -7,15 +7,20 @@ use Illuminate\Support\Facades\Cache;
 
 class MailevaAuthService
 {
-    private string $baseUrl = 'https://connexion.maileva.com';
+    private string $connectionUrl;
+
+    public function __construct()
+    {
+        $this->connectionUrl = config('maileva.connection_url');
+    }
 
     public function getAccessToken(): string
     {
-        // Cache::forget('maileva_access_token');
+        Cache::forget('maileva_access_token');
 
         return Cache::remember('maileva_access_token', 3500, function () {
             $response = Http::asForm()->post(
-                $this->baseUrl . '/auth/realms/services/protocol/openid-connect/token',
+                $this->connectionUrl . '/auth/realms/services/protocol/openid-connect/token',
                 [
                     'client_id' => config('maileva.client_id'),
                     'client_secret' => config('maileva.client_secret'),
@@ -31,8 +36,12 @@ class MailevaAuthService
 
             $token1 = $response->json()['access_token'];
 
+            if (config('maileva.mode') == 'sandbox') {
+                return $token1;
+            }
+
             $response = Http::asForm()->post(
-                $this->baseUrl . '/auth/realms/services/protocol/openid-connect/token',
+                $this->connectionUrl . '/auth/realms/services/protocol/openid-connect/token',
                 [
                     'client_id' => config('maileva.client_id'),
                     'client_secret' => config('maileva.client_secret'),
@@ -42,10 +51,14 @@ class MailevaAuthService
                 ]
             );
 
+            if (! $response->successful()) {
+                throw new \Exception('Maileva auth failed: '.$response->body());
+            }
+
             $token2 = $response->json()['access_token'];
 
             $response = Http::asForm()->post(
-                $this->baseUrl . '/auth/realms/services/protocol/openid-connect/token',
+                $this->connectionUrl . '/auth/realms/services/protocol/openid-connect/token',
                 [
                     'client_id' => config('maileva.client_id'),
                     'client_secret' => config('maileva.client_secret'),
@@ -55,6 +68,10 @@ class MailevaAuthService
                     'requested_subject' => 'KOLIBRINETWORK.GANDILLON',
                 ]
             );
+
+            if (! $response->successful()) {
+                throw new \Exception('Maileva auth failed: '.$response->body());
+            }
 
             return $response->json()['access_token'];
         });

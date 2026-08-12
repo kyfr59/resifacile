@@ -15,7 +15,7 @@ class Connection extends Command
     {
         try {
             $token = $auth->getAccessToken();
-            $this->info('Connexion Maileva OK');
+            $this->info('Connexion Maileva OK - Environnement : '.config('maileva.mode'));
 
         } catch (\Throwable $e) {
             $this->error('Erreur connexion Maileva');

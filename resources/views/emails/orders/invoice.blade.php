@@ -18,6 +18,13 @@
         }
     }
     $address = $data->transactionable->customer->addresses()->where('is_billing_address', true)->first() ?? $data->transactionable->customer->addresses()->first();
+
+    if ($data->transactionable->with_subscription && $data->transactionable->customer->orders()->where('status', \App\Enums\OrderStatus::PAID)->count() <= 1) {
+        $subscription = $data->transactionable->customer?->subscription;
+        if ($subscription) {
+            $current_period_end_at = \Carbon\Carbon::parse($subscription->current_period_end_at)->format('d/m/Y');
+        }
+    }
 @endphp
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -165,7 +172,7 @@
                                             @endforeach
                                             @if($data->transactionable->with_subscription && $data->transactionable->customer->orders()->where('status', \App\Enums\OrderStatus::PAID)->count() <= 1)
                                                 <tr>
-                                                    <td style="padding: 2px 8px; vertical-align: top;">Service accès+ sans engagement,<br>offert 3 jours puis 39,90€/mois*</td>
+                                                    <td style="padding: 2px 8px; vertical-align: top;">Service accès+ sans engagement,<br />offert 3 jours puis 39,90€/mois,<br />1er prélèvement le {{$current_period_end_at}}</td>
                                                     <td style="padding: 2px 8px; vertical-align: top; text-align: right;"></td>
                                                     <td style="padding: 2px 8px; vertical-align: top; text-align: center;"></td>
                                                     <td style="padding: 2px 8px; vertical-align: top; text-align: right;">@price(0)</td>

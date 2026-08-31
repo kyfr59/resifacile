@@ -74,7 +74,7 @@ class BrandResource extends Resource
                         Tabs\Tab::make('Adresse')
                             ->schema([
                                 TextInput::make('address.compagny')
-                                    ->label('Raison Social')
+                                    ->label('Raison Sociale')
                                     ->autofocus()
                                     ->required(),
                                 TextInput::make('address.address_line_4')

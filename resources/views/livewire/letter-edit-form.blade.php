@@ -8,10 +8,33 @@
                 <div class="font-semibold">Visualisez ici l'adresse de votre destinataire</div>
                 <div class="text-blue-700 italic text-sm pb-2">Vous pourrez modifier à l'étape suivante en cas erreur</div>
                 <div class="bg-white pb-2 rounded-xl p-3 md:p-6 self-start font-[500] text-left text-sm md:text-base border-2 border-gray-300">
-                    {{ $product->address->compagny }}<br/>
-                    {{ $product->address->address_line_4 }}<br/>
-                    {{ $product->address->postal_code }} {{ $product->address->city }}<br/>
-                    {{ $product->address->country }}
+                    @if(!empty($product->address->compagny))
+                        {{ $product->address->compagny }}<br>
+                    @endif
+
+                    @if(!empty($product->address->address_line_4))
+                        {{ $product->address->address_line_4 }}<br>
+                    @endif
+
+                    @if(!empty($product->address->address_line_2))
+                        {{ $product->address->address_line_2 }}<br>
+                    @endif
+
+                    @if(!empty($product->address->address_line_3))
+                        {{ $product->address->address_line_3 }}<br>
+                    @endif
+
+                    @if(!empty($product->address->address_line_5))
+                        {{ $product->address->address_line_5 }}<br>
+                    @endif
+
+                    @if(!empty($product->address->postal_code) || !empty($product->address->city))
+                        {{ $product->address->postal_code }} {{ $product->address->city }}<br>
+                    @endif
+
+                    @if(!empty($product->address->country))
+                        {{ $product->address->country }}<br>
+                    @endif
                 </div>
             </div>
         </div>

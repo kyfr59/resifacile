@@ -44,8 +44,9 @@ class PNDRecieved extends Mailable
      */
     public function content(): Content
     {
-        $number = $this->sending->tracking->id_ship;
+        $number = $this->sending->tracking?->id_ship ?? 'pas_attribue';
         $order_number = $this->sending->order->number;
+
         return new Content(
             text: 'emails.pnd-text',
             markdown: 'emails.pnd',

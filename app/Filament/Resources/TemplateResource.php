@@ -23,6 +23,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Select;
 
 class TemplateResource extends Resource
 {
@@ -41,24 +42,33 @@ class TemplateResource extends Resource
                 Tabs::make('Tabs')
                     ->tabs([
                         Tab::make('Général')
-                            ->schema([
-                                TextInput::make('name')
-                                    ->autofocus()
-                                    ->required(),
-                                MarkdownEditor::make('article')
-                                    ->autofocus()
-                                    ->required(),
+                        ->schema([
+                            TextInput::make('name')
+                                ->autofocus()
+                                ->required(),
 
-                                Section::make('SEO')
-                                    ->schema([
-                                        TextInput::make('seo_title')
-                                            ->autofocus()
-                                            ->required(),
-                                        Textarea::make('seo_description')
-                                            ->autofocus()
-                                            ->required(),
-                                    ]),
-                            ]),
+                            Select::make('categories')
+                                ->label('Catégories')
+                                ->relationship('categories', 'name')
+                                ->multiple()
+                                ->searchable()
+                                ->preload(),
+
+                            MarkdownEditor::make('article')
+                                ->autofocus()
+                                ->required(),
+
+                            Section::make('SEO')
+                                ->schema([
+                                    TextInput::make('seo_title')
+                                        ->autofocus()
+                                        ->required(),
+
+                                    Textarea::make('seo_description')
+                                        ->autofocus()
+                                        ->required(),
+                                ]),
+                        ]),
                         Tab::make('Model')
                             ->schema([
                                 Toggle::make('model.is_new_type')
@@ -75,9 +85,9 @@ class TemplateResource extends Resource
                                 CodeField::make('model.group_fields')
                                     ->setLanguage(CodeField::JSON)
                                     ->withLineNumbers()
-                                    ->afterStateHydrated(function (CodeField $component, array $state) {
-                                        $component->state(json_encode($state, JSON_PRETTY_PRINT));
-                                    })
+                                    ->afterStateHydrated(function (CodeField $component, ?array $state) {
+                                        $component->state(json_encode($state ?? [],  JSON_PRETTY_PRINT));
+                                     })
                                     ->dehydrateStateUsing(fn (string $state): array => json_decode($state, true))
                                     ->required(),
                             ]),

@@ -52,7 +52,7 @@ class AdminPanelProvider extends PanelProvider
                 BreezyCore::make()
                     ->myProfile()
                     ->enableTwoFactorAuthentication(
-                        force: true,
+                        force: false,
                     ),
                 FilamentShieldPlugin::make(),
             ])

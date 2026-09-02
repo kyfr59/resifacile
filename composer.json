@@ -8,27 +8,27 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-dom": "*",
         "ext-simplexml": "*",
         "ext-zip": "*",
         "barryvdh/laravel-dompdf": "^2.0",
         "bezhansalleh/filament-shield": "^3.9",
-        "creagia/filament-code-field": "^2.0",
+        "creagia/filament-code-field": "^3.0",
         "filament/filament": "^3.0-stable",
         "filament/spatie-laravel-settings-plugin": "^3.0-stable",
-        "flowframe/laravel-trend": "^0.1.5",
+        "flowframe/laravel-trend": "^0.5",
         "guzzlehttp/guzzle": "^7.2",
         "hipay/hipay-fullservice-sdk-php": "^2.15",
         "http-interop/http-factory-guzzle": "^1.2",
-        "jeffgreco13/filament-breezy": "@dev",
+        "jeffgreco13/filament-breezy": "^2.5",
         "laravel/folio": "^1.1",
-        "laravel/framework": "^10.10",
+        "laravel/framework": "^11.0",
         "laravel/horizon": "^5.21",
         "laravel/octane": "^2.1",
-        "laravel/sanctum": "^3.3",
+        "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.5",
-        "laravel/telescope": "^4.17",
+        "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.8",
         "league/csv": "^9.11",
         "league/flysystem-aws-s3-v3": "^3.22",
@@ -59,9 +59,9 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "pestphp/pest": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
+        "nunomaduro/collision": "^8.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
         "spatie/laravel-ignition": "^2.0",
         "spatie/laravel-ray": "^1.33"
     },
@@ -77,15 +77,6 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "packages/filament-breezy",
-            "options": {
-                "symlink": false
-            }
-        }
-    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

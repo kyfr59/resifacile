@@ -20,7 +20,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
         <link rel="alternate" href="{{ url()->current() }}" hreflang="fr">
         <script type="application/ld+json">
             {
-                "@context": "http://schema.org",
+                "@@context": "http://schema.org",
                 "@type": "Organization",
                 "name": "EuroCB",
                 "areaServed" : ["FR"],
@@ -72,14 +72,14 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
         </script>
         <script type="application/ld+json">
             {
-                "@context": "http://schema.org",
+                "@@context": "http://schema.org",
                 "@type": "WebSite",
                 "name": "{{ url()->current() }}/"
             }
         </script>
         <script type="application/ld+json">
             {
-                "@context": "https://schema.org",
+                "@@context": "https://schema.org",
                 "@type": "FAQPage",
                 "mainEntity": [{
                     "@type": "Question",
@@ -114,7 +114,7 @@ $guides = \App\Models\Guide::orderByDesc('created_at')->limit(3)->get();
         </script>
         <script type="application/ld+json">
             {
-                "@context": "https://schema.org",
+                "@@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [{
                     "@type": "ListItem",

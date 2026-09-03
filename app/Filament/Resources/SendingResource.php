@@ -56,8 +56,10 @@ class SendingResource extends Resource
                         SendingStatus::WAITING => 'gray',
                         SendingStatus::SENDED => 'warning',
                         SendingStatus::ACCEPTED => 'info',
+                        SendingStatus::REJECTED => 'danger',
                         SendingStatus::PROCESSED => 'success',
-                        SendingStatus::DELIVERED  => 'delivered',
+                        SendingStatus::DELIVERED => 'success',
+                        SendingStatus::UNDELIVERED => 'danger',
                     })
                     ->label('Statut')
                     ->sortable(),

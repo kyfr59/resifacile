@@ -90,7 +90,7 @@ class Order extends Model
                 requestData: (App::make(PostLetter::class))->newRequest(
                     trackId: 'CUS_' . $order->customer->id . '_' . now()->timestamp,
                     postageType: $order->postage,
-                    recipients: AddressData::collection($order->details->recipients)->each(static function($address) {
+                    recipients: AddressData::collect($order->details->recipients)->each(static function($address) {
                         if ($address->type === AddressType::PROFESSIONAL) {
                             $address->first_name = null;
                             $address->last_name = null;
@@ -98,7 +98,7 @@ class Order extends Model
                             $address->compagny = null;
                         }
                     }),
-                    senders: AddressData::collection($order->details->senders)->each(static function($address) {
+                    senders: AddressData::collect($order->details->senders)->each(static function($address) {
                         if ($address->type === AddressType::PROFESSIONAL) {
                             $address->first_name = null;
                             $address->last_name = null;
@@ -106,7 +106,7 @@ class Order extends Model
                             $address->compagny = null;
                         }
                     }),
-                    documents: DocumentData::collection(collect($order->details->documents)->map(fn ($document) => new DocumentData(
+                    documents: DocumentData::collect(collect($order->details->documents)->map(fn ($document) => new DocumentData(
                         file_name: $document->file_name,
                         readable_file_name: $document->readable_file_name,
                         path: $document->path,
@@ -121,7 +121,7 @@ class Order extends Model
                         },
                         number_of_pages: $document->number_of_pages,
                     ))),
-                    options: OptionData::collection($order->options),
+                    options: OptionData::collect($order->options),
                     ),
                 order: $order,
             );

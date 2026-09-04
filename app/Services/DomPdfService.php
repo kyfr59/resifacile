@@ -38,13 +38,21 @@ class DomPdfService implements Pdf
         $data = $documentData->toArray()['model']['group_fields'];
         $data['clean_city'] = $this->fixArticle("À ".$data['from_city']);
 
-        $stream = DomPdf::loadView('templates.letter', [
+        $pdf = DomPdf::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'isPhpEnabled' => false,
+            'dpi' => 96,
+        ]);
+
+        $pdf->loadView('templates.letter', [
             'recipient' => $recipientData->toArray(),
             'sender' => $senderData->toArray(),
             'letter' => $documentData->toArray()['letter'],
             'data' => $data,
-        ])->stream();
+        ]);
 
+        $stream = $pdf->stream();
 
         Storage::put(
             $path,

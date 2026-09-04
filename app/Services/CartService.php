@@ -40,9 +40,9 @@ final class CartService implements Cart
             Session::put('cart', [
                 'id' => Str::uuid(),
                 'product' => null,
-                'documents' => DocumentData::collection([]),
-                'senders' => AddressData::collection([AddressData::empty(['type' => AddressType::PERSONAL])]),
-                'recipients' => AddressData::collection([AddressData::empty(['type' => AddressType::PROFESSIONAL])]),
+                'documents' => DocumentData::collect([]),
+                'senders' => AddressData::collect([AddressData::empty(['type' => AddressType::PERSONAL])]),
+                'recipients' => AddressData::collect([AddressData::empty(['type' => AddressType::PROFESSIONAL])]),
                 'order' => OrderData::empty(),
             ]);
         }
@@ -134,7 +134,7 @@ final class CartService implements Cart
     {
         $cart = Session::get('cart');
 
-        $cart['documents'] = DocumentData::collection($documents);
+        $cart['documents'] = DocumentData::collect($documents);
 
         Session::put('cart', $cart);
     }
@@ -144,7 +144,8 @@ final class CartService implements Cart
      */
     public function getDocuments(): DataCollection
     {
-        return Session::get('cart')['documents'];
+        $documents = Session::get('cart')['documents'];
+        return DocumentData::collect($documents, DataCollection::class);
     }
 
     public function getDocument(int $id): DocumentData
@@ -172,7 +173,7 @@ final class CartService implements Cart
     public function addRecipients(array $addresses): void
     {
         $cart = Session::get('cart');
-        $cart['recipients'] = AddressData::collection($addresses);
+        $cart['recipients'] = AddressData::collect($addresses);
         Session::put('cart', $cart);
     }
 
@@ -190,7 +191,8 @@ final class CartService implements Cart
      */
     public function getRecipients(): DataCollection
     {
-        return Session::get('cart')['recipients'];
+        $recipients = Session::get('cart')['recipients'];
+        return AddressData::collect($recipients, DataCollection::class);
     }
 
     /**
@@ -200,7 +202,7 @@ final class CartService implements Cart
     public function addSenders(array $addresses): void
     {
         $cart = Session::get('cart');
-        $cart['senders'] = AddressData::collection($addresses);
+        $cart['senders'] = AddressData::collect($addresses);
         Session::put('cart', $cart);
     }
 
@@ -218,7 +220,8 @@ final class CartService implements Cart
      */
     public function getSenders(): DataCollection
     {
-        return Session::get('cart')['senders'];
+        $senders = Session::get('cart')['senders'];
+        return AddressData::collect($senders, DataCollection::class);
     }
 
     /**

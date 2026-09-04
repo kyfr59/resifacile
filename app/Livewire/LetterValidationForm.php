@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
+use Spatie\LaravelData\DataCollection;
 
 class LetterValidationForm extends Component
 {
@@ -224,6 +225,7 @@ class LetterValidationForm extends Component
 
     public function save(): RedirectResponse|Redirector
     {
+
         $this->validate();
 
         $cart = App::make(Cart::class);
@@ -246,8 +248,10 @@ class LetterValidationForm extends Component
         }
 
         $order = $cart->getOrder();
-
-        $order->options = OptionData::collection($options);
+        $order->options = new DataCollection(
+            OptionData::class,
+            $options
+        );
         $order->vat_rate = $accountingSettings->vat_rate;
         $order->amount = Accounting::hasSubscription($this->amount);
         $order->customer_certifies_documents_are_compliant = $this->customerCertifiesDocumentsAreCompliant;

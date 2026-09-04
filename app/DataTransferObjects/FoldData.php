@@ -30,7 +30,7 @@ class FoldData extends Data
     public static function fromArray(array $fold): self
     {
         return new self(
-            DocumentData::collection($fold['documents']),
+            DocumentData::collect($fold['documents']),
             AddressData::from($fold['sender']),
             AddressData::from($fold['recipient'])
         );
@@ -43,7 +43,7 @@ class FoldData extends Data
     public static function fromModel(Fold $fold): self
     {
         return new self(
-            Lazy::create(fn() => DocumentData::collection($fold->documents)),
+            Lazy::create(fn() => DocumentData::collect($fold->documents)),
             $fold->sender,
             $fold->recipient
         );

@@ -10,23 +10,23 @@ use Spatie\LaravelData\Data;
 class RecipientData extends Data
 {
     /**
-     * @param PaperAddress $paper_address
-     * @param string $category
-     * @param string $id
+     * @param PaperAddress|null $paper_address
+     * @param string|null $category
+     * @param string|null $id
      * @param string|null $track_id
      * @param string|null $partner_track_id
      */
     public function __construct(
-        #[Required]
-        public PaperAddress $paper_address,
-        #[Required]
-        public string $category,
-        #[Required]
-        public string $id,
-        #[Nullable,Size(32)]
+        #[Nullable]
+        public ?PaperAddress $paper_address = null,
+        #[Nullable]
+        public ?string $category = null,
+        #[Nullable]
+        public ?string $id = null,
+        #[Nullable, Size(32)]
         public ?string $track_id = null,
-        #[Nullable,Size(38)]
+        #[Nullable, Size(38)]
         public ?string $partner_track_id = null,
-    ){
+    ) {
     }
 }

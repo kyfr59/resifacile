@@ -29,13 +29,20 @@ trait WithRecipients
         $recipients = $cart->getRecipients()->toArray();
 
         foreach ($recipients as $recipient) {
-            if($recipient['address_line_2'] || $recipient['address_line_3'] || $recipient['address_line_5']) {
+            $addressLine2 = $recipient['address_line_2'] ?? null;
+            $addressLine3 = $recipient['address_line_3'] ?? null;
+            $addressLine5 = $recipient['address_line_5'] ?? null;
+
+            if ($addressLine2 || $addressLine3 || $addressLine5) {
                 $this->showComplementRecipient[] = true;
             } else {
                 $this->showComplementRecipient[] = false;
             }
 
-            $recipient['country'] .= '_' . $recipient['country_code'];
+            $country = $recipient['country'] ?? '';
+            $countryCode = $recipient['country_code'] ?? '';
+
+            $recipient['country'] = $country . '_' . $countryCode;
             $this->recipients[] = $recipient;
         }
     }
@@ -71,7 +78,8 @@ trait WithRecipients
         ]);
 
         foreach ($this->recipients as $index => $recipient) {
-            if($recipient['type'] === AddressType::PROFESSIONAL->value) {
+            $type = $recipient['type'] ?? null;
+            if ($type === AddressType::PROFESSIONAL->value) {
                 $recipients['recipients.'.$index.'.compagny'] = 'required|string|max:38';
                 $this->validationAttributes['recipients.'.$index.'.compagny'] = 'raison social';
             } else {
@@ -91,7 +99,8 @@ trait WithRecipients
     public function updatedRecipients(): void
     {
         for ($i = 0; $i < count($this->recipients); $i++) {
-            if($this->recipients[$i]['type'] === AddressType::PROFESSIONAL->value) {
+            $type = $this->recipients[$i]['type'] ?? null;
+            if ($type === AddressType::PROFESSIONAL->value) {
                 $this->recipients[$i]['first_name'] = null;
                 $this->recipients[$i]['last_name'] = null;
             } else {
@@ -99,5 +108,4 @@ trait WithRecipients
             }
         }
     }
-
 }

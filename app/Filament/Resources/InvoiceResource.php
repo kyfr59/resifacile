@@ -7,7 +7,7 @@ use App\Filament\Resources\InvoiceResource\RelationManagers;
 use App\Helpers\Accounting;
 use App\Models\Invoice;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -19,15 +19,15 @@ class InvoiceResource extends Resource
 {
     protected static ?string $model = Invoice::class;
 
-    protected static ?string $navigationGroup = 'CRM';
+    protected static string|\UnitEnum|null $navigationGroup = 'CRM';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Factures';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 //
             ]);

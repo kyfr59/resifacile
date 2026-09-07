@@ -9,7 +9,7 @@ use App\Filament\Resources\TransactionResource\Pages;
 use App\Helpers\Accounting;
 use App\Models\Subscription;
 use App\Models\Transaction;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -22,15 +22,15 @@ class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
-    protected static ?string $navigationGroup = 'CRM';
+    protected static string|\UnitEnum|null $navigationGroup = 'CRM';
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-euro';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-currency-euro';
 
     protected static ?string $navigationLabel = 'Transactions';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 //
             ]);

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ChargebackMonthlyByMidChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chargebacks mensuels par MID';
+    protected ?string $heading = 'Chargebacks mensuels par MID';
 
     protected int | string | array $columnSpan = [
         'sm' => 2,
@@ -22,7 +22,7 @@ class ChargebackMonthlyByMidChart extends ChartWidget
 
     protected static ?int $sort = 2;
 
-    protected static ?string $maxHeight = '200px';
+    protected ?string $maxHeight = '200px';
 
     protected function getFilters(): ?array
     {

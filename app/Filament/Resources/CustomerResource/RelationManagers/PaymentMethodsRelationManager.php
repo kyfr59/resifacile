@@ -6,7 +6,7 @@ use App\Enums\PaymentMethodStatus;
 use App\Helpers\Accounting;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -26,9 +26,9 @@ class PaymentMethodsRelationManager extends RelationManager
 
     protected static ?string $title = 'Moyens de paiement';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([]);
     }
 

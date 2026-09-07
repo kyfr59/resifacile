@@ -10,11 +10,10 @@ use App\Filament\Resources\OrderResource\RelationManagers\TransactionsRelationMa
 use App\Helpers\Accounting;
 use App\Models\Order;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -25,20 +24,20 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationGroup = 'CRM';
+    protected static string|\UnitEnum|null $navigationGroup = 'CRM';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Commandes';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([]);
+        return $schema->schema([]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Grid::make('4')->schema([
                     TextEntry::make('number')

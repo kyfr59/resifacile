@@ -12,7 +12,7 @@ use Flowframe\Trend\TrendValue;
 
 class TransactionsCreatedDailyChart extends ChartWidget
 {
-    protected static ?string $heading = 'Encaissements (ht), nbr d\'abos encaissées, nbr de refus et de chargebacks journaliers';
+    protected ?string $heading = 'Encaissements (ht), nbr d\'abos encaissées, nbr de refus et de chargebacks journaliers';
 
     public ?string $filter = '30';
 
@@ -20,7 +20,7 @@ class TransactionsCreatedDailyChart extends ChartWidget
         'sm' => 2,
     ];
 
-    protected static ?string $maxHeight = '200px';
+    protected ?string $maxHeight = '200px';
 
     protected function getFilters(): ?array
     {

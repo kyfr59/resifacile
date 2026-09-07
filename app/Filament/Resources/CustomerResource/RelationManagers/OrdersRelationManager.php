@@ -6,7 +6,7 @@ use App\Enums\OrderStatus;
 use App\Enums\PostageType;
 use App\Helpers\Accounting;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,9 +19,9 @@ class OrdersRelationManager extends RelationManager
 
     protected static ?string $title = 'Commandes';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\TextInput::make('number')
                     ->required()

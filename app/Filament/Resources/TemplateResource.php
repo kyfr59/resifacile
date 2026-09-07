@@ -16,7 +16,7 @@ use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -29,15 +29,15 @@ class TemplateResource extends Resource
 {
     protected static ?string $model = Template::class;
 
-    protected static ?string $navigationGroup = 'CMS';
+    protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document';
 
     protected static ?string $navigationLabel = 'Modèles';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Tabs::make('Tabs')
                     ->tabs([

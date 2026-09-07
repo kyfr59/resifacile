@@ -5,7 +5,6 @@ namespace App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Enums\MaxWidth;
 
 class ListCustomers extends ListRecords
 {
@@ -18,8 +17,8 @@ class ListCustomers extends ListRecords
         ];
     }
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): string
     {
-        return MaxWidth::Full;
+        return 'full';
     }
 }

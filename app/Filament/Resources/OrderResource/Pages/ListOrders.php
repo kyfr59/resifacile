@@ -5,7 +5,6 @@ namespace App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Enums\MaxWidth;
 
 class ListOrders extends ListRecords
 {
@@ -18,8 +17,8 @@ class ListOrders extends ListRecords
         ];
     }
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): string
     {
-        return MaxWidth::Full;
+        return 'full';
     }
 }

@@ -9,12 +9,11 @@ use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManag
 use App\Filament\Resources\CustomerResource\RelationManagers\PaymentMethodsRelationManager;
 use App\Helpers\Accounting;
 use App\Models\Customer;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,20 +22,20 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationGroup = 'CRM';
+    protected static string|\UnitEnum|null $navigationGroup = 'CRM';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Clients';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([]);
+        return $schema->schema([]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 TextEntry::make('compagny')
                     ->label('Société')

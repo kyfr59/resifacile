@@ -6,7 +6,7 @@ use App\Filament\Resources\SendingResource;
 use Filament\Actions;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
 use Filament\Resources\Pages\ViewRecord;
 use App\Enums\SendingStatus;
 use Filament\Infolists\Components\Grid;
@@ -16,9 +16,9 @@ class ViewSending extends ViewRecord
 {
     protected static string $resource = SendingResource::class;
 
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Grid::make('4')->schema([
                     TextEntry::make('id')

@@ -9,7 +9,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -23,9 +23,9 @@ class BrandsRelationManager extends RelationManager
 
     protected static ?string $title = 'Marques';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Tabs::make('Tabs')
                     ->tabs([

@@ -5,7 +5,6 @@ namespace App\Filament\Resources\PaymentMethodResource\Pages;
 use App\Filament\Resources\PaymentMethodResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Enums\MaxWidth;
 
 class ListPaymentMethods extends ListRecords
 {
@@ -18,8 +17,8 @@ class ListPaymentMethods extends ListRecords
         ];
     }
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): string
     {
-        return MaxWidth::Full;
+        return 'full';
     }
 }

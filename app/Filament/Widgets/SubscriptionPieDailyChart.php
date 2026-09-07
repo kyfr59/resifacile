@@ -7,11 +7,11 @@ use Filament\Widgets\ChartWidget;
 
 class SubscriptionPieDailyChart extends ChartWidget
 {
-    protected static ?string $heading = 'Statut des abonnements';
+    protected ?string $heading = 'Statut des abonnements';
 
     protected static ?int $sort = 0;
 
-    protected static ?string $maxHeight = '400px';
+    protected ?string $maxHeight = '400px';
 
     protected function getData(): array
     {

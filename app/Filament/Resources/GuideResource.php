@@ -13,7 +13,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -24,15 +24,15 @@ class GuideResource extends Resource
 {
     protected static ?string $model = Guide::class;
 
-    protected static ?string $navigationGroup = 'CMS';
+    protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document';
 
     protected static ?string $navigationLabel = 'Guides';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('Général')
                     ->schema([

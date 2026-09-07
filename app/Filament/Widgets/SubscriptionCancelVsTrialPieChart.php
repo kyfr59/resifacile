@@ -8,11 +8,11 @@ use Filament\Widgets\ChartWidget;
 
 class SubscriptionCancelVsTrialPieChart extends ChartWidget
 {
-    protected static ?string $heading = 'Abonnements en période d\'essai et annulés sur les 15 derniers jours';
+    protected ?string $heading = 'Abonnements en période d\'essai et annulés sur les 15 derniers jours';
 
     protected static ?int $sort = 1;
 
-    protected static ?string $maxHeight = '400px';
+    protected ?string $maxHeight = '400px';
 
     protected function getData(): array
     {

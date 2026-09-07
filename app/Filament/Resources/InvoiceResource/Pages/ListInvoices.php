@@ -5,7 +5,6 @@ namespace App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Enums\MaxWidth;
 
 class ListInvoices extends ListRecords
 {
@@ -18,8 +17,8 @@ class ListInvoices extends ListRecords
         ];
     }
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): string
     {
-        return MaxWidth::Full;
+        return 'full';
     }
 }

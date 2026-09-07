@@ -12,7 +12,7 @@ use Flowframe\Trend\TrendValue;
 
 class TransactionsFutureDailyChart extends ChartWidget
 {
-    protected static ?string $heading = 'Encaissements (ht) prévetionnels journaliers';
+    protected ?string $heading = 'Encaissements (ht) prévetionnels journaliers';
 
     public ?string $filter = '31';
 
@@ -20,7 +20,7 @@ class TransactionsFutureDailyChart extends ChartWidget
         'sm' => 2,
     ];
 
-    protected static ?string $maxHeight = '200px';
+    protected ?string $maxHeight = '200px';
 
     protected function getFilters(): ?array
     {

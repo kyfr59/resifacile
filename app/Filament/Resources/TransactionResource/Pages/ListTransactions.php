@@ -7,7 +7,6 @@ use App\Filament\Widgets\TransactionsCreatedDailyChart;
 use App\Filament\Widgets\TransactionsFutureDailyChart;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Enums\MaxWidth;
 
 class ListTransactions extends ListRecords
 {
@@ -20,8 +19,8 @@ class ListTransactions extends ListRecords
         ];
     }
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): string
     {
-        return MaxWidth::Full;
+        return 'full';
     }
 }

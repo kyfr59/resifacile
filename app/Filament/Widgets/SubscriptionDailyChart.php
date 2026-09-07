@@ -11,7 +11,7 @@ use Flowframe\Trend\TrendValue;
 
 class SubscriptionDailyChart extends ChartWidget
 {
-    protected static ?string $heading = 'Abonnements en période d\'essai, en cours, en rédemption et annulés journaliers';
+    protected ?string $heading = 'Abonnements en période d\'essai, en cours, en rédemption et annulés journaliers';
 
     public ?string $filter = '30';
 
@@ -19,7 +19,7 @@ class SubscriptionDailyChart extends ChartWidget
         'sm' => 2,
     ];
 
-    protected static ?string $maxHeight = '200px';
+    protected ?string $maxHeight = '200px';
 
     protected function getFilters(): ?array
     {

@@ -3,7 +3,6 @@
 namespace App\Filament\Pages;
 
 use Filament\Panel;
-use Filament\Support\Enums\MaxWidth;
 
 class Dashboard extends \Filament\Pages\Dashboard
 {

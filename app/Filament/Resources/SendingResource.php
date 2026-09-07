@@ -6,8 +6,7 @@ use App\Enums\SendingStatus;
 use App\Filament\Resources\SendingResource\Pages;
 use Filament\Infolists\Components\RepeatableEntry;
 use App\Models\Sending;
-use Filament\Forms\Form;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
 use App\Infolists\Components\Document;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
@@ -20,15 +19,15 @@ class SendingResource extends Resource
 {
     protected static ?string $model = Sending::class;
 
-    protected static ?string $navigationGroup = 'CRM';
+    protected static string|\UnitEnum|null $navigationGroup = 'CRM';
 
-    protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-paper-airplane';
 
     protected static ?string $navigationLabel = 'Courriers';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 //
             ]);
@@ -111,9 +110,9 @@ class SendingResource extends Resource
             ->defaultSort('waiting_at', 'desc');
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 TextEntry::make('status')
                     ->label('Statut'),

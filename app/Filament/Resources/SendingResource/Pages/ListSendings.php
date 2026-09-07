@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\SendingResource\Pages;
 
+
+use Filament\Actions\CreateAction;
 use App\Filament\Resources\SendingResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListSendings extends ListRecords
@@ -13,7 +14,7 @@ class ListSendings extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

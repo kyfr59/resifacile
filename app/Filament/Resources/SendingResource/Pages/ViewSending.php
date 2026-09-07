@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\SendingResource\Pages;
 
 use App\Filament\Resources\SendingResource;
-use Filament\Actions;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;

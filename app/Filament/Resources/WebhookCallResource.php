@@ -2,6 +2,10 @@
 
 namespace App\Filament\Resources;
 
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use App\Filament\Resources\WebhookCallResource\Pages;
 use App\Filament\Resources\WebhookCallResource\RelationManagers;
 use App\Models\WebhookCall;
@@ -57,11 +61,11 @@ class WebhookCallResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

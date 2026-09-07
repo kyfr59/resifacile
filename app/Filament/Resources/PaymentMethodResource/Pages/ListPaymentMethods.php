@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\PaymentMethodResource\Pages;
 
+
+use Filament\Actions\CreateAction;
 use App\Filament\Resources\PaymentMethodResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListPaymentMethods extends ListRecords
@@ -13,7 +14,7 @@ class ListPaymentMethods extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 

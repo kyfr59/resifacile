@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\InvoiceResource\Pages;
 
+
+use Filament\Actions\CreateAction;
 use App\Filament\Resources\InvoiceResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListInvoices extends ListRecords
@@ -13,7 +14,7 @@ class ListInvoices extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+
+use Filament\Actions\ViewAction;
 use App\Enums\SubscriptionStatus;
 use App\Enums\TransactionStatus;
 use App\Filament\Resources\CustomerResource\Pages;
@@ -156,7 +158,7 @@ class CustomerResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([]);
     }

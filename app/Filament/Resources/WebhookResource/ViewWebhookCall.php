@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\WebhookCallResource\Pages;
 
+
+use Filament\Actions\Action;
 use App\Filament\Resources\WebhookCallResource;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Actions;
 
 class ViewWebhookCall extends ViewRecord
 {
@@ -13,7 +14,7 @@ class ViewWebhookCall extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('retry')
+            Action::make('retry')
                 ->label('Réessayer')
                 ->icon('heroicon-o-arrow-path')
                 ->color('warning')

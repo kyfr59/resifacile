@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+
+use Filament\Actions\EditAction;
 use App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource\RelationManagers;
 use App\Helpers\Accounting;
@@ -77,7 +79,7 @@ class InvoiceResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([]);
     }

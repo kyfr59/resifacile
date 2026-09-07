@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\SendingResource\Pages;
 
+
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\SendingResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditSending extends EditRecord
@@ -13,7 +14,7 @@ class EditSending extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

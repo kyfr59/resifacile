@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\CustomerResource\Pages;
 
+
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\CustomerResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditCustomer extends EditRecord
@@ -13,7 +14,7 @@ class EditCustomer extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

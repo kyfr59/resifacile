@@ -2,14 +2,17 @@
 
 namespace App\Filament\Resources;
 
+
+use Filament\Actions\BulkAction;
+use Filament\Actions\EditAction;
 use App\Filament\Resources\GuideResource\Pages;
 use App\Filament\Resources\GuideResource\RelationManagers;
 use App\Models\Guide;
 use Filament\Forms;
-use Filament\Forms\Components\Fieldset;
+use Filament\Schemas\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
@@ -123,16 +126,16 @@ class GuideResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkAction::make('publish')
+                BulkAction::make('publish')
                     ->label('Publier la sélection')
                     ->icon('heroicon-o-check')
                     ->action(fn ($records) => $records->each->update(['status' => 'published']))
                     ->requiresConfirmation(),
 
-                Tables\Actions\BulkAction::make('draft')
+                BulkAction::make('draft')
                     ->label('Mettre en brouillon')
                     ->icon('heroicon-o-pencil')
                     ->action(fn ($records) => $records->each->update(['status' => 'draft'])),

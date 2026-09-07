@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Actions\Subscription\UnsubscribedProcessAction;
+
+use Filament\Actions\Action;
+use App\Filament\Actions\Subscription\UnsubscribedProcessAction;
 use App\Enums\SubscriptionStatus;
 use App\Filament\Resources\SubscriptionResource\Pages;
 use App\Helpers\Accounting;
@@ -86,7 +88,7 @@ class SubscriptionResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\Action::make('résilier')
+                Action::make('résilier')
                     ->requiresConfirmation()
                     ->color('danger')
                     ->modalIcon('heroicon-o-exclamation-triangle')

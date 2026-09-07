@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+
+use Filament\Actions\ViewAction;
 use App\Filament\Resources\PaymentMethodResource\Pages;
 use App\Filament\Resources\PaymentMethodResource\RelationManagers;
 use App\Helpers\Accounting;
@@ -114,7 +116,7 @@ class PaymentMethodResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([]);
     }

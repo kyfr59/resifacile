@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\GuideResource\Pages;
 
 use App\Filament\Resources\GuideResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateGuide extends CreateRecord

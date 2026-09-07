@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\GuideResource\Pages;
 
+
+use Filament\Actions\CreateAction;
 use App\Filament\Resources\GuideResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListGuides extends ListRecords
@@ -13,7 +14,7 @@ class ListGuides extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

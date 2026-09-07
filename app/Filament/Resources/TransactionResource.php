@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Actions\Transaction\RefundProcess;
+
+use Filament\Actions\Action;
+use App\Filament\Actions\Transaction\RefundProcess;
 use App\Enums\SubscriptionStatus;
 use App\Enums\TransactionStatus;
 use App\Filament\Resources\TransactionResource\Pages;
@@ -106,7 +108,7 @@ class TransactionResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\Action::make('rembourser')
+                Action::make('rembourser')
                     ->requiresConfirmation()
                     ->modalIcon('heroicon-o-exclamation-triangle')
                     ->modalIconColor('warning')

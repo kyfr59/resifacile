@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\GuideResource\Pages;
 
+
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\GuideResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditGuide extends EditRecord
@@ -13,7 +14,7 @@ class EditGuide extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

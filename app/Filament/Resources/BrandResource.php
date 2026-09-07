@@ -2,16 +2,19 @@
 
 namespace App\Filament\Resources;
 
+
+use Filament\Actions\BulkAction;
+use Filament\Actions\EditAction;
 use App\Filament\Resources\BrandResource\Pages;
 use App\Models\Brand;
 use App\Models\Template;
 use App\Enums\PageStatus;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Grid;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Tabs;
+use Filament\Schemas\Components\Tabs;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -138,16 +141,16 @@ class BrandResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
-        ->bulkActions([
-                Tables\Actions\BulkAction::make('publish')
+            ->bulkActions([
+                BulkAction::make('publish')
                     ->label('Publier la sélection')
                     ->icon('heroicon-o-check')
                     ->action(fn ($records) => $records->each->update(['status' => 'VISIBLE']))
                     ->requiresConfirmation(),
 
-                Tables\Actions\BulkAction::make('draft')
+                BulkAction::make('draft')
                     ->label('Mettre en brouillon')
                     ->icon('heroicon-o-pencil')
                     ->action(fn ($records) => $records->each->update(['status' => 'DRAFT'])),

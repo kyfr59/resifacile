@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+
+use Filament\Actions\ViewAction;
 use App\Enums\OrderStatus;
 use App\Enums\PostageType;
 use App\Filament\Resources\OrderResource\Pages;
@@ -133,7 +135,7 @@ class OrderResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([]);
     }

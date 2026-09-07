@@ -20,6 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use SmartCms\Redirects\RedirectsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -55,6 +56,7 @@ class AdminPanelProvider extends PanelProvider
                         force: false,
                     ),
                 FilamentShieldPlugin::make(),
+                RedirectsPlugin::make(),
             ])
             ->authMiddleware([
                 Authenticate::class,

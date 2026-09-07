@@ -36,6 +36,7 @@
         "meilisearch/meilisearch-php": "^1.5",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.6",
+        "smart-cms/redirects": "1.x-dev",
         "spatie/array-to-xml": "^3.2",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-data": "^4.0",

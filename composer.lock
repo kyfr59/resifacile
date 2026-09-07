@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5b42a7347203180a5ee0987e8bbd543",
+    "content-hash": "aede78a4700e87d71ffcf13778a69349",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -127,16 +127,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.394.8",
+            "version": "3.394.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "9afa5f6652e7035a029369c98db68bc21279a3cf"
+                "reference": "c5e7a247fa6aeac7355d5be88f38873480789c71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9afa5f6652e7035a029369c98db68bc21279a3cf",
-                "reference": "9afa5f6652e7035a029369c98db68bc21279a3cf",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c5e7a247fa6aeac7355d5be88f38873480789c71",
+                "reference": "c5e7a247fa6aeac7355d5be88f38873480789c71",
                 "shasum": ""
             },
             "require": {
@@ -218,9 +218,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.394.8"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.394.9"
             },
-            "time": "2026-09-03T18:08:51+00:00"
+            "time": "2026-09-04T18:07:00+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -738,16 +738,16 @@
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CarbonPHP/carbon-doctrine-types.git",
-                "reference": "18ba5ddfec8976260ead6e866180bd5d2f71aa1d"
+                "reference": "5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CarbonPHP/carbon-doctrine-types/zipball/18ba5ddfec8976260ead6e866180bd5d2f71aa1d",
-                "reference": "18ba5ddfec8976260ead6e866180bd5d2f71aa1d",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon-doctrine-types/zipball/5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc",
+                "reference": "5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc",
                 "shasum": ""
             },
             "require": {
@@ -762,6 +762,11 @@
                 "phpunit/phpunit": "^10.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Carbon\\Doctrine\\": "src/Carbon/Doctrine/"
@@ -787,7 +792,7 @@
             ],
             "support": {
                 "issues": "https://github.com/CarbonPHP/carbon-doctrine-types/issues",
-                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.0"
+                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.1"
             },
             "funding": [
                 {
@@ -803,7 +808,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-09T16:56:22+00:00"
+            "time": "2026-09-06T14:11:38+00:00"
         },
         {
             "name": "chillerlan/php-qrcode",
@@ -7830,6 +7835,81 @@
                 }
             ],
             "time": "2026-06-11T10:37:24+00:00"
+        },
+        {
+            "name": "smart-cms/redirects",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/s-cms/redirects.git",
+                "reference": "f54317a4517d49b6f0ccb0a494d7e13950f1a8c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/s-cms/redirects/zipball/f54317a4517d49b6f0ccb0a494d7e13950f1a8c7",
+                "reference": "f54317a4517d49b6f0ccb0a494d7e13950f1a8c7",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^4.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^8.0",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-arch": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "pestphp/pest-plugin-livewire": "^3.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Redirects": "SmartCms\\Redirects\\Facades\\Redirects"
+                    },
+                    "providers": [
+                        "SmartCms\\Redirects\\RedirectsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SmartCms\\Redirects\\": "src/",
+                    "SmartCms\\Redirects\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "maxboyko",
+                    "email": "maxboiko@divotek.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This is my package redirects",
+            "homepage": "https://github.com/smart-cms/redirects",
+            "keywords": [
+                "SmartCms",
+                "filamentphp",
+                "laravel",
+                "redirects"
+            ],
+            "support": {
+                "issues": "https://github.com/smart-cms/redirects/issues",
+                "source": "https://github.com/smart-cms/redirects"
+            },
+            "time": "2025-11-19T22:00:04+00:00"
         },
         {
             "name": "spatie/array-to-xml",
@@ -16299,7 +16379,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "smart-cms/redirects": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

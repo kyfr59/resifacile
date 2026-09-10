@@ -90,7 +90,7 @@ class Order extends Model
                 requestData: (App::make(PostLetter::class))->newRequest(
                     trackId: 'CUS_' . $order->customer->id . '_' . now()->timestamp,
                     postageType: $order->postage,
-                    recipients: AddressData::collect($order->details->recipients)->each(static function($address) {
+                    recipients: AddressData::collect($order->details->recipients, DataCollection::class)->each(static function ($address) {
                         if ($address->type === AddressType::PROFESSIONAL) {
                             $address->first_name = null;
                             $address->last_name = null;
@@ -98,7 +98,7 @@ class Order extends Model
                             $address->compagny = null;
                         }
                     }),
-                    senders: AddressData::collect($order->details->senders)->each(static function($address) {
+                    senders: AddressData::collect($order->details->senders, DataCollection::class)->each(static function ($address) {
                         if ($address->type === AddressType::PROFESSIONAL) {
                             $address->first_name = null;
                             $address->last_name = null;
@@ -120,8 +120,8 @@ class Order extends Model
                             DocumentType::TXT->value => DocumentType::TXT,
                         },
                         number_of_pages: $document->number_of_pages,
-                    ))),
-                    options: OptionData::collect($order->options),
+                    )), DataCollection::class),
+                    options: OptionData::collect($order->options, DataCollection::class),
                     ),
                 order: $order,
             );

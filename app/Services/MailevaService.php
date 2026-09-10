@@ -77,7 +77,7 @@ class MailevaService implements PostLetter
                     login: $this->login,
                     password: $this->password,
                 ),
-                requests: RequestData::collection([]),
+                requests: RequestData::collect([], DataCollection::class),
                 version: $mailevaSettings->version,
                 name: $mailevaSettings->name,
                 track_id: Accounting::makeNumber($mailevaSettings->sending_prefix, $mailevaSettings->sending_number),
@@ -107,7 +107,7 @@ class MailevaService implements PostLetter
         DataCollection $options,
     ): RequestData
     {
-        $recipients = RecipientData::collection($recipients->map(static function ($address) {
+        $recipients = RecipientData::collect($recipients->map(static function ($address) {
             $id = 'ID_' . Str::random(29);
 
             return new RecipientData(
@@ -128,9 +128,9 @@ class MailevaService implements PostLetter
                 track_id: $id,
                 partner_track_id: config('maileva.partner_track_id'),
             );
-        }));
+        }), DataCollection::class);
 
-        $senders = SenderData::collection($senders->map(static function ($address) {
+        $senders = SenderData::collect($senders->map(static function ($address) {
             $id = 'ID_' . Str::random(29);
 
             return new SenderData(
@@ -148,7 +148,7 @@ class MailevaService implements PostLetter
                 ),
                 id: $id,
             );
-        }));
+        }), DataCollection::class);
 
         $options = collect($options)->pluck('name')->toArray();
 
@@ -173,7 +173,7 @@ class MailevaService implements PostLetter
             $has_letter = true;
         }
 
-        $opts = OptionData::collection([]);
+        $opts = OptionData::collect([], DataCollection::class);
         $opts[] = new OptionData(
             request_option:  new PaperOptionData(
                 fold_option: new FoldOptionPaperData(
@@ -191,7 +191,7 @@ class MailevaService implements PostLetter
         return new RequestData(
             recipients: $recipients,
             senders: $senders,
-            documentData: PostLetterDocumentData::collection($documents->map(static function ($document) {
+            documentData: PostLetterDocumentData::collect($documents->map(static function ($document) {
                 $id = 'ID_' . Str::random(29);
 
                 return new PostLetterDocumentData(
@@ -202,9 +202,9 @@ class MailevaService implements PostLetter
                     shrink: false,
                     size: $document->size,
                 );
-            })),
+            }), DataCollection::class),
             options: $opts,
-            folds: PostLetterFoldData::collection($recipients->map(function ($recipient) use ($senders) {
+            folds: PostLetterFoldData::collect($recipients->map(function ($recipient) use ($senders) {
                 $id = 'ID_' . Str::random(29);
 
                 return new PostLetterFoldData(
@@ -213,45 +213,45 @@ class MailevaService implements PostLetter
                     sender_id: $senders[0]->id,
                     track_id: $id,
                 );
-            })),
-            notifications: NotificationData::collection([
+            }), DataCollection::class),
+            notifications: NotificationData::collect([
                 new NotificationData(
                     type: NotificationType::GENERAL->value,
                     format: NotificationFormat::XML->value,
-                    protocols: ProtocolData::collection([
+                    protocols: ProtocolData::collect([
                         new ProtocolData(
                             protocol: new ProtocolTypeData(
                                 attribute: 'xml',
                                 value: '',
                             )
                         )
-                    ]),
+                    ], DataCollection::class),
                 ),
                 new NotificationData(
                     type: NotificationType::LRE->value,
                     format: NotificationFormat::TXT->value,
-                    protocols: ProtocolData::collection([
+                    protocols: ProtocolData::collect([
                         new ProtocolData(
                             protocol: new ProtocolTypeData(
                                 attribute: 'Email',
                                 value: 'lre@mail.stop-contrat.com',
                             )
                         )
-                    ]),
+                    ], DataCollection::class),
                 ),
                 new NotificationData(
                     type: NotificationType::PND->value,
                     format: NotificationFormat::XML->value,
-                    protocols: ProtocolData::collection([
+                    protocols: ProtocolData::collect([
                         new ProtocolData(
                             protocol: new ProtocolTypeData(
                                 attribute: 'xml',
                                 value: '',
                             )
                         )
-                    ]),
+                    ], DataCollection::class),
                 ),
-            ]),
+            ], DataCollection::class),
             media_type: MediaType::PAPER->value,
             track_id: $trackId,
             stamp_adjust: false,

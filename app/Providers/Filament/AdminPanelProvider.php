@@ -21,9 +21,17 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use SmartCms\Redirects\RedirectsPlugin;
+use Filament\Schemas\Schema;
 
 class AdminPanelProvider extends PanelProvider
 {
+    public function boot(): void
+    {
+        Schema::configureUsing(function (Schema $schema): void {
+            $schema->columns(1);
+        });
+    }
+
     public function panel(Panel $panel): Panel
     {
 
@@ -31,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->maxContentWidth('full')
             ->login()
             ->colors([
                 'primary' => Color::Blue,

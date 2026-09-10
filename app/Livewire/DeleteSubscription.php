@@ -62,7 +62,7 @@ class DeleteSubscription extends Component
 
         return redirect()
             ->route('auth.account')
-            ->with('unsubscribe-message', "Votre abonnement Accès+ a été résilié.\n\nSi vous avez des questions, contactez notre service client par téléphone au 0 805 080 190.");
+            ->with('unsubscribe-message', "Votre abonnement Accès+ a été résilié.\n\nSi vous avez des questions, contactez notre service client par téléphone au 0 805 690 500.");
     }
 
     public function render()

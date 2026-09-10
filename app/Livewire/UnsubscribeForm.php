@@ -36,7 +36,7 @@ class UnsubscribeForm extends Component
                     $customer = Customer::where('email', $value)->first();
 
                     if (! $customer || ! $customer->subscription) {
-                        $fail("Nous n'avons pas trouvé d'abonnement lié à votre email. Contactez notre service client par téléphone au 0 805 080 190.");
+                        $fail("Nous n'avons pas trouvé d'abonnement lié à votre email. Contactez notre service client par téléphone au 0 805 690 500.");
                         return;
                     }
 
@@ -44,7 +44,7 @@ class UnsubscribeForm extends Component
                         $fail(
                             "Votre abonnement a été annulé le "
                             . $customer->subscription->cancellation_request_at->format('d/m/Y')
-                            . ". Si vous avez des questions, contactez notre service client par téléphone au 0 805 080 190."
+                            . ". Si vous avez des questions, contactez notre service client par téléphone au 0 805 690 500."
                         );
                     }
                 },
@@ -81,9 +81,8 @@ class UnsubscribeForm extends Component
             $this->error = true;
             $this->message = "Votre abonnement a été annulé le " . $customer->subscription->cancellation_request_at->format('d/m/Y') . ". Si vous avez des questions, contactez notre service client par téléphone au 0 805 080 190.";
         } else {
-            dd("dd");
             $this->error = true;
-            $this->message = "Nous n'avons pas trouver d'abonnement lié avec votre email. Contactez notre service client par téléphone au 0 805 080 190.";
+            $this->message = "Nous n'avons pas trouver d'abonnement lié avec votre email. Contactez notre service client par téléphone au 0 805 690 500.";
         }
     }
 

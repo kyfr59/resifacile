@@ -58,7 +58,7 @@ class UnsubscribeController extends Controller
 
                 redirect()
                     ->route('pages.se-desabonner')
-                    ->with('message', 'Votre abonnement a été annulé le ' . $subscription->cancellation_request_at->format('d/m/Y') . '. Si vous avez des questions, contactez notre service client par téléphone au 0 805 080 190.');
+                    ->with('message', 'Votre abonnement a été annulé le ' . $subscription->cancellation_request_at->format('d/m/Y') . '. Si vous avez des questions, contactez notre service client par téléphone au 0 805 690 500.');
             }
         }
 

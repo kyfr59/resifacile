@@ -19,6 +19,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Schemas\Components\Section;
 
 class PageResource extends Resource
 {
@@ -34,7 +35,7 @@ class PageResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Général')
+                Section::make('Général')
                     ->schema([
                         TextInput::make('title')
                             ->autofocus()

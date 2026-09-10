@@ -3,12 +3,12 @@
 namespace App\Filament\Resources\SendingResource\Pages;
 
 use App\Filament\Resources\SendingResource;
-use Filament\Infolists\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 use Filament\Resources\Pages\ViewRecord;
 use App\Enums\SendingStatus;
-use Filament\Infolists\Components\Grid;
+use Filament\Schemas\Components\Grid;
 use App\Filament\Resources\SendingResource\Pages;
 
 class ViewSending extends ViewRecord

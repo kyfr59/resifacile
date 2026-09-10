@@ -12,8 +12,8 @@ use App\Filament\Resources\CustomerResource\RelationManagers\PaymentMethodsRelat
 use App\Helpers\Accounting;
 use App\Models\Customer;
 use Filament\Schemas\Schema;
-use Filament\Infolists\Components\Fieldset;
-use Filament\Infolists\Components\Grid;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Grid;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;

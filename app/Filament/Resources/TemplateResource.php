@@ -11,7 +11,6 @@ use App\Filament\Resources\TemplateResource\Pages\CreateTemplate;
 use App\Filament\Resources\TemplateResource\Pages\EditTemplate;
 use App\Filament\Resources\TemplateResource\Pages\ListTemplates;
 use App\Models\Template;
-use Creagia\FilamentCodeField\CodeField;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
 use Filament\Schemas\Components\Section;
@@ -83,13 +82,17 @@ class TemplateResource extends Resource
                                     ->autosize()
                                     ->required(),
 
-                                CodeField::make('model.group_fields')
-                                    ->setLanguage(CodeField::JSON)
-                                    ->withLineNumbers()
-                                    ->afterStateHydrated(function (CodeField $component, ?array $state) {
-                                        $component->state(json_encode($state ?? [],  JSON_PRETTY_PRINT));
-                                     })
-                                    ->dehydrateStateUsing(fn (string $state): array => json_decode($state, true))
+                                Textarea::make('model.group_fields')
+                                    ->label('Group fields')
+                                    ->rows(20)
+                                    ->afterStateHydrated(function (Textarea $component, ?array $state) {
+                                        $component->state(
+                                            json_encode($state ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+                                        );
+                                    })
+                                    ->dehydrateStateUsing(function (?string $state): array {
+                                        return json_decode($state ?: '[]', true) ?? [];
+                                    })
                                     ->required(),
                             ]),
                     ])->columnSpanFull(),

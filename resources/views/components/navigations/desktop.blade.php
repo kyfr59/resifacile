@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-screen-xl px-6 h-16 md:h-24 flex items-center justify-between">
+<div class="mx-auto max-w-screen-xl px-6 md:h-24 flex items-center justify-between bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] h-[85px]">
     <a href="{{ route('pages.index') }}">
        <img src="{{ asset('images/logo-header.png') }}" class="pt-5" width="225" height="71" alt="{{ config('app.name') }}">
     </a>

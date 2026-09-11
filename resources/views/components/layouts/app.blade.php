@@ -61,7 +61,7 @@
                 </svg>
             </a>
         </div>
-        <header class="absolute w-full text-sm text-[#14142b]">
+        <header class="absolute w-full text-sm text-[#14142b] h-[82px]">
             @include('components.navigations.desktop')
         </header>
         <main>

@@ -8,7 +8,8 @@
     </x-slot:head>
 
     <form action="{{ route('tracking.number') }}" method="POST">@csrf
-    <div class="bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] md:pt-32">
+    <div class="bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] pt-24 md:pt-32">
+
         <div class="relative bg-white">
             <div class="max-w-screen-xl mx-auto pt-2 pb-2 md:py-12 px-4 flex gap-6 md:gap-12 flex-col">
 

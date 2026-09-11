@@ -42,6 +42,11 @@
                 {{ request()->session()->get('error') }}
             </div>
         @endif
+        @if(request()->session()->has('message') && request()->is('se-desabonner*'))
+            <div class="rounded-[7px] bg-green-50 text-green-700 p-6 text-center col-span-2  border border-green-200">
+                {{ request()->session()->get('message') }}
+            </div>
+        @endif
         @include('components.navigations.mobile')
         <div class="flex flex-col md:flex-row items-center justify-end text-white text-xs gap-1.5 md:gap-6 leading-none py-1.5 w-full max-w-7xl mx-auto px-6 md:px-9">
             <div class="flex gap-1.5 md:gap-0 flex-row md:flex-col items-center md:items-start">

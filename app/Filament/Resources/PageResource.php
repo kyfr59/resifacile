@@ -43,7 +43,7 @@ class PageResource extends Resource
                         MarkdownEditor::make('article')
                             ->autofocus()
                             ->required()
-                            ->reactive()
+                            //->reactive()
                             ->afterStateHydrated(function ($state, callable $set) {
                                 $set('word_count', str_word_count(strip_tags($state ?? '')));
                             })

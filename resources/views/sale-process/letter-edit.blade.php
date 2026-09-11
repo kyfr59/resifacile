@@ -44,6 +44,7 @@
                 <livewire:letter-edit-form
                     :template="$template"
                     :product="$product"
+                    :isBailCategorie="$isBailCategorie"
                     :object="$page->object ?? $page->template->object"
                 />
             </div>

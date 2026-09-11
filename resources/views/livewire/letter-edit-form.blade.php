@@ -43,7 +43,9 @@
         <div class="col-span-1 md:col-span-2">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                 @include('components.letter.city-date')
-                @include('components.letter.reference')
+                @if(!$isBailCategorie)
+                    @include('components.letter.reference')
+                @endif
                 @include('components.letter.object')
                 <div class="col-span-1 md:col-span-2 md:row-auto">
                     <div class="rounded-[7px] @if($errors->has('template.model.text') || $errors->has('template.model.json')) outline outline-offset-2 outline-4 outline-red-100 @endif">

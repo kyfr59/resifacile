@@ -36,6 +36,7 @@ class LetterEditForm extends Component
     public ?array $signature = null;
     public ?string $reference = null;
     public bool $importFiles = false;
+    public bool $isBailCategorie;
 
     protected $messages = [
         'template.model.text.required' => "N'oublier pas de rédigier votre courrier dans la zone ci-dessus !",

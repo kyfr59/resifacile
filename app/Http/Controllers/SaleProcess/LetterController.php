@@ -58,10 +58,13 @@ class LetterController extends Controller
             $template = (new ModelData([], null, true))->toArray();
         }
 
+        $isBailCategorie = $templateModel->categories->contains('id', 1);
+
         return view('sale-process.letter-edit', [
             'product' => $product,
             'page' => $product ?? $templateModel,
             'template' => $template,
+            'isBailCategorie' => $isBailCategorie,
             'handle' => ($product) ? 'marques' : 'modeles',
         ]);
     }

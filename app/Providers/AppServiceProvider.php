@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Settings\MailevaSettings;
 use App\Services\OkapiService;
+use Filament\Support\Facades\FilamentAsset;
+use Filament\Support\Assets\Js;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -63,5 +65,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('price', static fn($expression) => "<?php echo number_format(App\Helpers\Accounting::addTax($expression) / 100, 2, ',', ' ') . ' €'; ?>");
 
         Blade::directive('priceHtml', static fn($expression) => "<?php echo explode('.', App\Helpers\Accounting::addTax($expression) / 100)[0] . '<span class=\"font-light\">,</span>' . explode('.', App\Helpers\Accounting::addTax($expression) / 100)[1] . '<span class=\"font-light\">€</span>'; ?>");
+
+        FilamentAsset::register([
+            Js::make('word-counter', __DIR__ . '/../../public/js/app/word-counter.js'),
+        ]);
     }
 }

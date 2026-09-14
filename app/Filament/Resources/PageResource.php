@@ -43,14 +43,10 @@ class PageResource extends Resource
                         MarkdownEditor::make('article')
                             ->autofocus()
                             ->required()
-                            //->reactive()
-                            ->afterStateHydrated(function ($state, callable $set) {
-                                $set('word_count', str_word_count(strip_tags($state ?? '')));
-                            })
-                            ->afterStateUpdated(function ($state, callable $set) {
-                                $set('word_count', str_word_count(strip_tags($state ?? '')));
-                            })
-                            ->helperText(fn ($get) => ($get('word_count') ?? 0) . ' mots'),
+                            ->extraFieldWrapperAttributes(['data-word-counter' => true])
+                            ->helperText(new \Illuminate\Support\HtmlString('<span data-word-count>0 mots</span>'))
+                            ->extraAlpineAttributes([])
+                            ,
                         Fieldset::make('SEO')
                             ->schema([
                                 TextInput::make('seo_title')

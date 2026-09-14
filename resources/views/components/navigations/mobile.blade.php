@@ -6,7 +6,7 @@
     <div class="w-full h-20 flex items-center justify-between gap-8 px-6 pb-4 bg-[#fff3ee]">
         <div>
             <a href="{{ route('pages.index') }}">
-                <img src="https://resifacile.local/images/logo-header.png" class="pt-5" width="225" height="71" alt="Resifacile.fr">
+                <img src="{{ asset('images/logo-header.png') }}" class="pt-5" width="225" height="71" alt="Resifacile.fr">
             </a>
         </div>
         <div class="block">

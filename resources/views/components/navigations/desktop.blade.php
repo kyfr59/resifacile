@@ -1,6 +1,7 @@
-<div class="mx-auto max-w-screen-xl px-6 md:h-24 flex items-center justify-between bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] h-[85px]">
+<div class="w-full bg-gradient-to-r from-[#fff3ee] to-[#fff8e8] h-[85px]">
+    <div class="max-w-screen-xl mx-auto px-6 md:h-24 flex items-center justify-between h-full">
     <a href="{{ route('pages.index') }}">
-       <img src="{{ asset('images/logo-header.png') }}" class="pt-5" width="225" height="71" alt="{{ config('app.name') }}">
+       <img src="{{ asset('images/logo-header.png') }}" class="" width="225" height="71" alt="{{ config('app.name') }}">
     </a>
     <button
         class="block md:hidden w-6 h-8 text-gray-800"
@@ -23,4 +24,5 @@
             <a class="font-semibold" href="{{ route('login') }}">Se connecter</a>
         @endguest
     </nav>
+    </div>
 </div>

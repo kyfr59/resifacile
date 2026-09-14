@@ -58,7 +58,7 @@ class LetterController extends Controller
             $template = (new ModelData([], null, true))->toArray();
         }
 
-        $isBailCategorie = $templateModel->categories->contains('id', 1);
+        $isBailCategorie = $templateModel?->categories->contains('id', 1) ?? false;
 
         return view('sale-process.letter-edit', [
             'product' => $product,

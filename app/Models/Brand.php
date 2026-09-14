@@ -15,6 +15,7 @@ use Spatie\Sluggable\SlugOptions;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Artisan;
 
 class Brand extends Model implements Sitemapable
 {
@@ -44,6 +45,19 @@ class Brand extends Model implements Sitemapable
         'has_childs' => 'boolean',
     ];
 
+    public function shouldBeSearchable(): bool
+    {
+        return $this->status === PageStatus::VISIBLE;
+    }
+
+    protected static function booted(): void
+    {
+        static::saved(function (Brand $brand) {
+            if ($brand->wasChanged('status')) {
+                Artisan::call('sitemap:generate');
+            }
+        });
+    }
 
     public function getRouteKeyName(): string
     {

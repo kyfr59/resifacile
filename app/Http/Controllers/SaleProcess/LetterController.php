@@ -40,6 +40,11 @@ class LetterController extends Controller
             $product = Brand::where('slug', $slug)->first();
 
             if($product) {
+
+                if ($product->status !== \App\Enums\PageStatus::VISIBLE) {
+                    abort(404);
+                }
+
                 if($product->has_childs) {
                     return view('marque', [
                         'entry' => $product,

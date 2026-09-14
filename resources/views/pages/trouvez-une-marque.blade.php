@@ -5,7 +5,7 @@ use function Laravel\Folio\{name};
 name('pages.trouvez-une-marque');
 
 $page = \App\Models\Page::find(11);
-$brands = \App\Models\Brand::orderBy('name')->get();
+$brands = \App\Models\Brand::published()->orderBy('name')->get();
 
 ?>
 

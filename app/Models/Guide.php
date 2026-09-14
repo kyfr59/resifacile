@@ -32,6 +32,15 @@ class Guide extends Model
         'data' => 'object',
     ];
 
+    protected static function booted(): void
+    {
+        static::saved(function (Guide $guide) {
+            if ($guide->wasChanged('status')) {
+                Artisan::call('sitemap:generate');
+            }
+        });
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

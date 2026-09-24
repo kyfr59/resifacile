@@ -29,8 +29,8 @@ class Subscription extends Model
 
     protected $casts = [
         'price' => PriceConvertor::class,
-        'cancellation_request_at' => 'date',
-        'current_period_end_at' => 'date',
+        'cancellation_request_at' => 'datetime',
+        'current_period_end_at' => 'datetime',
         'status' => SubscriptionStatus::class,
         'meta_data' => 'object',
     ];

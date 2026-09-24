@@ -52,6 +52,15 @@ class RetractationForm extends Component
                         );
                     }
 
+                    if ($customer->subscription->status === SubscriptionStatus::RETRACTED) {
+                        $this->debugMessage = '';
+                        $fail(
+                            "Votre abonnement a été rétracté le "
+                            . $customer->subscription->cancellation_request_at->format('d/m/Y')
+                            . ". Si vous avez des questions, contactez notre service client par téléphone au 0 805 690 500."
+                        );
+                    }
+
                     $dateCreation = $customer->subscription->created_at;
                     $firstDay = $dateCreation->copy()->addDay();
                     $limitDay = $dateCreation->copy()->addDays(13);

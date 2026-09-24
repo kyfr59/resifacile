@@ -3,7 +3,7 @@
 namespace App\Actions\Subscription;
 
 use App\Enums\SubscriptionStatus;
-use App\Mail\UnsubcribeConfirmation;
+use App\Mail\RetractationConfirmation;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,6 +20,6 @@ class RetractationProcessAction
         $this->subscription->status = SubscriptionStatus::RETRACTED;
         $this->subscription->save();
 
-        Mail::to($this->subscription->customer->email)->send(new UnsubcribeConfirmation($this->subscription));
+        Mail::to($this->subscription->customer->email)->send(new RetractationConfirmation($this->subscription));
     }
 }

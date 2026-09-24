@@ -27,6 +27,10 @@ class GetLetterEditable
             $paragraph = preg_replace_callback('/{{(' . $varkey . ')}}/', function ($matches) use($template) {
                 $field = data_get($template['group_fields']['fields'], $matches[1]);
 
+                if (!$field) {
+                    return $matches[0]; // garde {{variable}} tel quel
+                }
+
                 if($matches[1] === 'ville') {
                     return '<strong>[' . $field['label']  . ']</strong>';
                 }

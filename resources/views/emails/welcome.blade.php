@@ -14,7 +14,7 @@ Votre espace client est accessible à l'adresse suivante :
 
 Pour vous identifier, vous recevrez un email contenant un lien sécurisé qui vous permettra d'accéder à votre compte.
 
-Pour toutes demandes supplémentaires, notre service client se tient à votre entière disposition du lundi au vendredi de 09h30 à 17h00 par téléphone au 0805 690 500 (appel gratuit) ou par email à {{ config('mail.from.address') }}.
+Pour toute question concernant votre commande, le suivi de votre courrier ou votre facture, notre service client est à votre disposition par téléphone du lundi au vendredi, de 09h30 à 17h00, au 0805 690 500 (appel gratuit) ou par e-mail à contact@resifacile.fr. Vous pouvez aussi gérer ou résilier votre abonnement accès+ en ligne à tout moment en cliquant <a target="_blank" href="https://resifacile.fr/se-desabonner">ici</a>. Si vous avez besoin d’aide pour rédiger une lettre ou utiliser notre service en ligne, notre équipe peut également vous accompagner.
 
 Merci de votre confiance et à bientôt sur Resifacile
 

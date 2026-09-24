@@ -72,7 +72,8 @@
                     @endforeach
                     @if($has_subscription)
                         <tr>
-                            <td colspan="3" class="leading-tight">Service accès+ offert 3 jours puis, @price($subscription->recurring_amount)/mois<sup>*</sup> sans engagement résiliable à tout moment</td>
+                            {{--<td colspan="3" class="leading-tight">Service accès+ offert 3 jours puis, @price($subscription->recurring_amount)/mois<sup>*</sup> sans engagement résiliable à tout moment</td>--}}
+                            <td colspan="3" class="leading-tight">Accès+ : 3 jours offerts, puis 39,90 €/mois dès le {{ now()->addDays(3)->format('d/m/Y') }}. Résiliable à tout moment.</td>
                         </tr>
                     @endif
                     </tbody>

@@ -22,7 +22,7 @@ class DeleteAccount extends Component
 
     public function mount() {
         $user = Auth::user();
-        $this->subscriptionIsActive  = $user->subscription && $user->subscription->status !== SubscriptionStatus::CANCELED;
+        $this->subscriptionIsActive  = $user->subscription && $user->subscription->status !== SubscriptionStatus::CANCELED && $user->subscription->status !== SubscriptionStatus::RETRACTED;
     }
 
     protected $messages = [

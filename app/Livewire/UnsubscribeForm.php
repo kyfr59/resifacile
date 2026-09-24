@@ -60,7 +60,8 @@ class UnsubscribeForm extends Component
 
         if(
             $customer->subscription &&
-            $customer->subscription->status !== SubscriptionStatus::CANCELED
+            $customer->subscription->status !== SubscriptionStatus::CANCELED &&
+            $customer->subscription->status !== SubscriptionStatus::RETRACTED
         ) {
             Mail::to($this->email)->send(new UnsubscribeDemande($this->email));
 
@@ -76,7 +77,8 @@ class UnsubscribeForm extends Component
                 ->log('Le client a fait une demande de désabonnement');
         } else if (
             $customer->subscription &&
-            $customer->subscription->status === SubscriptionStatus::CANCELED
+            $customer->subscription->status === SubscriptionStatus::CANCELED &&
+            $customer->subscription->status === SubscriptionStatus::RETRACTED
         ) {
             $this->error = true;
             $this->message = "Votre abonnement a été annulé le " . $customer->subscription->cancellation_request_at->format('d/m/Y') . ". Si vous avez des questions, contactez notre service client par téléphone au 0 805 080 190.";

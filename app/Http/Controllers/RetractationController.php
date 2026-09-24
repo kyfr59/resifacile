@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Subscription\UnsubscribedProcessAction;
+use App\Actions\Subscription\RetractationProcessAction;
 use App\Enums\SubscriptionStatus;
 use App\Http\Controllers\Controller;
 use App\Mail\UnsubcribeConfirmation;
@@ -17,7 +17,6 @@ class RetractationController extends Controller
 {
     public function __invoke(Request $request, PaymentGatewayRegistry $paymentGateway)
     {
-        dd("dd");
         if($request->has('token')) {
             $unsubscribe = Unsubscribe::where('token', $request->get('token'))->first();
 
@@ -30,7 +29,7 @@ class RetractationController extends Controller
 
                 if($subscription->status !== SubscriptionStatus::CANCELED) {
                     if(property_exists($subscription->meta_data, 'mid')) {
-                        (new UnsubscribedProcessAction($subscription))->process();
+                        (new RetractationProcessAction($subscription))->process();
                     } else {
                         $paymentMethod = $paymentGateway->get('stripe');
                         $subscription = $paymentMethod->cancelSubscription($subscription->meta_data->subscription_id);
@@ -52,19 +51,12 @@ class RetractationController extends Controller
                         ->event('onClick')
                         ->log('Le client c\'est désabonné');
 
-                    redirect()
-                        ->route('pages.retractation')
-                        ->with('message', 'Nous vous confirmons que nous avons bien enregistré votre demande et que votre résiliation a bien été effectuée.');
+                    return redirect('/retractation')->with('message', 'Nous vous confirmons que nous avons bien enregistré votre demande et que votre rétractation a bien été effectuée.');
                 }
-
-                redirect()
-                    ->route('pages.retractation')
-                    ->with('message', 'Votre abonnement a été annulé le ' . $subscription->cancellation_request_at->format('d/m/Y') . '. Si vous avez des questions, contactez notre service client par téléphone au 0 805 690 500.');
+                return redirect('/retractation')->with('message', 'Votre abonnement a été annulé le ' . $subscription->cancellation_request_at->format('d/m/Y') . '. Si vous avez des questions, contactez notre service client par téléphone au 0 805 690 500.');
             }
+            return redirect('/retractation')->with('error', 'Le jeton n\'est pas valide, veuillez réessayer');
         }
-
-        return redirect()
-            ->route('pages.retractation');
-            //->with('error', "Vous n'avez pas l'authorisation d'accéder à cette page");
+        return redirect('/retractation')->with('error', 'Vous n\'avez pas accès à cette page');
     }
 }

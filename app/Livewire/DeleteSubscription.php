@@ -30,7 +30,7 @@ class DeleteSubscription extends Component
 
     public function mount() {
         $user = Auth::user();
-        $this->subscriptionIsActive  = $user->subscription && $user->subscription->status !== SubscriptionStatus::CANCELED;
+        $this->subscriptionIsActive  = $user->subscription && $user->subscription->status !== SubscriptionStatus::CANCELED && $user->subscription->status !== SubscriptionStatus::RETRACTED;
     }
 
     public function confirmDelete()
@@ -41,7 +41,8 @@ class DeleteSubscription extends Component
 
         if(
             $customer->subscription &&
-            $customer->subscription->status !== SubscriptionStatus::CANCELED
+            $customer->subscription->status !== SubscriptionStatus::CANCELED &&
+            $customer->subscription->status !== SubscriptionStatus::RETRACTED
         ) {
 
             if(property_exists($customer->subscription->meta_data, 'mid')) {

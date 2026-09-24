@@ -70,6 +70,7 @@ class SubscriptionResource extends Resource
                     ->color(fn (SubscriptionStatus $state): string => match ($state) {
                         SubscriptionStatus::TRIAL => 'gray',
                         SubscriptionStatus::CANCELED, SubscriptionStatus::CANCEL_REQUEST => 'danger',
+                        SubscriptionStatus::RETRACTED => 'danger',
                         SubscriptionStatus::RECURRING => 'success',
                         SubscriptionStatus::LATE_PAYMENT => 'warning',
                     })

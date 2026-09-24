@@ -42,7 +42,7 @@
                 {{ request()->session()->get('error') }}
             </div>
         @endif
-        @if(request()->session()->has('message') && request()->is('se-desabonner*'))
+        @if(request()->session()->has('message') && (request()->is('se-desabonner*') || request()->is('retractation*')))
             <div class="rounded-[7px] bg-green-50 text-green-700 p-6 text-center col-span-2  border border-green-200">
                 {{ request()->session()->get('message') }}
             </div>

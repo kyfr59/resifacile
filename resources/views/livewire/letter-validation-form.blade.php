@@ -199,48 +199,63 @@
         document.addEventListener('adobe_dc_view_sdk.ready', () => {
             const documentViewers = @json($documentViewers);
             const container = document.querySelector('#adobe-dc-view');
+            const loader = document.querySelector('#custom-loader');
 
-            function pdfViewer(index, doc) {
+            const documents = Object.entries(documentViewers)
+                .map(([id, doc]) => ({
+                    id: id,
+                    doc: doc
+                }))
+                .reverse();
+
+            function pdfViewer(id, doc) {
                 const div = document.createElement('div');
-                div.setAttribute('id', 'preview-' + index)
-                container.append(div);
+
+                div.id = 'preview-' + id;
+                container.appendChild(div);
 
                 const adobeDCView = new AdobeDC.View({
                     clientId: '{{ config('adobe.api_viewer') }}',
-                    divId: 'preview-' + index
-                })
-
-            document.getElementById("custom-loader").style.display = "flex";
-            document.getElementById("adobe-dc-view").style.visibility = "hidden";
-
-            adobeDCView.registerCallback(
-                AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
-                function(event) {
-                    if (event.type === "APP_RENDERING_DONE") {
-                        document.getElementById("custom-loader").style.display = "none";
-                        document.getElementById("adobe-dc-view").style.visibility = "visible";
-                    }
-                }
-            );
-
-            adobeDCView.previewFile({
-                    content: {location: {url: route('frontend.letter.preview', {id: index})}},
-                    metaData: {fileName: doc['readable_file_name']}
-                }, {
-                    embedMode: "IN_LINE",
-                    showDownloadPDF: false,
-                    showPrintPDF: false,
+                    divId: 'preview-' + id
                 });
+
+                loader.style.display = 'flex';
+                container.style.visibility = 'hidden';
+
+                adobeDCView.registerCallback(
+                    AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
+                    function (event) {
+                        if (event.type === 'APP_RENDERING_DONE') {
+                            loader.style.display = 'none';
+                            container.style.visibility = 'visible';
+                        }
+                    }
+                );
+
+                adobeDCView.previewFile(
+                    {
+                        content: {
+                            location: {
+                                url: route('frontend.letter.preview', {
+                                    id: id
+                                })
+                            }
+                        },
+                        metaData: {
+                            fileName: doc.readable_file_name
+                        }
+                    },
+                    {
+                        embedMode: 'IN_LINE',
+                        showDownloadPDF: false,
+                        showPrintPDF: false
+                    }
+                );
             }
 
-            if(Array.isArray(documentViewers)) {
-                documentViewers.forEach((doc, index) => {
-                    pdfViewer(index, doc)
-                })
-            } else {
-                Object.keys(documentViewers).map((key) => pdfViewer(key, documentViewers[key]))
-            }
-
-        })
+            documents.forEach(({ id, doc }) => {
+                pdfViewer(id, doc);
+            });
+        });
     </script>
 @endpush

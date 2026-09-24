@@ -28,5 +28,5 @@ Schedule::command('scout:import "App\Models\Category"')
 Schedule::command('scout:import "App\Models\Template"')
     ->everyTenMinutes();
 
-Schedule::command('php artisan okapi-tracking')
+Schedule::command('okapi-tracking')
     ->everyTenMinutes();

@@ -13,6 +13,7 @@ use App\Http\Controllers\SaleProcess\RecipientController;
 use App\Http\Controllers\SaleProcess\SenderController;
 use App\Http\Controllers\SaleProcess\ValidationController;
 use App\Http\Controllers\UnsubscribeController;
+use App\Http\Controllers\RetractationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Account\PreviewDocumentController;
@@ -89,6 +90,12 @@ Route::get(
     UnsubscribeController::class,
 )
     ->name('frontend.resiliation');
+
+Route::get(
+    '/se-retracter',
+    RetractationController::class,
+)
+    ->name('frontend.retractation');
 
 /**
  *  Sale Process

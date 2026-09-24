@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Enums\SubscriptionStatus;
-use App\Mail\UnsubscribeDemande;
+use App\Mail\RetractationDemande;
 use App\Models\Customer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
@@ -112,7 +112,7 @@ class RetractationForm extends Component
             $customer->subscription &&
             $customer->subscription->status !== SubscriptionStatus::CANCELED
         ) {
-            Mail::to($this->email)->send(new UnsubscribeDemande($this->email));
+            Mail::to($this->email)->send(new RetractationDemande($this->email));
 
             $this->success = true;
 
@@ -122,7 +122,7 @@ class RetractationForm extends Component
                     'url' => request()->url()
                 ])
                 ->event('onClick')
-                ->log('Le client a fait une demande de désabonnement');
+                ->log('Le client a fait une demande de rétractation');
         } else if (
             $customer->subscription &&
             $customer->subscription->status === SubscriptionStatus::CANCELED

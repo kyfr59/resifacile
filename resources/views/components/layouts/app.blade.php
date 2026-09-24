@@ -107,7 +107,8 @@
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="/cookies">Politique des cookies</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="/grpd">Confidentialité</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.contact') }}">Contact</a>
-                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.se-desabonner') }}">Résilier l’abonnement</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="/retractation">Rétractation</a>
+                    <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.se-desabonner') }}">Résiliation</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="{{ route('pages.plan-site') }}">Plan du site</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2 js-lcc-settings-toggle" href="javascript:void(0)" class="js-lcc-settings-toggle">Gestion des cookies</a>
                     <a class="w-full md:w-auto text-center md:text-left py-3 md:py-0 px-2" href="/cgu">CGU</a>
